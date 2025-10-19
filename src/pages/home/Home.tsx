@@ -1,6 +1,23 @@
 import React from 'react'
 import foguete from "../../assets/img/icones/foguete.svg"
 import pessoas from "../../assets/img/icones/pessoas.svg"
+import Filtro from "../../assets/img/icones/filtro.svg";
+import Rectangle from "../../assets/img/icones/Rectangle.svg";
+import Ellipse from "../../assets/img/icones/Ellipse.svg";
+import Lupa from "../../assets/img/icones/lupa.svg";
+import Person from "../../assets/img/icones/Person.svg";
+import Tag from "../../assets/img/icones/Tag.svg";
+import Pessoas from "../../assets/img/icones/pessoas.svg";
+import ExclamationCircle from "../../assets/img/icones/ExclamationCircle.svg";
+import EllipseCadastro from "../../assets/img/icones/Ellipse cadastro.svg";
+import EllipseDescoberta from "../../assets/img/icones/Ellipse descoberta.svg";
+import EllipseConexao from "../../assets/img/icones/Ellipse conexao.svg";
+import EllipseLight from "../../assets/img/icones/Ellipse light.svg";
+import Lightbulb from "../../assets/img/icones/Lightbulb.svg";
+import EllipseMortar from "../../assets/img/icones/Ellipse  mortar.svg";
+import MortarboardFill from "../../assets/img/icones/MortarboardFill.svg";
+import EllipseBook from "../../assets/img/icones/Ellipse book.svg";
+
 
 function Home() {
   return (
@@ -24,24 +41,24 @@ function Home() {
         <section>
             <div>
                 <div>
-                <img src="./assets/img/icones/filtro.svg"/>
+                <img src={Filtro}/>
                 <h3>Filtros</h3>
                 </div>
                 <h4>Tipo de Projeto</h4>
                 <div>
-                    <img src="./assets/img/icones/Rectangle.svg" />
+                    <img src={Rectangle} />
                     <p>Sistema Web</p>
                 </div>
                 <div>
-                    <img src="./assets/img/icones/Rectangle.svg" />
+                    <img src={Rectangle} />
                     <p>Aplicativo Mobile</p>
                 </div>
                 <div>
-                    <img src="./assets/img/icones/Rectangle.svg" />
+                    <img src={Rectangle} />
                     <p>Landing Page</p>
                 </div>
                 <div>
-                    <img src="./assets/img/icones/Rectangle.svg" />
+                    <img src={Rectangle} />
                     <p>E-commerce</p>
                 </div>
                 <h4>Área de Negócios</h4>
@@ -52,23 +69,23 @@ function Home() {
                 </div>
                 <h4>Complexidade</h4>
                 <div>
-                    <img src="./assets/img/icones/Ellipse.svg" />
+                    <img src={Ellipse} />
                     <p>Todas</p>
                 </div>
                 <div>
-                    <img src="./assets/img/icones/Ellipse.svg" />
+                    <img src={Ellipse} />
                     <p>Básica</p>
                 </div>
                 <div>
-                    <img src="./assets/img/icones/Ellipse.svg" />
+                    <img src={Ellipse} />
                     <p>Intermediária</p>
                 </div>
                 <div>
-                    <img src="./assets/img/icones/Ellipse.svg" />
+                    <img src={Ellipse} />
                     <p>Avançada</p>
                 </div>
                 <button>
-                    <img src="./assets/img/icones/lupa.svg"/>
+                    <img src={Lupa}/>
                     <p>Aplicar Filtros</p>
                 </button>
             </div>
@@ -90,24 +107,24 @@ function Home() {
 
                     <div>
                         <div>
-                          <img src="./assets/img/icones/Person.svg"/>
+                          <img src={Person}/>
                           <h5>Nome da empresa</h5>
                         </div>
 
                         <div>
-                          <img src="./assets/img/icones/Tag.svg"/>
+                          <img src={Tag}/>
                           <h5>Tipo de Projeto</h5>
                         </div>
 
                         <p>DESCRIÇÃO DA DEMANDA. EX: "Desenvolvimento de sistema web para gestão completa de clínica veterinária, incluindo cadastro de pets, agendamento de consultas, prontuário eletrônico e controle financeiro. Necessário experiência com banco de dados."</p>
 
                         <button>
-                            <img src="./assets/img/icones/pessoas.svg"/>
+                            <img src={Pessoas}/>
                             <p>Manifestar Interesse</p>
                         </button>
 
                         <button>
-                            <img src="./assets/img/icones/ExclamationCircle.svg"/>
+                            <img src={ExclamationCircle}/>
                             <p>Ver Detalhes</p>
                         </button>
                     </div>
@@ -122,25 +139,25 @@ function Home() {
 
             <div>
                 <div>
-                    <img src="./assets/img/icones/Ellipse cadastro.svg" />
+                    <img src={EllipseCadastro} />
                     <h3>1. Cadastro</h3>
                     <p>Empreendedores se cadastram e descrevem suas demandas com detalhes do projeto</p>
                 </div>
 
                 <div>
-                    <img src="./assets/img/icones/Ellipse descoberta.svg" />
+                    <img src={EllipseDescoberta} />
                     <h3>2. Descoberta</h3>
                     <p>Estudantes exploram projetos usando filtros para encontrar oportunidades ideais</p>
                 </div>
 
                 <div>
-                    <img src="./assets/img/icones/Ellipse conexao.svg" />
+                    <img src={EllipseConexao} />
                     <h3>3. Conexão</h3>
                     <p>Grupos de alunos manifestam interesse e iniciam diálogo com empreendedores</p>
                 </div>
 
                 <div>
-                    <img src="./assets/img/icones/Ellipse cadastro.svg" />
+                    <img src={EllipseCadastro} />
                     <h3>4. Execução</h3>
                     <p>Desenvolvimento colaborativo do projeto</p>
                 </div>
@@ -154,8 +171,8 @@ function Home() {
             {/* <!-- CARROSSEL DE CARDS DE Cadastro --> */}
             <div>
                 <div>
-                    <img src="./assets/img/icones/Ellipse light.svg" />
-                    <img src="./assets/img/icones/Lightbulb.svg" />
+                    <img src={EllipseLight} />
+                    <img src={Lightbulb} />
                     <h3>Sou Empreendedor</h3>
                     <h5>Tenho uma demanda e preciso de uma solução digital</h5>
 
@@ -169,8 +186,8 @@ function Home() {
                     <button>Cadastrar como Empreendedor</button>
                 </div>
                 <div>
-                    <img src="./assets/img/icones/Ellipse  mortar.svg" />
-                    <img src="./assets/img/icones/MortarboardFill.svg" />
+                    <img src={EllipseMortar} />
+                    <img src={MortarboardFill} />
                     <h3>Sou Estudante</h3>
                     <h5>Quero participar de projetos reais e ganhar experiência</h5>
 
@@ -184,8 +201,8 @@ function Home() {
                     <button>Cadastrar como Estudante</button>
                 </div>
                 <div>
-                    <img src="./assets/img/icones/Ellipse book.svg" />
-                    <img src="./assets/img/icones/Ellipse book.svg" />
+                    <img src={EllipseBook} />
+                    <img src={EllipseBook} />
                     <h3>Sou Coordenador</h3>
                     <h5>Sou coordenador e preciso verificar a demanda</h5>
 
@@ -199,8 +216,8 @@ function Home() {
                     <button>Cadastrar como Coodenador</button>
                 </div>
                 <div>
-                    <img src="./assets/img/icones/Ellipse light.svg" />
-                    <img src="./assets/img/icones/Lightbulb.svg" />
+                    <img src={EllipseLight} />
+                    <img src={Lightbulb} />
                     <h3>Sou Professor</h3>
                     <h5>Preciso acompanhar projetos e orientar alunos</h5>
 
