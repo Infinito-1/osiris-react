@@ -1,33 +1,41 @@
-
-
-
 function Navbar() {
-
   return (
-    <>
-      <nav>
-        <div class="nav-left">
-          <div class="logo"></div>
-          <div class="nav-text">
-            <h1>Osíris</h1>
-            <span>Fatec Zona Leste</span>
-          </div>
+    <nav className="flex justify-between items-center bg-[#782e29] px-[60px] py-[15px]">
+      {/* Esquerda */}
+      <div className="flex items-center gap-[12px]">
+        <div className="w-[48px] h-[48px] rounded-full bg-white bg-[url('../imgs/logo.png')] bg-center bg-cover bg-no-repeat"></div>
+        <div>
+          <h1 className="m-0 text-[1.6rem] font-medium text-[#e9e4da]">
+            Osíris
+          </h1>
+          <span className="text-[1rem] text-[#bab9b5]">Fatec Zona Leste</span>
         </div>
+      </div>
 
-        <div class="nav-center">
-          <button>Projetos</button>
-          <button>Como Funciona</button>
-          <button>Grupos</button>
-        </div>
+      {/* Centro */}
+      <div className="flex items-center gap-[30px]">
+        <button className="bg-none border-none text-[#dad4c8] text-[1.15rem] cursor-pointer font-medium transition-opacity duration-300 hover:opacity-70">
+          Projetos
+        </button>
+        <button className="bg-none border-none text-[#dad4c8] text-[1.15rem] cursor-pointer font-medium transition-opacity duration-300 hover:opacity-70">
+          Como Funciona
+        </button>
+        <button className="bg-none border-none text-[#dad4c8] text-[1.15rem] cursor-pointer font-medium transition-opacity duration-300 hover:opacity-70">
+          Grupos
+        </button>
+      </div>
 
-        <div class="nav-right">
-          <button class="login">Login</button>
-          <button class="cadastrar">Cadastrar</button>
-        </div>
-      </nav>
-
-    </>
-  )
+      {/* Direita */}
+      <div className="flex items-center gap-[30px]">
+        <button className="text-[1.1rem] rounded-[10px] px-[22px] py-[10px] font-semibold cursor-pointer border border-solid border-white bg-white text-black transition-opacity duration-300 hover:opacity-85">
+          Login
+        </button>
+        <button className="text-[1.1rem] rounded-[10px] px-[22px] py-[10px] font-semibold cursor-pointer border border-solid border-white bg-white text-black transition-opacity duration-300 hover:opacity-85">
+          Cadastrar
+        </button>
+      </div>
+    </nav>
+  );
 }
 
-export default Navbar
+export default Navbar;
