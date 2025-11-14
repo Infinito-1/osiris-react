@@ -1,5 +1,6 @@
 function Footer() {
   return (
+    <main className="flex flex-col  bg-[#F1F7EE]">
     <footer className="bg-[#021926] text-[#dad4c8] pt-[50px] px-[80px] pb-[20px] mt-[80px]">
       {/* Colunas */}
       <div className="grid grid-cols-3 gap-[40px] mb-[30px]">
@@ -58,6 +59,7 @@ function Footer() {
         © 2025 Osíris - Fatec Zona Leste. Todos os direitos reservados.
       </div>
     </footer>
+    </main>
   );
 }
 
