@@ -24,7 +24,7 @@ const GrupoCard: React.FC = () => {
             </div>
 
             <div className="flex flex-col space-y-2 mt-auto">
-                <button className="bg-gray-600 text-white py-2 px-4 rounded-md text-base font-medium transition-colors duration-200 hover:bg-gray-700">Ver Detalhes</button>
+                <button className="bg-[#5F747F] text-white py-2 px-4 rounded-md text-base font-medium transition-colors duration-200 hover:bg-[#53656e]">Ver Detalhes</button>
                 <button className="bg-[#782E29] text-white py-2 px-4 rounded-md text-base font-medium transition-colors duration-200 hover:bg-[#6d2823]">Solicitar Entrada</button>
             </div>
         </div>
@@ -39,13 +39,13 @@ const Grupos: React.FC = () => {
     return (
         <main className="flex flex-col items-center w-full min-h-screen bg-[#F1F7EE]">
             {/* Seção do Cabeçalho (Fundo Azul Escuro) */}
-            <section className="w-full bg-[#021926] text-white py-10 md:py-16 flex justify-center">
+            <section className="w-full bg-[#021926] text-[#FFFBF2] py-10 md:py-16 flex justify-center">
                 <div className="w-11/12 max-w-6xl flex flex-col items-center text-center">
                     <h1 className="text-4xl md:text-5xl font-bold mb-1">Grupos</h1>
                     <p className="text-lg mb-8">Conheça os grupos de estudantes</p>
 
                     {/* Formulário de Busca */}
-                    <form className="flex items-center w-full max-w-xl bg-white rounded-full overflow-hidden mb-8 shadow-lg">
+                    <form className="flex items-center w-full max-w-xl bg-[#FFFBF2] rounded-full overflow-hidden mb-8 shadow-lg">
                         <input
                             type="text"
                             name="name"
