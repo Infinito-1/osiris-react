@@ -1,34 +1,46 @@
-import React from 'react'
+import React from "react";
 
-function esqueceusenha() {
+export default function EsqueceuSenha() {
   return (
-    <>
-      <section class="login-section">
-        <h1>Osíris</h1>
-        <p>Acesse sua conta ou crie uma nova</p>
+    <section className="flex flex-col items-center py-10">
+      <h1 className="text-4xl font-bold mb-2">Osíris</h1>
+      <p className="text-lg mb-6">Acesse sua conta ou crie uma nova</p>
 
-        
-        {/* <!--Digitar E-mail--> */}
-        <div class="login-box" id="emailBox">
-          <div class="login-header">
-            <img src="../../assets/img/login/arrowin.png" alt="Ícone de login" />
-            <h2>Redefinição de Senha</h2>
-          </div>
-
-          <div class="form-group">
-            <label for="email">Digite o E-mail cadastrado:</label>
-            <input type="email" id="email" />
-          </div>
-
-          <a href="codigosenha.html"><button class="login-button" id="email-button">Enviar Código para meu E-mail</button></a>
-          <div class="forgot-password">
-            <a href="#" id="suporte-link">Problemas? Fale com nosso suporte aqui</a>
-          </div>
-          {/* <!--Digitar E-mail--> */}
+      {/* BOX */}
+      <div className="bg-white border border-[#d3d3d3] rounded-xl p-12 w-[520px] shadow-md">
+        <div className="flex items-center gap-3 mb-6">
+          <img
+            src="../../assets/img/login/arrowin.png"
+            alt="Ícone de login"
+            className="w-7 h-7"
+          />
+          <h2 className="text-[1.6rem] text-[#021926] font-semibold">
+            Redefinição de Senha
+          </h2>
         </div>
-      </section>
-    </>
-  )
-}
 
-export default esqueceusenha
+        <div className="mb-6 text-left">
+          <label className="block mb-2 text-[1rem] text-[#021926] font-medium">
+            Digite o E-mail cadastrado:
+          </label>
+          <input
+            type="email"
+            className="w-full p-3 border border-gray-300 rounded-lg text-[1rem]"
+          />
+        </div>
+
+        <a href="codigosenha.html">
+          <button className="w-full bg-[#782e29] text-white py-3 text-[1.1rem] rounded-lg cursor-pointer transition hover:opacity-90">
+            Enviar Código para meu E-mail
+          </button>
+        </a>
+
+        <div className="text-center mt-3 text-[0.95rem]">
+          <a href="#" className="underline">
+            Problemas? Fale com nosso suporte aqui
+          </a>
+        </div>
+      </div>
+    </section>
+  );
+}
