@@ -1,120 +1,246 @@
-function Dashboard_grupo() {
-  return (
-    <>
-        <main>
-            <h1>Dashboard do grupo nomeGrupo</h1>
-            <p>Gerencie seu grupo e acompanhe o progresso do projeto</p>
+import React from 'react';
 
-            <section>
-                <article>
-                    <div>
-                        <img src="../assets/img/icones/Bell.svg" />
-                        <h2>Quadro de avisos</h2>
+// --- Subcomponentes ---
+
+// 1. Quadro de Avisos
+const QuadroAvisos: React.FC = () => {
+    const avisos = [
+        { title: "Prazo de Entrega", subtitle: "Entrega do MVP: 15/06/2024", date: "19/05/2025" },
+        { title: "Novo Membro", subtitle: "Ana Lima entrou no grupo", date: "17/05/2025" },
+        { title: "Reunião com Orientador", subtitle: "Sexta-feira às 14h", date: "16/05/2025" },
+    ];
+
+    return (
+        <div className="bg-white border border-gray-300 rounded-lg p-6 shadow-md h-100">
+            <div className="flex items-center space-x-2 mb-4">
+                {/* Ícone de sino/quadro de avisos - Usando um ícone genérico por enquanto */}
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-gray-800" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                </svg>
+                <h3 className="text-xl font-semibold text-gray-800">Quadro de avisos</h3>
+            </div>
+            <p className="text-sm text-gray-600 mb-6">Fique por dentro de lembretes e avisos enviados pela coordenação e professores.</p>
+
+            <div className="space-y-4">
+                {avisos.map((aviso, index) => (
+                    <div key={index} className="flex justify-between items-center border-b border-gray-200 pb-3">
+                        <div>
+                            <p className="font-medium text-gray-800">{aviso.title}</p>
+                            <p className="text-sm text-gray-600">{aviso.subtitle}</p>
+                        </div>
+                        <span className="text-sm text-gray-500">{aviso.date}</span>
                     </div>
-                    <p>Fique por dentro de lembretes e avisos enviados pela coordenação e  professores.</p>
+                ))}
+            </div>
 
-                    {/* <!-- Modelo de card de aviso. Estrutura circula em carrossel de 3 lembretes por vez. --> */}
-                    <div>
-                        <div>
-                            <h4>Título do alerta</h4>
-                            <p>Descrição</p>
-                        </div>
-                        <div>
-                            Data
+            {/* Paginação simples */}
+            <div className="flex justify-center items-center mt-6 space-x-4">
+                <button className="text-gray-500 hover:text-gray-800">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+                    </svg>
+                </button>
+                <span className="font-medium">1</span>
+                <button className="text-gray-500 hover:text-gray-800">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    );
+};
+
+// 2. Informações do Grupo
+const InformacoesGrupo: React.FC = () => {
+    return (
+        <div className="bg-white border border-gray-300 rounded-lg p-6 shadow-md h-120">
+            <h3 className="text-xl font-semibold text-gray-800 mb-4">Informações do Grupo</h3>
+
+            <div className="space-y-2 text-sm">
+                <p><span className="font-medium">Nome do Grupo</span><br />Os Fulaninhos</p>
+                <p><span className="font-medium">Representante</span><br />Pedro Alves dos Santos</p>
+                <p><span className="font-medium">RA</span><br />12345678</p>
+                <p><span className="font-medium">Semestre</span><br />5º Semestre</p>
+                <p className="font-medium pt-2">Membros</p>
+                <ul className="list-disc list-inside ml-4 text-gray-600">
+                    <li>Pedro Alves dos Santos</li>
+                    <li>Ricardo Botelho</li>
+                    <li>José de Oliveira</li>
+                    <li>Ana Lima</li>
+                </ul>
+            </div>
+
+            <div className="mt-4 pt-4 border-t border-gray-200">
+                <button className="w-full flex items-center justify-center space-x-2 py-2 px-4 border border-gray-300 rounded-md text-gray-700 hover:bg-[#782E29] hover:text-white transition-colors">
+                    {/* Ícone de Lápis/Editar - Usando um ícone genérico por enquanto */}
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                    </svg>
+                    <span>Editar</span>
+                </button>
+            </div>
+        </div>
+    );
+};
+
+// 3. Projeto Atual
+const ProjetoAtual: React.FC = () => {
+    return (
+        <div className="bg-white border border-gray-300 rounded-lg p-6 shadow-md h-60">
+            <div className="flex items-center space-x-2 mb-4">
+                {/* Ícone de Documento/Projeto - Usando um ícone genérico por enquanto */}
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-gray-800" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+                <h3 className="text-xl font-semibold text-gray-800">Projeto Atual</h3>
+            </div>
+
+            <p className="font-medium text-gray-800">Sistema de Gestão para Padaria Local</p>
+            <p className="text-sm text-gray-600 mb-3">Empreendedor: Padaria Pão Quente</p>
+
+            <div className="flex items-center space-x-4 text-sm mb-6">
+                <span className="bg-[#c6d8e2] text-[#5F747F] px-2 py-0.5 rounded-full font-medium">Em Andamento</span>
+                <p className="text-gray-600">Prazo: 29/04/2026</p>
+            </div>
+
+            <div className="flex space-x-3">
+                <button className="bg-[#782E29] text-white py-2 px-4 rounded-md text-sm font-medium transition-colors duration-200 hover:bg-[#6d2823]">
+                    Fazer Entrega
+                </button>
+                <button className="bg-[#5F747F] text-white py-2 px-4 rounded-md text-sm font-medium transition-colors duration-200 hover:bg-[#53656e]">
+                    Ver detalhes
+                </button>
+            </div>
+        </div>
+    );
+};
+
+// 4. Galeria de Demandas
+const GaleriaDemandas: React.FC = () => {
+    const demandas = [
+        { title: "App de Delivery para Restaurante", level: "Intermediário", semester: "4º Sem" },
+        { title: "App de Delivery para Restaurante", level: "Básico", semester: "3º Sem" },
+        { title: "App de Delivery para Restaurante", level: "Avançado", semester: "5º Sem" },
+    ];
+
+    const getLevelColor = (level: string) => {
+        switch (level) {
+            case 'Intermediário': return 'bg-[#782E29] text-white';
+            case 'Básico': return 'bg-[#5F747F] text-white';
+            case 'Avançado': return 'bg-[#021926] text-white';
+            default: return 'bg-gray-100 text-gray-800';
+        }
+    };
+
+    return (
+        <div className="bg-white border border-gray-300 rounded-lg p-6 shadow-md h-110">
+            <h3 className="text-xl font-semibold text-gray-800 mb-4">Galeria de Demandas</h3>
+            <p className="text-sm text-gray-600 mb-6">Demandas disponíveis para novos projetos</p>
+
+            <div className="space-y-3">
+                {demandas.map((demanda, index) => (
+                    <div key={index} className="border border-gray-200 rounded-md p-3">
+                        <p className="font-medium text-gray-800 mb-2">{demanda.title}</p>
+                        <div className="flex space-x-2 text-xs">
+                            <span className={`${getLevelColor(demanda.level)} px-2 py-0.5 rounded-full font-medium`}>{demanda.level}</span>
+                            <span className="bg-gray-100 text-gray-800 px-2 py-0.5 rounded-full font-medium">{demanda.semester}</span>
                         </div>
                     </div>
-                </article>
+                ))}
+            </div>
 
-                <article>
-                    <div>
-                        <img src="../assets/img/icones/FileProject.svg" />
-                        <h2>Projeto Atual</h2>
-                    </div>
-                    <h4>Título do projeto</h4>
-                    <p>Empreendedor: Nome do Empreendedor</p>
+            {/* Paginação simples */}
+            <div className="flex justify-center items-center mt-6 space-x-4">
+                <button className="text-gray-500 hover:text-gray-800">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+                    </svg>
+                </button>
+                <span className="font-medium">1</span>
+                <button className="text-gray-500 hover:text-gray-800">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    );
+};
 
-                    <div>
+// 5. Histórico de Entregas
+const HistoricoEntregas: React.FC = () => {
+    const entregas = [
+        { title: "MVP - Versão 1.0", date: "09/05/2025", status: "Aprovado", action: "Upload" },
+        { title: "Protótipo Inicial", date: "19/04/2025", status: "Revisão Necessária", action: "Revisar" },
+    ];
+
+    const getStatusColor = (status: string) => {
+        switch (status) {
+            case 'Aprovado': return 'bg-green-100 text-green-800';
+            case 'Revisão Necessária': return 'bg-red-100 text-red-800';
+            default: return 'bg-gray-100 text-gray-800';
+        }
+    };
+
+    return (
+        <div className="bg-white border border-gray-300 rounded-lg p-6 shadow-md h-62">
+            <h3 className="text-xl font-semibold text-gray-800 mb-4">Histórico de Entregas</h3>
+
+            <div className="space-y-4">
+                {entregas.map((entrega, index) => (
+                    <div key={index} className="flex justify-between items-center border-b border-gray-200 pb-3">
                         <div>
-                            <img src="../assets/img/icones/Clock.svg" />
-                            <p>Em Andamento</p>
+                            <p className="font-medium text-gray-800">{entrega.title}</p>
+                            <p className="text-sm text-gray-600">{entrega.date}</p>
                         </div>
-                        <div>
-                            <img src="../assets/img/icones/calendario.svg" />
-                            <p>Prazo: data</p>
-                        </div>
-                    </div>
-
-                    <div>
-                        <div>
-                            <img src="../assets/img/icones/upload.svg" />
-                            <p>Fazer Entrega</p>
-                        </div>
-                        <div>
-                            <p>Ver detalhes</p>
-                        </div>
-                    </div>
-                </article>
-
-                <article>
-                    <h2>Histórico de Entregas</h2>
-                    <!-- Modelo de cartão para lista -->
-                    <div>
-                        <div>
-                            <h4>Título do Projeto</h4>
-                            <p>Data</p>
-                        </div>
-                        <button>Status</button>
-                        <img src="../assets/img/icones/BoxArrowUpRight.svg" />
-                    </div>
-                </article>
-            </section>
-
-            <section>
-                <article>
-                    <h2>Informações do Grupo</h2>
-
-                    <h5>Nome do Grupo</h5>
-                    <p>nomeGrupo</p>
-
-                    <h5>Representante</h5>
-                    <p>nomeRepresentante</p>
-
-                    <h5>RA:</h5>
-                    <p>numRA</p>
-
-                    <h5>Semestre:</h5>
-                    <p>numSemestre</p>
-
-                    <h5>Membros</h5>
-                    <p>integrante2</p>
-                    <p>integrante3</p>
-                    <p>integrante4</p>
-                    <p>integrante5</p>
-
-                    <button>
-                        <img src="../assets/img/icones/PencilSquare.svg" />
-                        Editar
-                    </button>
-                </article>
-
-                <article>
-                    <h2>Galeria de Demandas</h2>
-                    <p>Demandas disponíveis para novos projetos</p>
-
-                    {/* <!-- Modelo de card de aviso. Estrutura circula em carrossel de 3 demandas por vez. --> */}
-                    <div>
-                        <h4>Título da demanda</h4>
-                        <div>
-                            <p>Status</p>
-                            <p>Semestre</p>
+                        <div className="flex items-center space-x-3">
+                            <span className={`${getStatusColor(entrega.status)} px-2 py-0.5 rounded-full text-xs font-medium`}>{entrega.status}</span>
+                            <button className="text-gray-500 hover:text-red-800">
+                                {/* Ícone de Lixeira/Excluir - Usando um ícone genérico por enquanto */}
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                </svg>
+                            </button>
                         </div>
                     </div>
-                </article>
-            </section>
+                ))}
+            </div>
+        </div>
+    );
+};
+
+// --- Componente Principal do Dashboard ---
+const Dashboard: React.FC = () => {
+    return (
+        <main className="flex flex-col items-center w-full bg-[#F1F7EE] py-10 pb-20">
+            <div className="w-11/12 max-w-6xl">
+                {/* Título Principal */}
+                <h1 className="text-3xl md:text-4xl font-bold text-gray-800 text-center mb-2">
+                    Dashboard do Grupo Os Fulaninhos
+                </h1>
+                <p className="text-base text-gray-600 text-center mb-10">
+                    Gerencie seu grupo e acompanhe o progresso do projeto
+                </p>
+
+                {/* Grid Principal do Dashboard */}
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    {/* Coluna 1 (2/3 da largura em telas grandes) */}
+                    <div className="lg:col-span-2 space-y-8">
+                        <QuadroAvisos />
+                        <ProjetoAtual />
+                        <HistoricoEntregas />
+                    </div>
+
+                    {/* Coluna 2 (1/3 da largura em telas grandes) */}
+                    <div className="lg:col-span-1 space-y-8">
+                        <InformacoesGrupo />
+                        <GaleriaDemandas />
+                    </div>
+                </div>
+            </div>
         </main>
+    );
+};
 
-    </> 
-  )
-}
-
-export default Dashboard_grupo
+export default Dashboard;
