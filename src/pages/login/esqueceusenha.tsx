@@ -1,6 +1,13 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function EsqueceuSenha() {
+  const navigate = useNavigate();
+
+  const handleEnviarCodigo = () => {
+    navigate("/codigo-senha");
+  };
+
   return (
     <section className="flex flex-col items-center py-10">
       <h1 className="text-4xl font-bold mb-2">Osíris</h1>
@@ -10,7 +17,7 @@ export default function EsqueceuSenha() {
       <div className="bg-white border border-[#d3d3d3] rounded-xl p-12 w-[520px] shadow-md">
         <div className="flex items-center gap-3 mb-6">
           <img
-            src="../../assets/img/login/arrowin.png"
+            src="/assets/img/login/arrowin.png"
             alt="Ícone de login"
             className="w-7 h-7"
           />
@@ -29,16 +36,17 @@ export default function EsqueceuSenha() {
           />
         </div>
 
-        <a href="codigosenha.html">
-          <button className="w-full bg-[#782e29] text-white py-3 text-[1.1rem] rounded-lg cursor-pointer transition hover:opacity-90">
-            Enviar Código para meu E-mail
-          </button>
-        </a>
+        <button
+          onClick={handleEnviarCodigo}
+          className="w-full bg-[#782e29] text-white py-3 text-[1.1rem] rounded-lg cursor-pointer transition hover:opacity-90"
+        >
+          Enviar Código para meu E-mail
+        </button>
 
         <div className="text-center mt-3 text-[0.95rem]">
-          <a href="#" className="underline">
+          <button onClick={() => navigate("/suporte")} className="underline">
             Problemas? Fale com nosso suporte aqui
-          </a>
+          </button>
         </div>
       </div>
     </section>
