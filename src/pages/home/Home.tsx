@@ -1,4 +1,3 @@
-import React from 'react'
 import foguete from "../../assets/img/icones/foguete.svg"
 import pessoas from "../../assets/img/icones/pessoas.svg"
 import Filtro from "../../assets/img/icones/filtro.svg";
