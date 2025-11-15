@@ -24,8 +24,9 @@ function Navbar() {
           <button className="bg-none border-none text-[#dad4c8] text-[1.15rem] cursor-pointer font-medium transition-opacity duration-300 hover:opacity-70">
             Como Funciona
           </button>
-          <button className="bg-none border-none text-[#dad4c8] text-[1.15rem] cursor-pointer font-medium transition-opacity duration-300 hover:opacity-70"
-          onClick={() => navigate("/grupos")}
+          <button
+            className="bg-none border-none text-[#dad4c8] text-[1.15rem] cursor-pointer font-medium transition-opacity duration-300 hover:opacity-70"
+            onClick={() => navigate("/grupos")}
           >
             Grupos
           </button>
@@ -33,10 +34,16 @@ function Navbar() {
 
         {/* Direita */}
         <div className="flex items-center gap-[30px]">
-          <button className="text-[1.1rem] rounded-[10px] px-[22px] py-[10px] font-semibold cursor-pointer border border-solid border-white bg-white text-black transition-opacity duration-300 hover:opacity-85">
+          <button
+            className="text-[1.1rem] rounded-[10px] px-[22px] py-[10px] font-semibold cursor-pointer border border-solid border-white bg-white text-black transition-opacity duration-300 hover:opacity-85"
+            onClick={() => navigate("/login")}
+          >
             Login
           </button>
-          <button className="text-[1.1rem] rounded-[10px] px-[22px] py-[10px] font-semibold cursor-pointer border border-solid border-white bg-white text-black transition-opacity duration-300 hover:opacity-85">
+          <button
+            className="text-[1.1rem] rounded-[10px] px-[22px] py-[10px] font-semibold cursor-pointer border border-solid border-white bg-white text-black transition-opacity duration-300 hover:opacity-85"
+            onClick={() => navigate("/login")}
+          >
             Cadastrar
           </button>
         </div>

@@ -1,17 +1,19 @@
 function EstudantesForm() {
   return (
     <>
-      <section className="login-section">
-        <h1>Osíris</h1>
-        <p>Acesse sua conta ou crie uma nova</p>
-
-        {/* Estudante */}
+      <section className="login-section flex flex-col items-center mt-[60px] font-inter text-[#021926]">
+        {/* Título */}
+        <h1 className="text-[2.5rem] font-semibold mb-[8px]">Osíris</h1>
+        <p className="text-[1.1rem] font-medium mb-[30px]">
+          Acesse sua conta ou crie uma nova
+        </p>
 
         <div
           className="
             estudante-form
             text-left
             max-w-[680px]
+            w-full
             bg-white
             border border-[#d3d3d3]
             rounded-xl
@@ -20,7 +22,8 @@ function EstudantesForm() {
           "
           id="estudanteForm"
         >
-          <div className="top-icon text-center mb-[25px]">
+          {/* Ícone */}
+          <div className="top-icon flex justify-center mb-[25px]">
             <img
               src="../../assets/img/login/hat.png"
               alt="Ícone Estudante"
@@ -34,72 +37,91 @@ function EstudantesForm() {
             />
           </div>
 
-          <h3 className="text-center my-[10px] mb-[6px] text-[1.4rem]">
+          {/* Subtítulo */}
+          <h3 className="text-center my-[10px] mb-[6px] text-[1.4rem] font-semibold">
             Sou Estudante
           </h3>
 
-          <p className="text-center text-[1rem] text-[#333] mb-[45px]">
+          <p className="text-center text-[1rem] text-[#333] mb-[45px] font-normal">
             Quero participar de projetos reais e ganhar experiência
           </p>
 
+          {/* Nome do representante */}
           <div className="form-group mb-[30px]">
-            <label htmlFor="nomeRep">Nome do Representante</label>
+            <label htmlFor="nomeRep" className="font-medium">
+              Nome do Representante
+            </label>
             <input
               type="text"
               id="nomeRep"
-              className="w-full border rounded p-2"
+              className="w-full border border-[#d3d3d3] rounded p-2 mt-1"
             />
           </div>
 
-          <div className="form-row flex gap-[35px] mb-[30px]">
+          {/* Linha de Email e RA */}
+          <div className="form-row flex gap-[35px] mb-[30px] max-[700px]:flex-col max-[700px]:gap-[20px]">
             <div className="form-group flex-1">
-              <label htmlFor="emailStud">E-mail</label>
+              <label htmlFor="emailStud" className="font-medium">
+                E-mail
+              </label>
               <input
                 type="email"
                 id="emailStud"
-                className="w-full border rounded p-2"
+                className="w-full border border-[#d3d3d3] rounded p-2 mt-1"
               />
             </div>
 
             <div className="form-group flex-1">
-              <label htmlFor="raStud">RA (Registro Acadêmico)</label>
+              <label htmlFor="raStud" className="font-medium">
+                RA (Registro Acadêmico)
+              </label>
               <input
                 type="text"
                 id="raStud"
-                className="w-full border rounded p-2"
+                className="w-full border border-[#d3d3d3] rounded p-2 mt-1"
               />
             </div>
           </div>
 
+          {/* Semestre */}
           <div className="form-group mb-[30px]">
-            <label htmlFor="semestre">Semestre Atual</label>
+            <label htmlFor="semestre" className="font-medium">
+              Semestre Atual
+            </label>
             <input
               type="text"
               id="semestre"
-              className="w-full border rounded p-2"
+              className="w-full border border-[#d3d3d3] rounded p-2 mt-1"
             />
           </div>
 
+          {/* Membros do Grupo */}
           <div className="form-group mb-[30px]">
-            <label htmlFor="membros">Membros do Grupo</label>
+            <label htmlFor="membros" className="font-medium">
+              Membros do Grupo
+            </label>
             <textarea
               id="membros"
-              className="w-full border rounded p-2 resize-none"
+              className="w-full border border-[#d3d3d3] rounded p-2 mt-1 resize-none"
+              rows={3}
             ></textarea>
           </div>
 
+          {/* Senha */}
           <div className="form-group mb-[30px]">
-            <label htmlFor="senhaStud">Senha</label>
+            <label htmlFor="senhaStud" className="font-medium">
+              Senha
+            </label>
             <input
               type="password"
               id="senhaStud"
-              className="w-full border rounded p-2"
+              className="w-full border border-[#d3d3d3] rounded p-2 mt-1"
             />
           </div>
 
+          {/* Botão */}
           <button
             className="
-              register-button estudante
               w-full
               text-white
               bg-[#546873]

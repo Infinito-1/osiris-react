@@ -1,7 +1,9 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
   const [activeTab, setActiveTab] = useState("login");
+  const navigate = useNavigate();
 
   return (
     <section className="flex flex-col items-center py-10">
@@ -38,7 +40,7 @@ export default function Login() {
         <div className="bg-white border border-[#d3d3d3] rounded-xl p-12 w-[520px] shadow-md">
           <div className="flex items-center gap-3 mb-6">
             <img
-              src="../../assets/img/login/arrowin.png"
+              src="/assets/img/login/arrowin.png"
               alt="Ícone de login"
               className="w-7 h-7"
             />
@@ -72,9 +74,12 @@ export default function Login() {
           </button>
 
           <div className="text-center mt-3 text-[0.95rem]">
-            <a href="esqueceusenha.html" className="underline">
+            <button
+              onClick={() => navigate("/esqueceu-senha")}
+              className="underline"
+            >
               Esqueceu sua senha?
-            </a>
+            </button>
           </div>
         </div>
       )}
@@ -84,7 +89,7 @@ export default function Login() {
         <div className="bg-white border border-[#d3d3d3] rounded-xl p-12 w-[520px] shadow-md">
           <div className="flex items-center gap-3 mb-6">
             <img
-              src="../../assets/img/login/PersonPlus.png"
+              src="/assets/img/login/PersonPlus.png"
               alt="Ícone de cadastro"
               className="w-7 h-7"
             />
@@ -94,37 +99,37 @@ export default function Login() {
           </div>
 
           {/* BUTTONS */}
-          {[
-            {
-              label: "Empreendedor",
-              color: "#782e29",
-              link: "./forms/empreendedorform.html",
-            },
-            {
-              label: "Estudante",
-              color: "#546873",
-              link: "./forms/estudantesform.html",
-            },
-            {
-              label: "Docente",
-              color: "#021926",
-              link: "./forms/docenteform.html",
-            },
-            {
-              label: "Coordenador",
-              color: "#9fa39e",
-              link: "./forms/coordenadorform.html",
-            },
-          ].map((btn, index) => (
-            <a href={btn.link} key={index}>
-              <button
-                className="w-full py-4 text-[1.05rem] font-medium rounded-lg text-white mt-4 cursor-pointer transition hover:opacity-90"
-                style={{ backgroundColor: btn.color }}
-              >
-                {btn.label}
-              </button>
-            </a>
-          ))}
+          <button
+            onClick={() => navigate("/cadastro/empreendedor")}
+            className="w-full py-4 text-[1.05rem] font-medium rounded-lg text-white mt-4 cursor-pointer transition hover:opacity-90"
+            style={{ backgroundColor: "#782e29" }}
+          >
+            Empreendedor
+          </button>
+
+          <button
+            onClick={() => navigate("/cadastro/estudante")}
+            className="w-full py-4 text-[1.05rem] font-medium rounded-lg text-white mt-4 cursor-pointer transition hover:opacity-90"
+            style={{ backgroundColor: "#546873" }}
+          >
+            Estudante
+          </button>
+
+          <button
+            onClick={() => navigate("/cadastro/docente")}
+            className="w-full py-4 text-[1.05rem] font-medium rounded-lg text-white mt-4 cursor-pointer transition hover:opacity-90"
+            style={{ backgroundColor: "#021926" }}
+          >
+            Docente
+          </button>
+
+          <button
+            onClick={() => navigate("/cadastro/coordenador")}
+            className="w-full py-4 text-[1.05rem] font-medium rounded-lg text-white mt-4 cursor-pointer transition hover:opacity-90"
+            style={{ backgroundColor: "#9fa39e" }}
+          >
+            Coordenador
+          </button>
         </div>
       )}
     </section>
