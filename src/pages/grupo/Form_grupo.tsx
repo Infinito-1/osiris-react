@@ -1,58 +1,99 @@
-function From_grupo() {
-  return (
-    <>
-        <main>
-            <h2>Formulário de cadastro do grupo</h2>
-            <form action="#" method="submit" id="formulario">
-                <label for="grupo">Nome do grupo</label>
-                <input id="grupo" type="text" name="grupo" placeholder="Digite o nome do grupo" required />
+import React from 'react';
 
-                <label for="semestre">Semestre</label>
-                <select id="semestre" name="semestre" required>
-                    <option value="1">1º Semestre</option>
-                    <option value="2">2º Semestre</option>
-                    <option value="3">3º Semestre</option>
-                    <option value="4">4º Semestre</option>
-                    <option value="5">5º Semestre</option>
-                    <option value="6">6º Semestre</option>
-                </select>
-
-                <label for="representante">Representante</label>
-                <input id="representante" type="text" name="representante" placeholder="Digite o nome do representante" required />
-
-                <label for="ra1">RA</label>
-                <input id="ra1" type="number" name="ra1" placeholder="Digite o RA" required />
-
-                <label for="integrante2">Integrante</label>
-                <input id="integrante2" type="text" name="integrante2" placeholder="Digite o nome do integrante" required />
-
-                <label for="ra2">RA</label>
-                <input id="ra2" type="number" name="ra2" placeholder="Digite o RA" required />
-
-                <label for="integrante3">Integrante</label>
-                <input id="integrante3" type="text" name="integrante3" placeholder="Digite o nome do integrante" required />
-
-                <label for="ra3">RA</label>
-                <input id="ra3" type="number" name="ra3" placeholder="Digite o RA" required />
-
-                <label for="integrante4">Integrante</label>
-                <input id="integrante4" type="text" name="integrante4" placeholder="Digite o nome do integrante" required />
-
-                <label for="ra4">RA</label>
-                <input id="ra4" type="number" name="ra4" placeholder="Digite o RA" required />
-
-                <label for="integrante5">Integrante</label>
-                <input id="integrante5" type="text" name="integrante5" placeholder="Digite o nome do integrante" required />
-
-                <label for="ra5">RA</label>
-                <input id="ra5" type="number" name="ra5" placeholder="Digite o RA" required />
-
-                <button>Cadastrar</button>
-            </form>
-        </main>
-
-    </> 
-  )
+// Componente para um campo de formulário com label e input/select
+interface FormFieldProps {
+    label: string;
+    id: string;
+    type: 'text' | 'number' | 'select';
+    placeholder?: string;
+    required?: boolean;
+    options?: { value: string; label: string }[];
 }
 
-export default From_grupo
+const FormField: React.FC<FormFieldProps> = ({ label, id, type, placeholder, required, options }) => {
+    const inputClasses = "w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-800";
+
+    const renderInput = () => {
+        if (type === 'select' && options) {
+            return (
+                <select id={id} name={id} required={required} className={inputClasses}>
+                    {options.map(option => (
+                        <option key={option.value} value={option.value}>{option.label}</option>
+                    ))}
+                </select>
+            );
+        }
+        return (
+            <input
+                id={id}
+                type={type === 'number' ? 'number' : 'text'}
+                name={id}
+                placeholder={placeholder}
+                required={required}
+                className={inputClasses}
+            />
+        );
+    };
+
+    return (
+        <div className="flex flex-col space-y-1">
+            <label htmlFor={id} className="text-sm font-medium text-gray-700">{label}</label>
+            {renderInput()}
+        </div>
+    );
+};
+
+// Componente Principal do Formulário
+const FormGrupo: React.FC = () => {
+    const semestreOptions = [
+        { value: "1", label: "1º Semestre" },
+        { value: "2", label: "2º Semestre" },
+        { value: "3", label: "3º Semestre" },
+        { value: "4", label: "4º Semestre" },
+        { value: "5", label: "5º Semestre" },
+        { value: "6", label: "6º Semestre" },
+    ];
+
+    return (
+        <main className="flex justify-center w-full min-h-screen bg-[#F1F7EE] py-10">
+            <div className="w-11/12 max-w-4xl bg-white border border-gray-300 rounded-lg p-8 shadow-xl">
+                <h2 className="text-2xl md:text-3xl font-bold text-gray-800 text-center mb-8">
+                    Formulário de cadastro do grupo
+                </h2>
+
+                <form action="#" method="submit" id="formulario" className="space-y-6">
+                    {/* Campos em Duas Colunas */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <FormField label="Nome do grupo" id="grupo" type="text" placeholder="Digite o nome do grupo" required />
+                        <FormField label="Semestre" id="semestre" type="select" required options={semestreOptions} />
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <FormField label="Representante" id="representante" type="text" placeholder="Digite o nome do representante" required />
+                        <FormField label="RA" id="ra1" type="number" placeholder="Digite o RA" required />
+                    </div>
+
+                    {/* Campos de Integrantes e RAs */}
+                    {[2, 3, 4, 5].map((i) => (
+                        <div key={i} className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <FormField label="Integrante" id={`integrante${i}`} type="text" placeholder="Digite o nome do integrante" required />
+                            <FormField label="RA" id={`ra${i}`} type="number" placeholder="Digite o RA" required />
+                        </div>
+                    ))}
+
+                    {/* Botão de Cadastro */}
+                    <div className="pt-4">
+                        <button
+                            type="submit"
+                            className="w-full bg-[#782E29] text-white py-3 rounded-md text-lg font-medium transition-colors duration-200 hover:bg-[#6d2823] shadow-md"
+                        >
+                            Cadastrar
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </main>
+    );
+};
+
+export default FormGrupo;
