@@ -34,7 +34,7 @@ function Home() {
 
                 <button className="bg-[#F1F7EE] text-2x1 flex gap-1 rounded-2xl p-3 items-center">
                     <img className="size-4" src={pessoas}/> 
-                    <p className="text-[#021926]">Formar Equipe</p>
+                    <p className="text-[#021926]">Formar Equipe </p>
                 </button>
             </div>
         </section>
