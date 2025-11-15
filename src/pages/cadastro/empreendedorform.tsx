@@ -1,3 +1,5 @@
+import Lamp from "../../assets/img/login/lamp.png";
+
 function EmpreendedorForm() {
   return (
     <>
@@ -25,7 +27,7 @@ function EmpreendedorForm() {
           {/* Ícone */}
           <div className="top-icon flex justify-center mb-[25px]">
             <img
-              src="../../assets/img/login/lamp.png"
+              src={Lamp}
               alt="Ícone de lâmpada"
               className="
                 w-[70px]

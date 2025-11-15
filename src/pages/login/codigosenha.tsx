@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import ArrowIn from "../../assets/img/login/arrowin.png";
 
 export default function CodigoSenha() {
   const navigate = useNavigate();
@@ -15,11 +16,7 @@ export default function CodigoSenha() {
 
       <div className="bg-white border border-[#d3d3d3] rounded-xl p-12 w-[520px] shadow-md">
         <div className="flex items-center gap-3 mb-6">
-          <img
-            src="/assets/img/login/arrowin.png"
-            alt="Ícone verificação"
-            className="w-7 h-7"
-          />
+          <img src={ArrowIn} alt="Ícone verificação" className="w-7 h-7" />
           <h2 className="text-[1.6rem] text-[#021926] font-semibold">
             Redefinição de Senha
           </h2>

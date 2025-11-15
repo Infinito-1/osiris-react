@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import ArrowIn from "../../assets/img/login/arrowin.png";
+import PersonPlus from "../../assets/img/login/PersonPlus.png";
 
 export default function Login() {
   const [activeTab, setActiveTab] = useState("login");
@@ -39,11 +41,7 @@ export default function Login() {
       {activeTab === "login" && (
         <div className="bg-white border border-[#d3d3d3] rounded-xl p-12 w-[520px] shadow-md">
           <div className="flex items-center gap-3 mb-6">
-            <img
-              src="/assets/img/login/arrowin.png"
-              alt="Ícone de login"
-              className="w-7 h-7"
-            />
+            <img src={ArrowIn} alt="Ícone de login" className="w-7 h-7" />
             <h2 className="text-[1.6rem] text-[#021926] font-semibold">
               Fazer Login
             </h2>
@@ -88,11 +86,7 @@ export default function Login() {
       {activeTab === "register" && (
         <div className="bg-white border border-[#d3d3d3] rounded-xl p-12 w-[520px] shadow-md">
           <div className="flex items-center gap-3 mb-6">
-            <img
-              src="/assets/img/login/PersonPlus.png"
-              alt="Ícone de cadastro"
-              className="w-7 h-7"
-            />
+            <img src={PersonPlus} alt="Ícone de cadastro" className="w-7 h-7" />
             <h2 className="text-[1.6rem] text-[#021926] font-semibold">
               Criar Conta
             </h2>

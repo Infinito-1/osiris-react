@@ -1,3 +1,5 @@
+import Hat from "../../assets/img/login/hat.png";
+
 function EstudantesForm() {
   return (
     <>
@@ -25,7 +27,7 @@ function EstudantesForm() {
           {/* Ícone */}
           <div className="top-icon flex justify-center mb-[25px]">
             <img
-              src="../../assets/img/login/hat.png"
+              src={Hat}
               alt="Ícone Estudante"
               className="
                 w-[70px]

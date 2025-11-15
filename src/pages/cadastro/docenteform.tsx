@@ -1,3 +1,5 @@
+import Prof from "../../assets/img/login/prof.png";
+
 function DocenteForm() {
   return (
     <section className="flex flex-col items-center mt-[60px] font-inter">
@@ -25,7 +27,7 @@ function DocenteForm() {
         {/* ÍCONE CENTRALIZADO */}
         <div className="flex justify-center mb-[25px]">
           <img
-            src="../../assets/img/login/prof.png"
+            src={Prof}
             alt="Ícone Docente"
             className="w-[70px] h-[70px] rounded-full p-[15px] bg-[#021926]"
           />
