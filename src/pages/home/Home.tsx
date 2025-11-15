@@ -1,4 +1,3 @@
-import React from 'react'
 import foguete from "../../assets/img/icones/foguete.svg"
 import pessoas from "../../assets/img/icones/pessoas.svg"
 import Filtro from "../../assets/img/icones/filtro.svg";
@@ -23,22 +22,24 @@ function Home() {
   return (
     <>
       <main>
-        <section>
-            <h1>Conectamos <span>Empreendedores</span> com <span>Estudantes de Tecnologia</span></h1>
-            <p>Plataforma que une demandas reais de negócios com projetos acadêmicos da Fatec Zona Leste, criando oportunidades de aprendizado prático e soluções inovadoras.</p>
+        <section className="bg-[#021926] p-10">
+            <h1 className="text-5xl justify-center font-semibold text-[#DAD4C8] mx-55 text-center">Conectamos <span className="text-[#A33E38]">Empreendedores</span> com <span className="text-[#A33E38]">Estudantes de Tecnologia</span></h1>
+            <p className="text-[#DAD4C8] text-center py-5 text-2xl mx-30">Plataforma que une demandas reais de negócios com projetos acadêmicos da Fatec Zona Leste, criando oportunidades de aprendizado prático e soluções inovadoras.</p>
 
-            <button>
-                <img src={foguete}/> 
-                <p>Publicar Projeto</p>
-            </button>
+            <div className="flex gap-5 justify-center">
+                <button className="text-white text-2x1 flex gap-1 bg-[#5F747F] rounded-2xl p-3 items-center">
+                    <img className="size-6" src={foguete}/> 
+                    <p>Cadastrar Projeto</p>
+                </button>
 
-            <button>
-                <img src={pessoas}/> 
-                <p>Formar Equipe</p>
-            </button>
+                <button className="bg-[#F1F7EE] text-2x1 flex gap-1 rounded-2xl p-3 items-center">
+                    <img className="size-4" src={pessoas}/> 
+                    <p className="text-[#021926]">Formar Equipe</p>
+                </button>
+            </div>
         </section>
 
-        <section>
+        <section className="bg=[#F1F7EE]">
             <div>
                 <div>
                 <img src={Filtro}/>
