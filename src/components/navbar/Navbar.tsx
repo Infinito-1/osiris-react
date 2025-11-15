@@ -1,4 +1,7 @@
+import { useNavigate } from "react-router-dom";
+
 function Navbar() {
+  const navigate = useNavigate();
   return (
     <>
       <nav className="flex justify-between items-center bg-[#782e29] px-[60px] py-[15px]">
@@ -21,7 +24,9 @@ function Navbar() {
           <button className="bg-none border-none text-[#dad4c8] text-[1.15rem] cursor-pointer font-medium transition-opacity duration-300 hover:opacity-70">
             Como Funciona
           </button>
-          <button className="bg-none border-none text-[#dad4c8] text-[1.15rem] cursor-pointer font-medium transition-opacity duration-300 hover:opacity-70">
+          <button className="bg-none border-none text-[#dad4c8] text-[1.15rem] cursor-pointer font-medium transition-opacity duration-300 hover:opacity-70"
+          onClick={() => navigate("/grupos")}
+          >
             Grupos
           </button>
         </div>
