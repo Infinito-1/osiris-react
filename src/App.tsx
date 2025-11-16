@@ -14,6 +14,7 @@ import EmpreendedorForm from "./pages/cadastro/empreendedorform";
 import EstudantesForm from "./pages/cadastro/estudantesform";
 import DocenteForm from "./pages/cadastro/docenteform";
 import CoordenadorForm from "./pages/cadastro/coordenadorform";
+import Projeto from "./pages/projeto/Projeto";
 
 function App() {
   return (
@@ -38,6 +39,7 @@ function App() {
             <Route path="/cadastro/estudante" element={<EstudantesForm />} />
             <Route path="/cadastro/docente" element={<DocenteForm />} />
             <Route path="/cadastro/coordenador" element={<CoordenadorForm />} />
+            <Route path="/projeto" element={<Projeto />} />
           </Routes>
         </div>
         <Footer />
