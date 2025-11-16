@@ -2,9 +2,9 @@ import Prof from "../../assets/img/login/prof.png";
 
 function DocenteForm() {
   return (
-    <section className="flex flex-col items-center mt-[60px] font-inter">
+    <section className="flex flex-col items-center font-inter bg-[#F1F7EE]">
       {/* TÍTULO E SUBTÍTULO */}
-      <h1 className="text-[#021926] text-[2.5rem] font-semibold mb-2">
+      <h1 className="text-[#021926] text-[2.5rem] font-semibold mb-2 mt-[60px]">
         Osíris
       </h1>
 
@@ -29,7 +29,7 @@ function DocenteForm() {
           <img
             src={Prof}
             alt="Ícone Docente"
-            className="w-[70px] h-[70px] rounded-full p-[15px] bg-[#021926]"
+            className="w-[90px] h-[90px] rounded-full p-[15px] bg-[#021926]"
           />
         </div>
 

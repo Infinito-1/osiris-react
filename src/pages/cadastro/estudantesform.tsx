@@ -3,9 +3,9 @@ import Hat from "../../assets/img/login/hat.png";
 function EstudantesForm() {
   return (
     <>
-      <section className="login-section flex flex-col items-center mt-[60px] font-inter text-[#021926]">
+      <section className="login-section flex flex-col items-center font-inter text-[#021926] bg-[#F1F7EE]">
         {/* Título */}
-        <h1 className="text-[2.5rem] font-semibold mb-[8px]">Osíris</h1>
+        <h1 className="text-[2.5rem] font-semibold mb-[8px] mt-[60px]">Osíris</h1>
         <p className="text-[1.1rem] font-medium mb-[30px]">
           Acesse sua conta ou crie uma nova
         </p>
@@ -30,11 +30,11 @@ function EstudantesForm() {
               src={Hat}
               alt="Ícone Estudante"
               className="
-                w-[70px]
-                h-[70px]
+                w-[90px]
+                h-[90px]
                 rounded-full
                 p-[15px]
-                bg-[#6b7c85]
+                bg-[#5F747F]
               "
             />
           </div>

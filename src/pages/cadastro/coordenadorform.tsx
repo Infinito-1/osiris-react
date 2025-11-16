@@ -2,9 +2,9 @@ import Book from "../../assets/img/login/book.png";
 
 function CoordenadorForm() {
   return (
-    <section className="flex flex-col items-center mt-[60px] px-4 font-inter">
+    <section className="flex flex-col items-center px-4 font-inter  bg-[#F1F7EE]">
       {/* TÍTULO E SUBTÍTULO COM BOLD SUAVE */}
-      <h1 className="text-[#021926] text-[2.4rem] font-semibold mb-2">
+      <h1 className="text-[#021926] text-[2.4rem] font-semibold mb-2 mt-[60px]">
         Osíris
       </h1>
 
@@ -29,7 +29,7 @@ function CoordenadorForm() {
           <img
             src={Book}
             alt="Ícone Coordenador"
-            className="w-[70px] h-[70px] rounded-full p-[15px] bg-[#9fa39e]"
+            className="w-[90px] h-[90px] rounded-full p-[15px] bg-[#9fa39e]"
           />
         </div>
 
