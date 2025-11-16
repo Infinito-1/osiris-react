@@ -10,7 +10,7 @@ export default function RedefinirSenha() {
   };
 
   return (
-    <section className="flex flex-col items-center py-10">
+    <section className="flex flex-col items-center py-10 bg-[#F1F7EE]">
       <h1 className="text-4xl font-bold mb-2">Osíris</h1>
       <p className="text-lg mb-6">Acesse sua conta ou crie uma nova</p>
 
