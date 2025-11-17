@@ -19,7 +19,6 @@ const InfoField: React.FC<InfoFieldProps> = ({ label, value }) => {
 const Projeto: React.FC = () => {
     return (
         <main className="flex flex-col items-center w-full min-h-screen bg-[#F1F7EE] py-10 ">
-            {/* Header com fundo azul */}
             <header className="w-full py-8 text-center mb-10">
                 <h1 className="text-3xl md:text-4xl font-bold">Sistema de Gestão para Clínica Veterinária</h1>
                 <p className="text-lg mt-1"> Amanda Alves / Sistema Web</p>

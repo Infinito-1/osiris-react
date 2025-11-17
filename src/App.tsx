@@ -15,6 +15,8 @@ import EstudantesForm from "./pages/cadastro/estudantesform";
 import DocenteForm from "./pages/cadastro/docenteform";
 import CoordenadorForm from "./pages/cadastro/coordenadorform";
 import Projeto from "./pages/projeto/Projeto";
+import Entrega from "./pages/projeto/Entrega";
+import Status from "./pages/projeto/Status";
 
 function App() {
   return (
@@ -40,6 +42,8 @@ function App() {
             <Route path="/cadastro/docente" element={<DocenteForm />} />
             <Route path="/cadastro/coordenador" element={<CoordenadorForm />} />
             <Route path="/projeto" element={<Projeto />} />
+            <Route path="/entrega" element={<Entrega />} />
+            <Route path="/status" element={<Status />} />
           </Routes>
         </div>
         <Footer />
