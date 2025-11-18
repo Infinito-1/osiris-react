@@ -18,6 +18,7 @@ import Projeto from "./pages/projeto/Projeto";
 import Entrega from "./pages/projeto/Entrega";
 import Status from "./pages/projeto/Status";
 import DashboardAluno from "./pages/usuarios/Aluno";
+import DashboardCoordenador from "./pages/usuarios/Coordenador";
 
 function App() {
   return (
@@ -46,6 +47,7 @@ function App() {
             <Route path="/entrega" element={<Entrega />} />
             <Route path="/status" element={<Status />} />
             <Route path="/aluno" element={<DashboardAluno />} />
+            <Route path="/coordenador" element={<DashboardCoordenador />} />
           </Routes>
         </div>
         <Footer />
