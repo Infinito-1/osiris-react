@@ -239,18 +239,15 @@ const DashboardAluno = () => {
         </p>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Coluna da esquerda */}
           <div className="lg:col-span-2 space-y-8">
             <QuadroAvisos />
             <MeuPortfolio />
           </div>
 
-          {/* Coluna da direita */}
           <div className="space-y-8">
             <MinhasInformacoes />
             <MeuGrupo />
 
-            {/* Botões movidos para fora da seção */}
             <div className="space-y-3">
               <button className="w-full bg-[#021926] text-white py-2 rounded-md hover:bg-[#01121b] transition">
                 Cadastrar Grupo
