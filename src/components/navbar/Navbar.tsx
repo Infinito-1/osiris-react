@@ -18,7 +18,10 @@ function Navbar() {
 
         {/* Centro */}
         <div className="flex items-center gap-[30px]">
-          <button className="bg-none border-none text-[#dad4c8] text-[1.15rem] cursor-pointer font-medium transition-opacity duration-300 hover:opacity-70">
+          <button
+            className="bg-none border-none text-[#dad4c8] text-[1.15rem] cursor-pointer font-medium transition-opacity duration-300 hover:opacity-70"
+            onClick={() => navigate("/aluno")}
+          >
             Projetos
           </button>
           <button className="bg-none border-none text-[#dad4c8] text-[1.15rem] cursor-pointer font-medium transition-opacity duration-300 hover:opacity-70">
