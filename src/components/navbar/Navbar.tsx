@@ -27,7 +27,7 @@ function Navbar() {
             // onClick={() => navigate("/aluno")}
             // onClick={() => navigate("/coordenador")}
             // onClick={() => navigate("/professor")}
-            onClick={() => navigate("/empreendedor")}
+            // onClick={() => navigate("/empreendedor")}
           >
             Projetos
           </button>

@@ -227,9 +227,9 @@ export default function DashboardProfessor() {
         </header>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
-          {/* COLUNA ESQUERDA (Conteúdo Principal) */}
+          {/* COLUNA ESQUERDA */}
           <div className="lg:col-span-2 space-y-6">
-            {/* Sessão: Grupos Orientando */}
+            {/* Sessão Grupos Orientando */}
             <section className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
               <div className="mb-6">
                 <h2 className="text-xl font-bold text-[#021926]">
@@ -258,7 +258,7 @@ export default function DashboardProfessor() {
             </section>
           </div>
 
-          {/* COLUNA DIREITA (Sidebar) */}
+          {/* COLUNA DIREITA */}
           <div className="space-y-6">
             {/* Botão de Ação Principal */}
             <button className="w-full bg-[#782E29] hover:bg-[#632420] text-white py-3 px-4 rounded-md shadow flex items-center justify-center gap-2 transition">

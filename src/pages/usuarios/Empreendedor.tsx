@@ -71,7 +71,7 @@ const TabsNavegacao = () => {
   );
 };
 
-// Card de Demanda (Item da lista)
+// Card de Demanda
 const CardDemanda = () => {
   return (
     <div className="bg-white border border-gray-200 rounded-b-lg rounded-tr-lg p-6 mb-4 shadow-sm first:rounded-tl-none">
@@ -198,7 +198,7 @@ export default function DashboardEmpreendedor() {
         </header>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
-          {/* COLUNA ESQUERDA (Lista de Demandas) */}
+          {/* COLUNA ESQUERDA */}
           <div className="lg:col-span-2">
             <TabsNavegacao />
 
@@ -208,7 +208,7 @@ export default function DashboardEmpreendedor() {
             </div>
           </div>
 
-          {/* COLUNA DIREITA (Sidebar) */}
+          {/* COLUNA DIREITA */}
           <div className="space-y-6">
             <button className="w-full bg-[#550B0B] hover:bg-[#3f0808] text-white py-3 px-4 rounded-md shadow font-medium transition text-center">
               Nova Demanda

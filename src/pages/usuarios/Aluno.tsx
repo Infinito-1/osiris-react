@@ -1,236 +1,311 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
-// 1. Quadro de Avisos
+// --- Ícones SVG - GENÉRICOS, VAMOS UTILIZAR O LUCID POR FAVOR ---
+
+const BellIcon = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="20"
+    height="20"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+    <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+  </svg>
+);
+
+const ChevronLeftIcon = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <path d="m15 18-6-6 6-6" />
+  </svg>
+);
+
+const ChevronRightIcon = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <path d="m9 18 6-6-6-6" />
+  </svg>
+);
+
+const ExternalLinkIcon = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="18"
+    height="18"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className="text-gray-400"
+  >
+    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+    <polyline points="15 3 21 3 21 9"></polyline>
+    <line x1="10" y1="14" x2="21" y2="3"></line>
+  </svg>
+);
+
+const EditIcon = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="14"
+    height="14"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+  </svg>
+);
+
+// --- Componentes Internos ---
+
+// Item de Aviso Individual
+const AvisoItem = ({
+  title,
+  subtitle,
+  date,
+}: {
+  title: string;
+  subtitle: string;
+  date: string;
+}) => (
+  <div className="border border-gray-200 rounded-md p-4 flex justify-between items-start bg-white hover:border-gray-300 transition-colors">
+    <div>
+      <h4 className="font-bold text-gray-800 text-sm mb-1">{title}</h4>
+      <p className="text-gray-600 text-xs">{subtitle}</p>
+    </div>
+    <div className="border border-gray-300 rounded px-2 py-1 text-xs font-medium text-gray-700 whitespace-nowrap">
+      {date}
+    </div>
+  </div>
+);
+
+// Item de Portfólio
+const PortfolioItem = ({
+  title,
+  subtitle,
+  nota,
+  date,
+}: {
+  title: string;
+  subtitle: string;
+  nota: string;
+  date: string;
+}) => (
+  <div className="border border-gray-200 rounded-md p-4 relative hover:border-gray-300 transition-colors bg-white">
+    <div className="absolute top-4 right-4">
+      <ExternalLinkIcon />
+    </div>
+
+    <h4 className="font-bold text-gray-800 text-sm mb-1 pr-8">{title}</h4>
+    <p className="text-gray-600 text-xs mb-3">{subtitle}</p>
+
+    <div className="flex items-center gap-3">
+      <span className="bg-[#782E29] text-white text-[10px] px-3 py-0.5 rounded-full font-medium">
+        Nota: {nota}
+      </span>
+      <span className="text-gray-500 text-xs">{date}</span>
+    </div>
+  </div>
+);
+
+// --- Seções Principais ---
+
 const QuadroAvisos = () => {
-  const avisos = [
-    {
-      title: "Entrega de Projeto",
-      subtitle: "Entrega final: 15/06/2024",
-      date: "19/05/2025",
-    },
-    {
-      title: "Palestra de Tecnologia",
-      subtitle: "Amanhã às 19h no auditório",
-      date: "17/05/2025",
-    },
-    {
-      title: "Cadastro de Grupos",
-      subtitle: "Grupos podem ser formados até 30/05",
-      date: "16/05/2025",
-    },
-  ];
-
   return (
-    <div className="bg-white border border-gray-300 rounded-lg p-6 shadow-md">
-      <div className="flex items-center space-x-2 mb-4">
-        <svg
-          className="w-6 h-6 text-gray-800"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth={2}
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
-          />
-        </svg>
-        <h3 className="text-xl font-semibold text-gray-800">
-          Quadro de avisos
-        </h3>
+    <section className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
+      <div className="flex items-center gap-2 mb-2">
+        <div className="text-[#021926]">
+          <BellIcon />
+        </div>
+        <h3 className="text-lg font-bold text-[#021926]">Quadro de avisos</h3>
       </div>
 
-      <p className="text-sm text-gray-600 mb-6">
+      <p className="text-gray-500 text-sm mb-6">
         Fique por dentro de lembretes e avisos enviados pela coordenação e
         professores.
       </p>
 
-      <div className="space-y-4">
-        {avisos.map((aviso, index) => (
-          <div
-            key={index}
-            className="flex justify-between items-center rounded-md border border-gray-200 p-3"
-          >
-            <div>
-              <p className="font-medium text-gray-800">{aviso.title}</p>
-              <p className="text-sm text-gray-600">{aviso.subtitle}</p>
-            </div>
-            <span className="text-sm bg-gray-100 px-3 py-1 rounded-md text-gray-800">
-              {aviso.date}
-            </span>
-          </div>
-        ))}
+      <div className="space-y-3 mb-6">
+        <AvisoItem
+          title="Entrega de Projeto"
+          subtitle="Entrega final: 15/06/2024"
+          date="19/05/2025"
+        />
+        <AvisoItem
+          title="Palestra de Tecnologia"
+          subtitle="Amanhã às 19h no auditório"
+          date="17/05/2025"
+        />
+        <AvisoItem
+          title="Cadastro de Grupos"
+          subtitle="Grupos podem ser formados até 30/05"
+          date="16/05/2025"
+        />
       </div>
 
-      <div className="flex justify-center items-center mt-6 space-x-6">
-        <button className="text-gray-500 hover:text-gray-700">
-          <svg
-            className="w-6 h-6"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth={2}
-            viewBox="0 0 24 24"
-          >
-            <path d="M15 19l-7-7 7-7" />
-          </svg>
+      {/* Paginação */}
+      <div className="flex justify-center items-center gap-4 text-gray-600">
+        <button className="p-1 hover:bg-gray-100 rounded-full transition">
+          <ChevronLeftIcon />
         </button>
         <span className="font-medium text-lg">1</span>
-        <button className="text-gray-500 hover:text-gray-700">
-          <svg
-            className="w-6 h-6"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth={2}
-            viewBox="0 0 24 24"
-          >
-            <path d="M9 5l7 7-7 7" />
-          </svg>
+        <button className="p-1 hover:bg-gray-100 rounded-full transition">
+          <ChevronRightIcon />
         </button>
       </div>
-    </div>
+    </section>
   );
 };
 
-// 2. Minhas Informações
+const MeuPortfolio = () => {
+  return (
+    <section className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
+      <h3 className="text-lg font-bold text-[#021926] mb-1">Meu Portfólio</h3>
+      <p className="text-gray-500 text-sm mb-6">
+        Demandas disponíveis para novos projetos
+      </p>
+
+      <div className="space-y-4">
+        <PortfolioItem
+          title="Sistema de Gestão para Padaria"
+          subtitle="Sistema web para controle de estoque e vendas"
+          nota="9.5"
+          date="14/05/2025"
+        />
+        <PortfolioItem
+          title="Sistema de Gestão para Padaria"
+          subtitle="Sistema web para controle de estoque e vendas"
+          nota="9.5"
+          date="14/05/2025"
+        />
+        <PortfolioItem
+          title="Sistema de Gestão para Padaria"
+          subtitle="Sistema web para controle de estoque e vendas"
+          nota="9.5"
+          date="14/05/2025"
+        />
+      </div>
+    </section>
+  );
+};
+
 const MinhasInformacoes = () => {
   return (
-    <div className="bg-white border border-gray-300 rounded-lg p-6 shadow-md">
-      <h3 className="text-xl font-semibold text-gray-800 mb-4">
+    <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
+      <h3 className="text-lg font-bold text-[#021926] mb-4">
         Minhas Informações
       </h3>
 
-      <div className="text-sm space-y-3">
-        <p>
-          <span className="font-medium text-gray-700">Nome</span>
-          <br /> João Santos
-        </p>
-        <p>
-          <span className="font-medium text-gray-700">Email</span>
-          <br /> joao.santos@fatec.sp.gov.br
-        </p>
-        <p>
-          <span className="font-medium text-gray-700">RA</span>
-          <br /> 12345678
-        </p>
-        <p>
-          <span className="font-medium text-gray-700">Semestre</span>
-          <br /> 5º Semestre
-        </p>
+      <div className="space-y-4 text-sm mb-6">
+        <div>
+          <p className="text-gray-500 text-xs uppercase font-semibold mb-0.5">
+            Nome
+          </p>
+          <p className="font-medium text-gray-900">João Santos</p>
+        </div>
+
+        <div>
+          <p className="text-gray-500 text-xs uppercase font-semibold mb-0.5">
+            Email
+          </p>
+          <p className="font-medium text-gray-900">
+            joao.santos@fatec.sp.gov.br
+          </p>
+        </div>
+
+        <div>
+          <p className="text-gray-500 text-xs uppercase font-semibold mb-0.5">
+            RA
+          </p>
+          <p className="font-medium text-gray-900">12345678</p>
+        </div>
+
+        <div>
+          <p className="text-gray-500 text-xs uppercase font-semibold mb-0.5">
+            Semestre
+          </p>
+          <p className="font-medium text-gray-900">5º Semestre</p>
+        </div>
       </div>
 
-      <button className="w-full flex items-center justify-center space-x-2 border border-gray-300 py-2 mt-5 rounded-md hover:bg-gray-100 transition">
-        <svg
-          className="w-5 h-5"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth={2}
-          viewBox="0 0 24 24"
-        >
-          <path d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
-        </svg>
-        <span>Editar</span>
+      <button className="w-full border border-gray-300 text-gray-600 py-2 rounded text-sm font-medium hover:bg-gray-50 flex items-center justify-center gap-2 transition">
+        <EditIcon /> Editar
       </button>
     </div>
   );
 };
 
-// 3. Meu Grupo
 const MeuGrupo = () => {
+  const navigate = useNavigate();
   return (
-    <div className="bg-white border border-gray-300 rounded-lg p-6 shadow-md">
-      <h3 className="text-xl font-semibold mb-4 text-gray-800">Meu Grupo</h3>
+    <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
+      <h3 className="text-lg font-bold text-[#021926] mb-4">Meu Grupo</h3>
 
-      <p className="text-sm">
-        <span className="font-medium text-gray-700">Nome do Grupo</span>
-        <br /> Os Fulaninhos
-      </p>
+      <div className="space-y-4 text-sm mb-6">
+        <div>
+          <p className="text-gray-500 text-xs uppercase font-semibold mb-0.5">
+            Nome do Grupo
+          </p>
+          <p className="font-medium text-gray-900">Os Fulaninhos</p>
+        </div>
 
-      <p className="text-sm mt-3">
-        <span className="font-medium text-gray-700">Membros</span>
-        <br /> 4 integrantes
-      </p>
+        <div>
+          <p className="text-gray-500 text-xs uppercase font-semibold mb-0.5">
+            Membros
+          </p>
+          <p className="font-medium text-gray-900">4 integrantes</p>
+        </div>
+      </div>
 
-      <button className="w-full bg-[#782E29] text-white py-2 rounded-md mt-5 hover:bg-[#6a2623] transition">
+      <button
+        className="w-full bg-[#782E29] hover:bg-[#632420] text-white py-3 rounded-md shadow text-sm font-medium transition text-center"
+        onClick={() => navigate("/dashboard_grupo")}
+      >
         Acessar Dashboard do Grupo
       </button>
     </div>
   );
 };
 
-// 4. Meu Portfólio
-const MeuPortfolio = () => {
-  const projetos = [
-    {
-      title: "Sistema de Gestão para Padaria",
-      subtitle: "Sistema web para controle de estoque e vendas",
-      note: "Nota: 9.5",
-      date: "14/05/2025",
-    },
-    {
-      title: "Sistema de Gestão para Padaria",
-      subtitle: "Sistema web para controle de estoque e vendas",
-      note: "Nota: 9.5",
-      date: "14/05/2025",
-    },
-    {
-      title: "Sistema de Gestão para Padaria",
-      subtitle: "Sistema web para controle de estoque e vendas",
-      note: "Nota: 9.5",
-      date: "14/05/2025",
-    },
-  ];
+// --- Componente Principal ---
 
+export default function DashboardAluno() {
   return (
-    <div className="bg-white border border-gray-300 rounded-lg p-6 shadow-md">
-      <h3 className="text-xl font-semibold text-gray-800 mb-1">
-        Meu Portfólio
-      </h3>
-      <p className="text-sm text-gray-600 mb-6">
-        Demandas disponíveis para novos projetos
-      </p>
-
-      <div className="space-y-4">
-        {projetos.map((p, i) => (
-          <div
-            key={i}
-            className="border border-gray-200 rounded-md p-3 flex justify-between items-center"
-          >
-            <div>
-              <p className="font-medium text-gray-800">{p.title}</p>
-              <p className="text-sm text-gray-600">{p.subtitle}</p>
-
-              <div className="flex items-center space-x-2 mt-2">
-                <span className="bg-[#782E29] text-white text-xs px-2 py-0.5 rounded-md">
-                  {p.note}
-                </span>
-                <p className="text-xs text-gray-600">{p.date}</p>
-              </div>
-            </div>
-
-            <button className="text-gray-500 hover:text-gray-700">
-              <svg
-                className="w-6 h-6"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth={2}
-                viewBox="0 0 24 24"
-              >
-                <path d="M9 5l7 7-7 7" />
-              </svg>
-            </button>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-};
-
-// Página Principal
-const DashboardAluno = () => {
-  return (
-    <main className="w-full flex flex-col items-center bg-[#E8F0E2] py-12">
-      <div className="w-11/12 max-w-7xl">
+    <main className="w-full min-h-screen bg-[#E8F0E2] py-10 font-sans">
+      <div className="w-11/12 max-w-6xl mx-auto">
+        {/* Header */}
         <header className="text-center mb-10">
           <h1 className="text-3xl md:text-4xl font-semibold text-[#021926] mb-2">
             Dashboard do Aluno
@@ -240,22 +315,24 @@ const DashboardAluno = () => {
           </p>
         </header>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          <div className="lg:col-span-2 space-y-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+          {/* COLUNA ESQUERDA */}
+          <div className="lg:col-span-2 space-y-6">
             <QuadroAvisos />
             <MeuPortfolio />
           </div>
 
-          <div className="space-y-8">
+          {/* COLUNA DIREITA */}
+          <div className="space-y-6">
             <MinhasInformacoes />
             <MeuGrupo />
 
+            {/* Botões de Ação */}
             <div className="space-y-3">
-              <button className="w-full bg-[#021926] text-white py-2 rounded-md hover:bg-[#01121b] transition">
+              <button className="w-full bg-[#021926] hover:bg-[#0f293a] text-white py-3 rounded-md shadow text-sm font-medium transition text-center">
                 Cadastrar Grupo
               </button>
-
-              <button className="w-full bg-[#782E29] text-white py-2 rounded-md hover:bg-[#6a2623] transition">
+              <button className="w-full bg-[#550B0B] hover:bg-[#3f0808] text-white py-3 rounded-md shadow text-sm font-medium transition text-center">
                 Grupos com vagas em aberto
               </button>
             </div>
@@ -264,6 +341,4 @@ const DashboardAluno = () => {
       </div>
     </main>
   );
-};
-
-export default DashboardAluno;
+}
