@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import logo from "../../assets/img/login/logo.png";
 
 function Navbar() {
   const navigate = useNavigate();
@@ -7,7 +8,10 @@ function Navbar() {
       <nav className="flex justify-between items-center bg-[#782e29] px-[60px] py-[15px]">
         {/* Esquerda */}
         <div className="flex items-center gap-[12px]">
-          <div className="w-[48px] h-[48px] rounded-full bg-white bg-[url('../imgs/logo.png')] bg-center bg-cover bg-no-repeat"></div>
+          <div
+            className="w-[48px] h-[48px] rounded-full bg-center bg-cover bg-no-repeat"
+            style={{ backgroundImage: `url(${logo})` }}
+          ></div>
           <div>
             <h1 className="m-0 text-[1.6rem] font-medium text-[#e9e4da]">
               Osíris
