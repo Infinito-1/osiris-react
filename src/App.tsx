@@ -19,6 +19,7 @@ import Entrega from "./pages/projeto/Entrega";
 import Status from "./pages/projeto/Status";
 import DashboardAluno from "./pages/usuarios/Aluno";
 import DashboardCoordenador from "./pages/usuarios/Coordenador";
+import DashboardProfessor from "./pages/usuarios/Professor";
 
 function App() {
   return (
@@ -48,6 +49,7 @@ function App() {
             <Route path="/status" element={<Status />} />
             <Route path="/aluno" element={<DashboardAluno />} />
             <Route path="/coordenador" element={<DashboardCoordenador />} />
+            <Route path="/professor" element={<DashboardProfessor />} />
           </Routes>
         </div>
         <Footer />

@@ -24,7 +24,9 @@ function Navbar() {
         <div className="flex items-center gap-[30px]">
           <button
             className="bg-none border-none text-[#dad4c8] text-[1.15rem] cursor-pointer font-medium transition-opacity duration-300 hover:opacity-70"
-            // onClick={() => navigate("/aluno")} onClick={() => navigate("/coordenador")}
+            // onClick={() => navigate("/aluno")}
+            // onClick={() => navigate("/coordenador")}
+            // onClick={() => navigate("/professor")}
           >
             Projetos
           </button>
