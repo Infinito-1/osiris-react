@@ -231,12 +231,14 @@ const DashboardAluno = () => {
   return (
     <main className="w-full flex flex-col items-center bg-[#E8F0E2] py-12">
       <div className="w-11/12 max-w-7xl">
-        <h1 className="text-4xl font-bold text-center text-gray-900 mb-1">
-          Dashboard do Aluno
-        </h1>
-        <p className="text-gray-600 text-center mb-10">
-          Acompanhe seu progresso e gerencie suas informações
-        </p>
+        <header className="text-center mb-10">
+          <h1 className="text-3xl md:text-4xl font-semibold text-[#021926] mb-2">
+            Dashboard do Aluno
+          </h1>
+          <p className="text-gray-600 font-light">
+            Acompanhe seu progresso e gerencie suas informações
+          </p>
+        </header>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <div className="lg:col-span-2 space-y-8">

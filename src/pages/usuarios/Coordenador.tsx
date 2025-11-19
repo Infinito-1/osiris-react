@@ -128,13 +128,14 @@ export default function DashboardCoordenador() {
   return (
     <main className="w-full flex flex-col items-center bg-[#E8F0E2] py-12">
       <div className="w-11/12 max-w-7xl">
-        <h1 className="text-4xl font-bold text-center text-gray-900 mb-1">
-          Dashboard do Coordenador
-        </h1>
-
-        <p className="text-center text-gray-700 mb-8">
-          Gerencie demandas e acompanhe projetos do curso
-        </p>
+        <header className="text-center mb-10">
+          <h1 className="text-3xl md:text-4xl font-semibold text-[#021926] mb-2">
+            Dashboard do Coordenador
+          </h1>
+          <p className="text-gray-600 font-light">
+            Gerencie demandas e acompanhe projetos do curso
+          </p>
+        </header>
 
         {/* <div className="lg:col-span-2">
           <TabsNavegacao />
