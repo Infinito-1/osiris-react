@@ -42,7 +42,7 @@ const TabsNavegacao = () => {
 
       <button
         className="flex-1 py-2 text-white font-medium text-sm hover:bg-white/10 rounded transition-colors"
-        onClick={() => navigate("/empreendedor/em-andamento")}
+        onClick={() => navigate("/empreendedorEmAndamento")}
       >
         Em Andamento
       </button>

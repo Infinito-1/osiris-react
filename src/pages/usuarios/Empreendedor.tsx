@@ -62,7 +62,10 @@ const TabsNavegacao = () => {
         Demandas Pendentes
       </button>
 
-      <button className="flex-1 py-2 text-gray-200 font-medium text-sm hover:bg-white/10 rounded transition">
+      <button
+        className="flex-1 py-2 text-gray-200 font-medium text-sm hover:bg-white/10 rounded transition"
+        onClick={() => navigate("/empreendedorEmAndamento")}
+      >
         Em Andamento
       </button>
 
@@ -170,7 +173,7 @@ const Estatisticas = () => {
 
       {/* Barra Marrom/Rosada */}
       <div className="w-full py-2 bg-[#BC9595] text-gray-900 rounded flex justify-between px-4 font-medium text-sm">
-        <span>Demandas Pendentes</span> <span>3</span>
+        <span>Demandas Abertas</span> <span>3</span>
       </div>
 
       {/* Barra Cinza Escuro */}
