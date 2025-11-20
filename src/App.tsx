@@ -25,6 +25,7 @@ import CoordenadorEmAndamento from "./pages/usuarios/CoordenadorEmAndamento";
 import CoordenadorConcluidas from "./pages/usuarios/CoordenadorConcluidas";
 import EmpreendedorConcluidas from "./pages/usuarios/EmpreendedorConcluidas";
 import EmpreendedorEmAndamento from "./pages/usuarios/EmpreendedorEmAndamento";
+import ProfessorLembrete from "./pages/usuarios/ProfessorLembrete";
 
 function App() {
   return (
@@ -72,6 +73,7 @@ function App() {
               path="/EmpreendedorEmAndamento"
               element={<EmpreendedorEmAndamento />}
             />
+            <Route path="/ProfessorLembrete" element={<ProfessorLembrete />} />
           </Routes>
         </div>
         <Footer />

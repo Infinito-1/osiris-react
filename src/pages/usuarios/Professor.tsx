@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 // Ícone de Enviar gerado de modo genérico por enquanto, TODO: substituir por icone do lucid.
 const SendIcon = () => (
@@ -167,11 +168,11 @@ const Estatisticas = () => {
         Estatísticas Gerais
       </h3>
 
-      <div className="w-full py-2 bg-[#B88A8A] text-[#3E1F1F] rounded flex justify-between px-4 font-medium text-sm">
+      <div className="w-full py-2 bg-[#B88A8A] text-gray-900 rounded flex justify-between px-4 font-medium text-sm">
         <span>Grupos Orientando</span> <span>2</span>
       </div>
 
-      <div className="w-full py-2 bg-[#6F7C85] text-white rounded flex justify-between px-4 font-medium text-sm">
+      <div className="w-full py-2 bg-[#6F7C85] text-gray-900 rounded flex justify-between px-4 font-medium text-sm">
         <span>Entregas Pendentes</span> <span>1</span>
       </div>
 
@@ -213,6 +214,7 @@ const Lembretes = () => {
 };
 
 export default function DashboardProfessor() {
+  const navigate = useNavigate();
   return (
     <main className="w-full min-h-screen bg-[#E8F0E2] py-10 font-sans">
       <div className="w-11/12 max-w-6xl mx-auto">
@@ -261,7 +263,10 @@ export default function DashboardProfessor() {
           {/* COLUNA DIREITA */}
           <div className="space-y-6">
             {/* Botão de Ação Principal */}
-            <button className="w-full bg-[#782E29] hover:bg-[#632420] text-white py-3 px-4 rounded-md shadow flex items-center justify-center gap-2 transition">
+            <button
+              className="w-full bg-[#782E29] hover:bg-[#632420] text-white py-3 px-4 rounded-md shadow flex items-center justify-center gap-2 transition"
+              onClick={() => navigate("/professorLembrete")}
+            >
               <SendIcon />
               <span className="font-medium">Enviar Lembrete</span>
             </button>
