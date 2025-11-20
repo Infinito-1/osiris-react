@@ -21,6 +21,7 @@ import DashboardAluno from "./pages/usuarios/Aluno";
 import DashboardCoordenador from "./pages/usuarios/Coordenador";
 import DashboardProfessor from "./pages/usuarios/Professor";
 import DashboardEmpreendedor from "./pages/usuarios/Empreendedor";
+import CoordenadorEmAndamento from "./pages/usuarios/CoordenadorEmAndamento";
 
 function App() {
   return (
@@ -52,6 +53,10 @@ function App() {
             <Route path="/coordenador" element={<DashboardCoordenador />} />
             <Route path="/professor" element={<DashboardProfessor />} />
             <Route path="/empreendedor" element={<DashboardEmpreendedor />} />
+            <Route
+              path="/CoordenadorEmAndamento"
+              element={<CoordenadorEmAndamento />}
+            />
           </Routes>
         </div>
         <Footer />

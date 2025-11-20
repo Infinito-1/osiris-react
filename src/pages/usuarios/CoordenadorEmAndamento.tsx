@@ -1,35 +1,35 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-// --- Componentes de UI - Genéricos ---
+// --- Componentes de UI Reutilizáveis ---
 
-// Badge de Status
+// Badge de Status (Marrom escuro conforme imagem)
 const StatusBadge = ({ text }: { text: string }) => (
-  <span className="border border-gray-300 text-gray-600 text-[10px] px-3 py-1 rounded-full font-medium uppercase tracking-wide bg-white">
+  <span className="bg-[#3E1F1F] text-white text-[10px] px-3 py-1 rounded-full font-medium uppercase tracking-wide">
     {text}
   </span>
 );
 
-// Tag para categorias
-const Tag = ({ text }: { text: string }) => (
-  <span className="bg-[#021926] text-white text-[10px] px-3 py-1 rounded-full font-medium">
+// Badge de Complexidade (Marrom avermelhado)
+const ComplexityBadge = ({ text }: { text: string }) => (
+  <span className="bg-[#8B3A3A] text-white text-[10px] px-4 py-1 rounded-full font-medium">
     {text}
   </span>
 );
 
-// Barra de Abas
+// Barra de Abas (Aba "Em Andamento" Ativa)
 const TabsNavegacao = () => {
   const navigate = useNavigate();
   return (
-    <div className="flex w-full bg-[#A7ACA6] rounded-md p-1 shadow-sm">
-      <button className="flex-1 py-2 bg-white text-gray-900 rounded-md font-medium shadow-sm text-sm transition-all">
+    <div className="flex w-full bg-[#9FA39E] rounded-md p-1 shadow-sm">
+      <button
+        className="flex-1 py-2 text-white font-medium text-sm hover:bg-white/10 rounded transition-colors"
+        onClick={() => navigate("/coordenador")}
+      >
         Demandas Pendentes
       </button>
 
-      <button
-        className="flex-1 py-2 text-white font-medium text-sm hover:bg-white/10 rounded transition-colors"
-        onClick={() => navigate("/CoordenadorEmAndamento")}
-      >
+      <button className="flex-1 py-2 bg-white text-gray-900 rounded-md font-medium shadow-sm text-sm transition-all">
         Em Andamento
       </button>
 
@@ -40,49 +40,53 @@ const TabsNavegacao = () => {
   );
 };
 
-// --- Cards Principais ---
+// --- Card Principal (Layout Em Andamento) ---
 
-const CardDemanda = () => {
+const CardAndamento = () => {
   return (
-    <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm mb-4 hover:border-gray-300 transition-colors">
-      {/* Cabeçalho do Card */}
-      <div className="flex justify-between items-start mb-2">
+    <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm mb-4">
+      {/* Cabeçalho */}
+      <div className="flex justify-between items-start mb-1">
         <h3 className="text-xl font-bold text-gray-900">
           App de Gestão de Academia
         </h3>
-        <StatusBadge text="Pendente" />
+        <StatusBadge text="Em Andamento" />
       </div>
 
-      <p className="text-gray-600 text-sm mb-5">
+      <p className="text-gray-600 text-sm mb-6">
         Aplicativo para controle de treinos e frequência de alunos
       </p>
 
-      {/* Grid de Informações*/}
-      <div className="grid grid-cols-2 gap-4 mb-5">
+      {/* Grid de Detalhes (Complexidade e Semestre) */}
+      <div className="flex gap-12 mb-6">
         <div>
-          <p className="text-gray-500 text-xs uppercase font-semibold mb-0.5">
-            Empreendedor
-          </p>
-          <p className="font-medium text-gray-900 text-sm">Raquel Queiroz</p>
+          <p className="text-gray-500 text-sm font-medium mb-2">Complexidade</p>
+          <ComplexityBadge text="Intermediário" />
         </div>
 
         <div>
-          <p className="text-gray-500 text-xs uppercase font-semibold mb-0.5">
-            Empresa
-          </p>
-          <p className="font-medium text-gray-900 text-sm">Super Fit</p>
+          <p className="text-gray-500 text-sm font-medium mb-1">Semestre</p>
+          <p className="font-bold text-gray-900 text-lg">5º</p>
         </div>
       </div>
 
-      {/* Rodapé do Card */}
-      <div className="flex items-center gap-3 mb-6">
-        <Tag text="App Mobile" />
-        <span className="text-xs text-gray-500">Submetido em: 18/05/2024</span>
+      {/* Barra de Progresso */}
+      <div className="mb-8">
+        <p className="text-gray-900 font-bold text-sm mb-2">Progresso</p>
+        <div className="flex items-center gap-3">
+          <div className="flex-1 h-1.5 bg-gray-200 rounded-full overflow-hidden">
+            <div
+              className="h-full bg-[#021926] rounded-full"
+              style={{ width: "65%" }}
+            />
+          </div>
+          <span className="text-xs text-gray-600 font-medium">65%</span>
+        </div>
       </div>
 
-      {/* Botão de Ação */}
-      <button className="w-full bg-[#782E29] hover:bg-[#5e231f] text-white py-2.5 rounded-md font-medium text-sm transition-colors shadow-sm">
-        Analisar e Classificar
+      {/* Botão Outline */}
+      <button className="w-full bg-white border border-gray-400 text-gray-900 py-2.5 rounded-md font-bold text-sm hover:bg-gray-50 transition-colors">
+        Ver Detalhes Completos
       </button>
     </div>
   );
@@ -102,7 +106,7 @@ const MinhasInformacoes = () => {
           <p className="text-gray-500 text-xs uppercase font-semibold mb-0.5">
             Nome
           </p>
-          <p className="font-medium text-gray-900">Professora Bruna</p>
+          <p className="font-medium text-gray-900">Coordenador(a) Bruna</p>
         </div>
 
         <div>
@@ -130,18 +134,18 @@ const EstatisticasGerais = () => {
         Estatísticas Gerais
       </h3>
 
-      {/* Barra Pendentes */}
+      {/* Barra Marrom/Rosada */}
       <div className="w-full py-2 bg-[#BC9595] text-gray-900 rounded flex justify-between px-4 font-medium text-sm">
         <span>Demandas Pendentes</span> <span>3</span>
       </div>
 
-      {/* Barra em Andamento */}
+      {/* Barra Cinza Escuro */}
       <div className="w-full py-2 bg-[#7D888F] text-gray-900 rounded flex justify-between px-4 font-medium text-sm">
         <span>Em Andamento</span> <span>3</span>
       </div>
 
-      {/* Barra Concluído */}
-      <div className="w-full py-2 bg-[#A6ACB1] text-gray-900 rounded flex justify-between px-4 font-medium text-sm box-border">
+      {/* Barra Cinza */}
+      <div className="w-full py-2 bg-[#A6ACB1] text-gray-900 rounded flex justify-between px-4 font-medium text-sm">
         <span>Concluído</span> <span>3</span>
       </div>
     </div>
@@ -166,7 +170,7 @@ const Relatorios = () => {
 
 // --- Componente Principal ---
 
-export default function DashboardCoordenador() {
+export default function CoordenadorEmAndamento() {
   return (
     <main className="w-full min-h-screen bg-[#E8F0E2] py-10 font-sans">
       <div className="w-11/12 max-w-6xl mx-auto">
@@ -185,10 +189,9 @@ export default function DashboardCoordenador() {
           <div className="lg:col-span-2">
             <TabsNavegacao />
 
+            {/* Lista de Cards com espaçamento superior */}
             <div className="mt-6">
-              <CardDemanda />
-              <CardDemanda />
-              <CardDemanda />
+              <CardAndamento />
             </div>
           </div>
 
