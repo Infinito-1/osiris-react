@@ -26,7 +26,7 @@ function Navbar() {
             className="bg-none border-none text-[#dad4c8] text-[1.15rem] cursor-pointer font-medium transition-opacity duration-300 hover:opacity-70"
             // onClick={() => navigate("/aluno")}
             // onClick={() => navigate("/coordenador")}
-            onClick={() => navigate("/professor")}
+            // onClick={() => navigate("/professor")}
             // onClick={() => navigate("/empreendedor")}
           >
             Projetos

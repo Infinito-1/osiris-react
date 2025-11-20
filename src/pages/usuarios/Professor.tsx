@@ -72,6 +72,7 @@ const CardGrupoInterno = () => {
 
 // Card Interno de Projeto Entregue - Tipo 1 (Com avaliação pendente)
 const CardProjetoPendente = () => {
+  const navigate = useNavigate();
   return (
     <div className="bg-white border border-gray-200 rounded-lg p-5 mb-4 shadow-sm">
       <div className="flex justify-between items-start mb-2">
@@ -91,7 +92,10 @@ const CardProjetoPendente = () => {
         <button className="flex-1 bg-white border border-gray-300 text-gray-700 py-2 rounded text-sm font-medium hover:bg-gray-50 transition">
           Visualizar Projeto
         </button>
-        <button className="flex-1 bg-[#782E29] border border-[#782E29] text-white py-2 rounded text-sm font-medium hover:bg-[#6a2623] transition shadow-sm">
+        <button
+          className="flex-1 bg-[#782E29] border border-[#782E29] text-white py-2 rounded text-sm font-medium hover:bg-[#6a2623] transition shadow-sm"
+          onClick={() => navigate("/professorAvaliar")}
+        >
           Avaliar
         </button>
       </div>
@@ -245,7 +249,7 @@ export default function DashboardProfessor() {
               <CardGrupoInterno />
             </section>
 
-            {/* Sessão: Projetos Entregues */}
+            {/* Projetos Entregues */}
             <section className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
               <div className="mb-6">
                 <h2 className="text-xl font-bold text-[#021926]">
