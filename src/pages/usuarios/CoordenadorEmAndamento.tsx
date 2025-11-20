@@ -3,21 +3,21 @@ import { useNavigate } from "react-router-dom";
 
 // --- Componentes de UI Reutilizáveis ---
 
-// Badge de Status (Marrom escuro conforme imagem)
+// Badge de Status
 const StatusBadge = ({ text }: { text: string }) => (
-  <span className="bg-[#3E1F1F] text-white text-[10px] px-3 py-1 rounded-full font-medium uppercase tracking-wide">
+  <span className="bg-[#782E29] text-white text-[10px] px-3 py-1 rounded-full font-medium uppercase tracking-wide">
     {text}
   </span>
 );
 
-// Badge de Complexidade (Marrom avermelhado)
+// Badge de Complexidade
 const ComplexityBadge = ({ text }: { text: string }) => (
   <span className="bg-[#8B3A3A] text-white text-[10px] px-4 py-1 rounded-full font-medium">
     {text}
   </span>
 );
 
-// Barra de Abas (Aba "Em Andamento" Ativa)
+// Barra de Abas
 const TabsNavegacao = () => {
   const navigate = useNavigate();
   return (
@@ -33,14 +33,17 @@ const TabsNavegacao = () => {
         Em Andamento
       </button>
 
-      <button className="flex-1 py-2 text-white font-medium text-sm hover:bg-white/10 rounded transition-colors">
+      <button
+        className="flex-1 py-2 text-white font-medium text-sm hover:bg-white/10 rounded transition-colors"
+        onClick={() => navigate("/CoordenadorConcluidas")}
+      >
         Concluídos
       </button>
     </div>
   );
 };
 
-// --- Card Principal (Layout Em Andamento) ---
+// --- Card Principal ---
 
 const CardAndamento = () => {
   return (
@@ -57,7 +60,7 @@ const CardAndamento = () => {
         Aplicativo para controle de treinos e frequência de alunos
       </p>
 
-      {/* Grid de Detalhes (Complexidade e Semestre) */}
+      {/* Grid de Detalhes */}
       <div className="flex gap-12 mb-6">
         <div>
           <p className="text-gray-500 text-sm font-medium mb-2">Complexidade</p>
@@ -189,13 +192,12 @@ export default function CoordenadorEmAndamento() {
           <div className="lg:col-span-2">
             <TabsNavegacao />
 
-            {/* Lista de Cards com espaçamento superior */}
             <div className="mt-6">
               <CardAndamento />
             </div>
           </div>
 
-          {/* COLUNA DIREITA (Sidebar) */}
+          {/* COLUNA DIREITA */}
           <div className="space-y-6">
             <MinhasInformacoes />
             <EstatisticasGerais />
