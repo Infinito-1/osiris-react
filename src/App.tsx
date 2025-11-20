@@ -23,6 +23,7 @@ import DashboardProfessor from "./pages/usuarios/Professor";
 import DashboardEmpreendedor from "./pages/usuarios/Empreendedor";
 import CoordenadorEmAndamento from "./pages/usuarios/CoordenadorEmAndamento";
 import CoordenadorConcluidas from "./pages/usuarios/CoordenadorConcluidas";
+import EmpreendedorConcluidas from "./pages/usuarios/EmpreendedorConcluidas";
 
 function App() {
   return (
@@ -61,6 +62,10 @@ function App() {
             <Route
               path="/CoordenadorConcluidas"
               element={<CoordenadorConcluidas />}
+            />
+            <Route
+              path="/EmpreendedorConcluidas"
+              element={<EmpreendedorConcluidas />}
             />
           </Routes>
         </div>

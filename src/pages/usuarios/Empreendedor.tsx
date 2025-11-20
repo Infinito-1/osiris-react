@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 // --- Ícones SVG - gerados de modo genérico. TODO: Trocar por icones do lucid ---
 
@@ -54,6 +55,7 @@ const Tag = ({ text }: { text: string }) => (
 
 // Componente de Barra de Abas
 const TabsNavegacao = () => {
+  const navigate = useNavigate();
   return (
     <div className="flex w-full bg-[#A7ACA6] rounded-md p-1">
       <button className="flex-1 py-2 bg-white text-gray-800 rounded-md font-medium shadow-sm text-sm">
@@ -64,7 +66,10 @@ const TabsNavegacao = () => {
         Em Andamento
       </button>
 
-      <button className="flex-1 py-2 text-gray-200 font-medium text-sm hover:bg-white/10 rounded transition">
+      <button
+        className="flex-1 py-2 text-gray-200 font-medium text-sm hover:bg-white/10 rounded transition"
+        onClick={() => navigate("/empreendedorConcluidas")}
+      >
         Concluídos
       </button>
     </div>
@@ -163,18 +168,18 @@ const Estatisticas = () => {
     <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm space-y-3">
       <h3 className="text-lg font-bold text-gray-900 mb-2">Estatísticas</h3>
 
-      {/* Barra Marrom (Demandas Abertas) */}
-      <div className="w-full py-2 bg-[#BC9595] text-[#3E1F1F] rounded flex justify-between px-4 font-medium text-sm">
-        <span>Demandas Abertas</span> <span>3</span>
+      {/* Barra Marrom/Rosada */}
+      <div className="w-full py-2 bg-[#BC9595] text-gray-900 rounded flex justify-between px-4 font-medium text-sm">
+        <span>Demandas Pendentes</span> <span>3</span>
       </div>
 
-      {/* Barra Cinza Escuro (Em Andamento) */}
-      <div className="w-full py-2 bg-[#7D888F] text-white rounded flex justify-between px-4 font-medium text-sm">
+      {/* Barra Cinza Escuro */}
+      <div className="w-full py-2 bg-[#7D888F] text-gray-900 rounded flex justify-between px-4 font-medium text-sm">
         <span>Em Andamento</span> <span>3</span>
       </div>
 
-      {/* Barra Cinza Claro (Concluído) */}
-      <div className="w-full py-2 bg-[#A6ACB1] text-gray-800 rounded flex justify-between px-4 font-medium text-sm">
+      {/* Barra Cinza */}
+      <div className="w-full py-2 bg-[#A6ACB1] text-gray-900 rounded flex justify-between px-4 font-medium text-sm">
         <span>Concluído</span> <span>3</span>
       </div>
     </div>
