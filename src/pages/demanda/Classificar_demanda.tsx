@@ -1,70 +1,120 @@
-function Classificar_demanda() {
-  return ( 
-    <>
-        <section className="login-section">
-        
+import React from 'react';
 
-        <div className="login-box" id="loginBox">
-            <div className="login-header">
-            <h2>ClassNameificação da demanda</h2>
-            </div>
-
-            <div className="form-group">
-            <label for="email">Nome da demanda/ projeto a ser desenvolvido</label>
-            <input type="text" placeholder="Desenvolvimento de sistema web para gestão completa de clínica veterinária, incluindo cadastro de pets, agendamento de consultas, prontuário eletrônico e controle financeiro. Necessário experiência com banco de dados. "     >
-            </div>
-
-            <div className="form-group">
-            <label for="senha">Descrição. Aqui você poderá nos detalhar quais são as suas necessidades</label>
-            <input type="text" placeholder="1° semestre | 2° semestre | 3° semestre......">
-            </div>
-            <div className="form-group">
-            <label for="senha">Descrição breve sobre quais os requisitos exigidos para esse Projeto</label>
-            <input type="password" id="senha" />
-            </div>
-            <div className="form-group">
-            <label for="email">Tipo</label>
-            <input type="text" placeholder="Site | Mobile | Outro:">
-            </div>
-
-            <div className="form-group">
-            <label for="senha">Aceita proposta de mudança no tipo?</label>
-            <input type="text" placeholder="Básico | Intermediário | Dificil">
-            </div>
-
-            <button className="login-button">publicar</button>
-        </div>
-
-        <div className="register-box" id="registerBox">
-            <div className="login-header">
-            <img src="../../assets/img/login/PersonPlus.png" alt="Ícone de cadastro" />
-            <h2>Criar Conta</h2>
-            </div>
-
-            <a href="./forms/empreendedorform.html">
-            <button className="register-button empreendedor" id="btnEmpreendedor">
-                Empreendedor
-            </button>
-            </a>
-            <a href="./forms/estudantesform.html">
-            <button className="register-button estudante" id="btnEstudante">
-                Estudante
-            </button>
-            </a>
-            <a href="./forms/docenteform.html">
-            <button className="register-button docente" id="btnDocente">
-                Docente
-            </button>
-            </a>
-            <a href="./forms/coordenadorform.html">
-            <button className="register-button coordenador" id="btnCoordenador">
-                Coordenador
-            </button>
-            </a>
-        </div>
-        </section>
-    </>
-   )
+// Componente para um campo de formulário com label e input/textarea
+interface FormFieldProps {
+    label: string;
+    id: string;
+    type: 'text' | 'textarea';
+    placeholder?: string;
+    required?: boolean;
+    readOnly?: boolean;
 }
 
-export default Classificar_demanda
+const FormField: React.FC<FormFieldProps> = ({ label, id, type, placeholder, required, readOnly = false }) => {
+    const inputClasses = "w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#782E29]";
+
+    const renderInput = () => {
+        if (type === 'textarea') {
+            return (
+                <textarea
+                    id={id}
+                    name={id}
+                    placeholder={placeholder}
+                    required={required}
+                    rows={4}
+                    readOnly={readOnly}
+                    className={`${inputClasses} resize-none ${readOnly ? 'bg-gray-50 cursor-default' : ''}`}
+                />
+            );
+        }
+        return (
+            <input
+                id={id}
+                type="text"
+                name={id}
+                placeholder={placeholder}
+                required={required}
+                readOnly={readOnly}
+                className={`${inputClasses} ${readOnly ? 'bg-gray-50 cursor-default' : ''}`}
+            />
+        );
+    };
+
+    return (
+        <div className="flex flex-col space-y-1">
+            <label htmlFor={id} className="text-sm font-medium text-gray-700">{label}</label>
+            {renderInput()}
+        </div>
+    );
+};
+
+// Componente Principal da Página de Classificação de Demanda
+const ClassificarDemanda: React.FC = () => {
+    return (
+        <main className="flex justify-center w-full min-h-screen bg-[#F1F7EE] py-10">
+            <div className="w-11/12 max-w-xl bg-white border border-gray-300 rounded-lg p-8 shadow-xl">
+                <h1 className="text-3xl font-bold text-gray-800 text-center mb-8">
+                    Classificação da Demanda
+                </h1>
+
+                <form className="space-y-6">
+                    {/* Descrição sobre a demanda (ReadOnly) */}
+                    <FormField
+                        label="Descrição sobre a demanda"
+                        id="descricaoDemanda"
+                        type="textarea"
+                        placeholder="Desenvolvimento de sistema web para gestão completa de clínica veterinária, incluindo cadastro de pets, agendamento de consultas, prontuário eletrônico e controle financeiro. Necessário experiência com banco de dados."
+                        readOnly
+                    />
+
+                    {/* Indicação de Semestre */}
+                    <FormField
+                        label="Indicação de Semestre"
+                        id="semestre"
+                        type="text"
+                        placeholder="1° semestre | 2° semestre | 3° semestre......"
+                        required
+                    />
+
+                    {/* Descrição breve sobre quais os requisitos exigidos para esse projeto */}
+                    <FormField
+                        label="Descrição breve sobre quais os requisitos exigidos para esse projeto"
+                        id="requisitos"
+                        type="text"
+                        required
+                    />
+
+                    {/* Tipo */}
+                    <FormField
+                        label="Tipo:"
+                        id="tipo"
+                        type="text"
+                        placeholder="Site | Mobile | Outro:"
+                        required
+                    />
+
+                    {/* Grau de dificuldade */}
+                    <FormField
+                        label="Grau de dificuldade"
+                        id="dificuldade"
+                        type="text"
+                        placeholder="Básico | Intermediário | Dificil"
+                        required
+                    />
+
+                    {/* Botão de Publicar */}
+                    <div className="pt-4">
+                        <button
+                            type="submit"
+                            className="w-full bg-[#782E29] text-white py-3 rounded-md text-lg font-medium transition-colors duration-200 hover:bg-[#6d2823] shadow-md"
+                        >
+                            Publicar
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </main>
+    );
+};
+
+export default ClassificarDemanda;

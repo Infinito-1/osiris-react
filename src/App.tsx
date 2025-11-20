@@ -17,6 +17,9 @@ import CoordenadorForm from "./pages/cadastro/coordenadorform";
 import Projeto from "./pages/projeto/Projeto";
 import Entrega from "./pages/projeto/Entrega";
 import Status from "./pages/projeto/Status";
+import CadastrarDemanda from "./pages/demanda/Cadastrar_demanda";
+import ClassificarDemanda from "./pages/demanda/Classificar_demanda";
+import GaleriaDemanda from "./pages/demanda/Demandas";
 
 function App() {
   return (
@@ -44,6 +47,9 @@ function App() {
             <Route path="/projeto" element={<Projeto />} />
             <Route path="/entrega" element={<Entrega />} />
             <Route path="/status" element={<Status />} />
+            <Route path="/cadastrar_demanda" element={<CadastrarDemanda />} />
+            <Route path="/classificar_demanda" element={<ClassificarDemanda />} />
+            <Route path="/demandas" element={<GaleriaDemanda />} />
           </Routes>
         </div>
         <Footer />
