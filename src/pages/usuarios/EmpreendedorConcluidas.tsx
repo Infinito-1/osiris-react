@@ -173,7 +173,6 @@ export default function EmpreendedorConcluidas() {
           <div className="lg:col-span-2">
             <TabsNavegacao />
 
-            {/* Lista de Cards com espaçamento superior */}
             <div className="mt-6">
               <CardConcluido />
             </div>

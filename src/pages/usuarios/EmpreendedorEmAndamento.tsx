@@ -185,7 +185,7 @@ export default function EmpreendedorEmAndamento() {
           <div className="lg:col-span-2">
             <TabsNavegacao />
 
-            {/* Lista de Cards com espaçamento superior */}
+            {/* Lista de Cards */}
             <div className="mt-6">
               <CardEmAndamento />
             </div>

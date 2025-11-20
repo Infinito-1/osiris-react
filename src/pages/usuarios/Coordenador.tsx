@@ -195,7 +195,7 @@ export default function DashboardCoordenador() {
             </div>
           </div>
 
-          {/* COLUNA DIREITA (Sidebar) */}
+          {/* COLUNA DIREITA */}
           <div className="space-y-6">
             <MinhasInformacoes />
             <EstatisticasGerais />
