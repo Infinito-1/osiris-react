@@ -22,7 +22,7 @@ const CardDemanda: React.FC<CardDemandaProps> = ({ titulo, empreendedor, tipo, c
             <p className="text-gray-600 leading-relaxed mb-4 flex-grow">{descricao}</p>
 
             <div className="flex flex-col space-y-2">
-                <button className="w-full bg-red-800 text-white py-2 px-4 rounded-md text-base font-medium transition-colors duration-200 hover:bg-red-900 shadow-md">
+                <button className="w-full bg-[#782E29] text-white py-2 px-4 rounded-md text-base font-medium transition-colors duration-200 hover:bg-[#6d2823] shadow-md">
                     Manifestar Interesse
                 </button>
                 <button className="w-full bg-gray-200 text-gray-800 py-2 px-4 rounded-md text-base font-medium transition-colors duration-200 hover:bg-gray-300 shadow-md">
