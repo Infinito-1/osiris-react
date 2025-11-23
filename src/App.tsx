@@ -20,6 +20,16 @@ import Status from "./pages/projeto/Status";
 import CadastrarDemanda from "./pages/demanda/Cadastrar_demanda";
 import ClassificarDemanda from "./pages/demanda/Classificar_demanda";
 import GaleriaDemanda from "./pages/demanda/Demandas";
+import DashboardAluno from "./pages/usuarios/Aluno";
+import DashboardCoordenador from "./pages/usuarios/Coordenador";
+import DashboardProfessor from "./pages/usuarios/Professor";
+import DashboardEmpreendedor from "./pages/usuarios/Empreendedor";
+import CoordenadorEmAndamento from "./pages/usuarios/CoordenadorEmAndamento";
+import CoordenadorConcluidas from "./pages/usuarios/CoordenadorConcluidas";
+import EmpreendedorConcluidas from "./pages/usuarios/EmpreendedorConcluidas";
+import EmpreendedorEmAndamento from "./pages/usuarios/EmpreendedorEmAndamento";
+import ProfessorLembrete from "./pages/usuarios/ProfessorLembrete";
+import ProfessorAvaliar from "./pages/usuarios/ProfessorAvaliar";
 
 function App() {
   return (
@@ -48,8 +58,33 @@ function App() {
             <Route path="/entrega" element={<Entrega />} />
             <Route path="/status" element={<Status />} />
             <Route path="/cadastrar_demanda" element={<CadastrarDemanda />} />
-            <Route path="/classificar_demanda" element={<ClassificarDemanda />} />
+            <Route
+              path="/classificar_demanda"
+              element={<ClassificarDemanda />}
+            />
             <Route path="/demandas" element={<GaleriaDemanda />} />
+            <Route path="/aluno" element={<DashboardAluno />} />
+            <Route path="/coordenador" element={<DashboardCoordenador />} />
+            <Route path="/professor" element={<DashboardProfessor />} />
+            <Route path="/empreendedor" element={<DashboardEmpreendedor />} />
+            <Route
+              path="/CoordenadorEmAndamento"
+              element={<CoordenadorEmAndamento />}
+            />
+            <Route
+              path="/CoordenadorConcluidas"
+              element={<CoordenadorConcluidas />}
+            />
+            <Route
+              path="/EmpreendedorConcluidas"
+              element={<EmpreendedorConcluidas />}
+            />
+            <Route
+              path="/EmpreendedorEmAndamento"
+              element={<EmpreendedorEmAndamento />}
+            />
+            <Route path="/ProfessorLembrete" element={<ProfessorLembrete />} />
+            <Route path="/ProfessorAvaliar" element={<ProfessorAvaliar />} />
           </Routes>
         </div>
         <Footer />
