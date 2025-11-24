@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { useNavigate } from "react-router-dom";
+
 interface CardDemandaProps {
     titulo: string;
     empreendedor: string;
@@ -9,6 +11,7 @@ interface CardDemandaProps {
 }
 
 const CardDemanda: React.FC<CardDemandaProps> = ({ titulo, empreendedor, tipo, complexidade, descricao }) => {
+    const navigate = useNavigate();
     return (
         <div className="bg-white border border-gray-300 rounded-lg p-6 shadow-md h-full flex flex-col">
             <h3 className="text-xl font-semibold text-gray-800 mb-1">{titulo}</h3>
@@ -25,7 +28,8 @@ const CardDemanda: React.FC<CardDemandaProps> = ({ titulo, empreendedor, tipo, c
                 <button className="w-full bg-[#782E29] text-white py-2 px-4 rounded-md text-base font-medium transition-colors duration-200 hover:bg-[#6d2823] shadow-md">
                     Manifestar Interesse
                 </button>
-                <button className="w-full bg-gray-200 text-gray-800 py-2 px-4 rounded-md text-base font-medium transition-colors duration-200 hover:bg-gray-300 shadow-md">
+                <button className="w-full bg-gray-200 text-gray-800 py-2 px-4 rounded-md text-base font-medium transition-colors duration-200 hover:bg-gray-300 shadow-md"
+                onClick={() => navigate("/projeto")}>
                     Ver Detalhes
                 </button>
             </div>
