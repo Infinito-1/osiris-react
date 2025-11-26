@@ -3,7 +3,6 @@ import foguete from "../../assets/img/icones/foguete.svg"
 import pessoas from "../../assets/img/icones/pessoas.svg"
 import Person from "../../assets/img/icones/Person.svg";
 import Tag from "../../assets/img/icones/Tag.svg";
-import Pessoas from "../../assets/img/icones/pessoas.svg";
 import ExclamationCircle from "../../assets/img/icones/ExclamationCircle.svg";
 import EllipseCadastro from "../../assets/img/icones/Ellipse cadastro.svg";
 import EllipseDescoberta from "../../assets/img/icones/Ellipse descoberta.svg";
