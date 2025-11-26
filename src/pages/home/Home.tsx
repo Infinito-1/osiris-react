@@ -12,12 +12,7 @@ import EllipseCadastro from "../../assets/img/icones/Ellipse cadastro.svg";
 import EllipseDescoberta from "../../assets/img/icones/Ellipse descoberta.svg";
 import EllipseExecucao from "../../assets/img/icones/Ellipse execucao.svg"
 import EllipseConexao from "../../assets/img/icones/Ellipse conexao.svg";
-import EllipseLight from "../../assets/img/icones/Ellipse light.svg";
-import Lightbulb from "../../assets/img/icones/Lightbulb.svg";
-import EllipseMortar from "../../assets/img/icones/Ellipse  mortar.svg";
-import MortarboardFill from "../../assets/img/icones/MortarboardFill.svg";
-import EllipseBook from "../../assets/img/icones/Ellipse book.svg";
-
+import CarrosselHome from "../../components/carrosselHome/CarrosselHome";
 
 function Home() {
   return (
@@ -135,9 +130,9 @@ function Home() {
               </div> 
         </section>
 
-        <section className="text-center">
+        <section className="text-center py-5">
             <h2 className="text-3xl font-semibold">Como Funciona</h2>
-            <p className="text-2xl w-[50%] mx-auto ">Um processo simples e eficiente para conectar demandas reais com estudantes talentosos</p>
+            <p className="text-2xl w-[50%] mx-auto">Um processo simples e eficiente para conectar demandas reais com estudantes talentosos</p>
 
             <div className="mx-[10%] my-10">
 
@@ -169,73 +164,14 @@ function Home() {
             </div>
         </section>
 
-        <section>
-            <h2>Faça Parte da Plataforma</h2>
-            <p>Escolha como deseja participar do Osiris</p>
+        <section className="text-center py-5">
+            <h2 className="text-3xl font-semibold">Faça Parte da Plataforma</h2>
+            <p className="text-2xl w-[50%] mx-auto">Escolha como deseja participar do Osiris</p>
 
-            {/* <!-- CARROSSEL DE CARDS DE Cadastro --> */}
-            <div>
-                <div>
-                    <img src={EllipseLight} />
-                    <img src={Lightbulb} />
-                    <h3>Sou Empreendedor</h3>
-                    <h5>Tenho uma demanda e preciso de uma solução digital</h5>
-
-                    <ul>
-                        <li>Publique seus projetos na plataforma</li>
-                        <li>Receba propostas de grupos qualificados</li>
-                        <li>Acompanhe o desenvolvimento do projeto</li>
-                        <li>Acesso a estudantes especializados</li>
-                    </ul>
-
-                    <button>Cadastrar como Empreendedor</button>
-                </div>
-                <div>
-                    <img src={EllipseMortar} />
-                    <img src={MortarboardFill} />
-                    <h3>Sou Estudante</h3>
-                    <h5>Quero participar de projetos reais e ganhar experiência</h5>
-
-                    <ul>
-                        <li>Trabalhe em projetos reais do mercado</li>
-                        <li>Ganhe experiência prática</li>
-                        <li>Forme uma rede de contatos</li>
-                        <li>Desenvolva seu portfólio</li>
-                    </ul>
-
-                    <button>Cadastrar como Estudante</button>
-                </div>
-                <div>
-                    <img src={EllipseBook} />
-                    <img src={EllipseBook} />
-                    <h3>Sou Coordenador</h3>
-                    <h5>Sou coordenador e preciso verificar a demanda</h5>
-
-                    <ul>
-                        <li>Verifique as demandas</li>
-                        <li>Classifique as propostas</li>
-                        <li>Acompanhe o desenvolvimento do projeto</li>
-                        <li>Dê orientações gerais</li>
-                    </ul>
-
-                    <button>Cadastrar como Coodenador</button>
-                </div>
-                <div>
-                    <img src={EllipseLight} />
-                    <img src={Lightbulb} />
-                    <h3>Sou Professor</h3>
-                    <h5>Preciso acompanhar projetos e orientar alunos</h5>
-
-                    <ul>
-                        <li>Verifique os grupos</li>
-                        <li>Dê orientações</li>
-                        <li>Acompanhe o desenvolvimento dos projetos</li>
-                        <li>Verrique o andamento das atividades</li>
-                    </ul>
-
-                    <button>Cadastrar como Professor</button>
-                </div>
+            <div className="">
+                <CarrosselHome />
             </div>
+            
         </section>
       </main>
     </>
