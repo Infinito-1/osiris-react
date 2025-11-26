@@ -133,7 +133,6 @@ function Home() {
 
   return (
     <>
-      <main className="bg-[#F1F7EE]">
       <main className="w-full min-h-screen bg-[#F1F7EE]">
         <section className="bg-[#021926] p-10">
             <h1 className="text-5xl justify-center font-semibold text-[#DAD4C8] w-[70%] mx-auto text-center">Conectamos <span className="text-[#A33E38]">Empreendedores</span> com <span className="text-[#A33E38]">Estudantes de Tecnologia</span></h1>
