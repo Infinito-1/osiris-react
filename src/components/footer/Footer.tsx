@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 function Footer() {
   return (
     <>
@@ -18,24 +20,21 @@ function Footer() {
 
           <div>
             <h3 className="text-[1.3rem] mb-[10px]">Links Rápidos</h3>
-            <a
-              href="#"
+            <Link to="/demandas"
               className="block leading-[1.6] text-[0.95rem] text-[#dad4c8] no-underline hover:underline"
             >
               Projetos
-            </a>
-            <a
-              href="#"
+            </Link>
+            <Link to="/#como-funciona"
               className="block leading-[1.6] text-[0.95rem] text-[#dad4c8] no-underline hover:underline"
             >
               Como Funciona
-            </a>
-            <a
-              href="#"
+            </Link>
+            <Link to="/grupos"
               className="block leading-[1.6] text-[0.95rem] text-[#dad4c8] no-underline hover:underline"
             >
               Grupos
-            </a>
+            </Link>
           </div>
 
           <div>
