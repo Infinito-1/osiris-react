@@ -10,31 +10,27 @@ import Pessoas from "../../assets/img/icones/pessoas.svg";
 import ExclamationCircle from "../../assets/img/icones/ExclamationCircle.svg";
 import EllipseCadastro from "../../assets/img/icones/Ellipse cadastro.svg";
 import EllipseDescoberta from "../../assets/img/icones/Ellipse descoberta.svg";
+import EllipseExecucao from "../../assets/img/icones/Ellipse execucao.svg"
 import EllipseConexao from "../../assets/img/icones/Ellipse conexao.svg";
-import EllipseLight from "../../assets/img/icones/Ellipse light.svg";
-import Lightbulb from "../../assets/img/icones/Lightbulb.svg";
-import EllipseMortar from "../../assets/img/icones/Ellipse  mortar.svg";
-import MortarboardFill from "../../assets/img/icones/MortarboardFill.svg";
-import EllipseBook from "../../assets/img/icones/Ellipse book.svg";
-
+import CarrosselHome from "../../components/carrosselHome/CarrosselHome";
 
 function Home() {
   return (
     <>
       <main>
         <section className="bg-[#021926] p-10">
-            <h1 className="text-5xl justify-center font-semibold text-[#DAD4C8] mx-55 text-center">Conectamos <span className="text-[#A33E38]">Empreendedores</span> com <span className="text-[#A33E38]">Estudantes de Tecnologia</span></h1>
-            <p className="text-[#DAD4C8] text-center py-5 text-2xl mx-30">Plataforma que une demandas reais de negócios com projetos acadêmicos da Fatec Zona Leste, criando oportunidades de aprendizado prático e soluções inovadoras.</p>
+            <h1 className="text-5xl justify-center font-semibold text-[#DAD4C8] w-[70%] mx-auto text-center">Conectamos <span className="text-[#A33E38]">Empreendedores</span> com <span className="text-[#A33E38]">Estudantes de Tecnologia</span></h1>
+            <p className="text-[#DAD4C8] text-center py-5 text-2xl w-[80%] mx-auto">Plataforma que une demandas reais de negócios com projetos acadêmicos da Fatec Zona Leste, criando oportunidades de aprendizado prático e soluções inovadoras.</p>
 
             <div className="flex gap-5 justify-center">
-                <button className="text-white text-2x1 flex gap-1 bg-[#5F747F] rounded-2xl p-3 items-center">
+                <button className="text-white text-2x1 flex gap-1 bg-[#5F747F] rounded-2xl p-3 items-center cursor-pointer transition-opacity duration-300 hover:opacity-70">
                     <img className="size-6" src={foguete}/> 
                     <p>Cadastrar Projeto</p>
                 </button>
 
-                <button className="bg-[#F1F7EE] text-2x1 flex gap-1 rounded-2xl p-3 items-center">
+                <button className="bg-[#F1F7EE] text-2x1 flex gap-1 rounded-2xl p-3 items-center cursor-pointer transition-opacity duration-300 hover:opacity-70">
                     <img className="size-4" src={pessoas}/> 
-                    <p className="text-[#021926]">Formar Equipe</p>
+                    <p className="text-[#021926]">Formar Equipe </p>
                 </button>
             </div>
         </section>
@@ -134,104 +130,48 @@ function Home() {
               </div> 
         </section>
 
-        <section>
-            <h2>Como Funciona</h2>
-            <p>Um processo simples e eficiente para conectar demandas reais com estudantes talentosos</p>
+        <section className="text-center py-5">
+            <h2 className="text-3xl font-semibold">Como Funciona</h2>
+            <p className="text-2xl w-[50%] mx-auto">Um processo simples e eficiente para conectar demandas reais com estudantes talentosos</p>
 
-            <div>
-                <div>
-                    <img src={EllipseCadastro} />
-                    <h3>1. Cadastro</h3>
-                    <p>Empreendedores se cadastram e descrevem suas demandas com detalhes do projeto</p>
-                </div>
+            <div className="mx-[10%] my-10">
 
-                <div>
-                    <img src={EllipseDescoberta} />
-                    <h3>2. Descoberta</h3>
-                    <p>Estudantes exploram projetos usando filtros para encontrar oportunidades ideais</p>
-                </div>
+                <div className="flex gap-15 justify-center">
+                    <div className="justify-center w-[25%] p-2 hover:scale-110 hover:shadow-2xl">
+                        <img className="size-25 mx-auto" src={EllipseCadastro} />
+                        <h3 className="font-semibold text-lg">1. Cadastro</h3>
+                        <p>Empreendedores se cadastram e descrevem suas demandas com detalhes do projeto</p>
+                    </div>
 
-                <div>
-                    <img src={EllipseConexao} />
-                    <h3>3. Conexão</h3>
-                    <p>Grupos de alunos manifestam interesse e iniciam diálogo com empreendedores</p>
-                </div>
+                    <div className="justify-center w-[25%] hover:scale-110 hover:shadow-2xl">
+                        <img className="size-25 mx-auto" src={EllipseDescoberta} />
+                        <h3 className="font-semibold text-lg">2. Descoberta</h3>
+                        <p>Estudantes exploram projetos usando filtros para encontrar oportunidades ideais</p>
+                    </div>
 
-                <div>
-                    <img src={EllipseCadastro} />
-                    <h3>4. Execução</h3>
-                    <p>Desenvolvimento colaborativo do projeto</p>
+                    <div className="justify-center w-[25%] hover:scale-110 hover:shadow-2xl">
+                        <img className="size-25 mx-auto" src={EllipseConexao} />
+                        <h3 className="font-semibold text-lg">3. Conexão</h3>
+                        <p>Grupos de alunos manifestam interesse e iniciam diálogo com empreendedores</p>
+                    </div>
+
+                    <div className="justify-center w-[25%] hover:scale-110 hover:shadow-2xl">
+                        <img className="size-25 mx-auto" src={EllipseExecucao} />
+                        <h3 className="font-semibold text-lg">4. Execução</h3>
+                        <p>Desenvolvimento colaborativo do projeto</p>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <section>
-            <h2>Faça Parte da Plataforma</h2>
-            <p>Escolha como deseja participar do Osiris</p>
+        <section className="text-center py-5">
+            <h2 className="text-3xl font-semibold">Faça Parte da Plataforma</h2>
+            <p className="text-2xl w-[50%] mx-auto">Escolha como deseja participar do Osiris</p>
 
-            {/* <!-- CARROSSEL DE CARDS DE Cadastro --> */}
-            <div>
-                <div>
-                    <img src={EllipseLight} />
-                    <img src={Lightbulb} />
-                    <h3>Sou Empreendedor</h3>
-                    <h5>Tenho uma demanda e preciso de uma solução digital</h5>
-
-                    <ul>
-                        <li>Publique seus projetos na plataforma</li>
-                        <li>Receba propostas de grupos qualificados</li>
-                        <li>Acompanhe o desenvolvimento do projeto</li>
-                        <li>Acesso a estudantes especializados</li>
-                    </ul>
-
-                    <button>Cadastrar como Empreendedor</button>
-                </div>
-                <div>
-                    <img src={EllipseMortar} />
-                    <img src={MortarboardFill} />
-                    <h3>Sou Estudante</h3>
-                    <h5>Quero participar de projetos reais e ganhar experiência</h5>
-
-                    <ul>
-                        <li>Trabalhe em projetos reais do mercado</li>
-                        <li>Ganhe experiência prática</li>
-                        <li>Forme uma rede de contatos</li>
-                        <li>Desenvolva seu portfólio</li>
-                    </ul>
-
-                    <button>Cadastrar como Estudante</button>
-                </div>
-                <div>
-                    <img src={EllipseBook} />
-                    <img src={EllipseBook} />
-                    <h3>Sou Coordenador</h3>
-                    <h5>Sou coordenador e preciso verificar a demanda</h5>
-
-                    <ul>
-                        <li>Verifique as demandas</li>
-                        <li>Classifique as propostas</li>
-                        <li>Acompanhe o desenvolvimento do projeto</li>
-                        <li>Dê orientações gerais</li>
-                    </ul>
-
-                    <button>Cadastrar como Coodenador</button>
-                </div>
-                <div>
-                    <img src={EllipseLight} />
-                    <img src={Lightbulb} />
-                    <h3>Sou Professor</h3>
-                    <h5>Preciso acompanhar projetos e orientar alunos</h5>
-
-                    <ul>
-                        <li>Verifique os grupos</li>
-                        <li>Dê orientações</li>
-                        <li>Acompanhe o desenvolvimento dos projetos</li>
-                        <li>Verrique o andamento das atividades</li>
-                    </ul>
-
-                    <button>Cadastrar como Professor</button>
-                </div>
+            <div className="">
+                <CarrosselHome />
             </div>
+            
         </section>
       </main>
     </>
