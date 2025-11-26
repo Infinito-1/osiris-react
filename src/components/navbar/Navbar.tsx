@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import logo from "../../assets/img/login/logo.png";
 
 function Navbar() {
@@ -7,7 +7,7 @@ function Navbar() {
     <>
       <nav className="flex justify-between items-center bg-[#782e29] px-[60px] py-[15px]">
         {/* Esquerda */}
-        <div className="flex items-center gap-[12px]">
+        <Link to='/' className="flex items-center gap-[12px] cursor-pointer transition-opacity duration-300 hover:opacity-70">
           <div
             className="w-[48px] h-[48px] rounded-full bg-center bg-cover bg-no-repeat"
             style={{ backgroundImage: `url(${logo})` }}
@@ -18,7 +18,7 @@ function Navbar() {
             </h1>
             <span className="text-[1rem] text-[#bab9b5]">Fatec Zona Leste</span>
           </div>
-        </div>
+        </Link>
 
         {/* Centro */}
         <div className="flex items-center gap-[30px]">
