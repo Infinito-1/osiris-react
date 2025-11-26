@@ -1,9 +1,8 @@
 import React from 'react';
-import Filtros from './Filtros';
 import CardDemanda from './CardDemanda';
-
 import foguete from "../../assets/img/icones/foguete.svg";
 import pessoas from "../../assets/img/icones/pessoas.svg";
+import FiltroDemandas from '../../components/filtro/filtroDemandas';
 
 const GaleriaDemanda: React.FC = () => {
     const demandas = [
@@ -84,7 +83,7 @@ const GaleriaDemanda: React.FC = () => {
             <div className="w-11/12 max-w-7xl mx-auto py-10 grid grid-cols-1 lg:grid-cols-4 gap-8">
                 {/* Coluna de Filtros */}
                 <div className="lg:col-span-1">
-                    <Filtros />
+                    <FiltroDemandas />
                 </div>
 
                 {/* Coluna de Cards */}
