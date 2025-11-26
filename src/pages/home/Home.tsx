@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import foguete from "../../assets/img/icones/foguete.svg"
 import pessoas from "../../assets/img/icones/pessoas.svg"
 import Person from "../../assets/img/icones/Person.svg";
@@ -10,6 +10,7 @@ import EllipseExecucao from "../../assets/img/icones/Ellipse execucao.svg"
 import EllipseConexao from "../../assets/img/icones/Ellipse conexao.svg";
 import CarrosselHome from "../../components/carrosselHome/CarrosselHome";
 import FiltroDemandas from "../../components/filtro/filtroDemandas";
+import { useLocation } from 'react-router-dom';
 
 // Reutilizando as interfaces e dados de exemplo de Demandas.tsx para consistência
 interface Demanda {
@@ -106,6 +107,7 @@ const CardDemandaHome: React.FC<Demanda> = ({ titulo, empreendedor, tipo, comple
 
 
 function Home() {
+    const { hash } = useLocation();
     const [filtros, setFiltros] = useState<Filtros>({
         tipos: [],
         area: 'Todas as áreas',
@@ -130,6 +132,13 @@ function Home() {
             return tipoMatch && complexidadeMatch; // && areaMatch;
         });
     }, [filtros]);
+
+    useEffect(() => {
+    if (hash) {
+      const el = document.querySelector(hash);
+      el?.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [hash]);
 
   return (
     <>
@@ -179,7 +188,7 @@ function Home() {
             </div>
         </section>
 
-        <section className="text-center py-5">
+        <section id="como-funciona" className="text-center py-5">
             <h2 className="text-3xl font-semibold">Como Funciona</h2>
             <p className="text-2xl w-[50%] mx-auto">Um processo simples e eficiente para conectar demandas reais com estudantes talentosos</p>
 

@@ -32,9 +32,9 @@ function Navbar() {
           >
             Projetos
           </button>
-          <button className="bg-none border-none text-[#dad4c8] text-[1.15rem] cursor-pointer font-medium transition-opacity duration-300 hover:opacity-70">
+          <Link to="/#como-funciona" className="bg-none border-none text-[#dad4c8] text-[1.15rem] cursor-pointer font-medium transition-opacity duration-300 hover:opacity-70">
             Como Funciona
-          </button>
+          </Link>
           <button
             className="bg-none border-none text-[#dad4c8] text-[1.15rem] cursor-pointer font-medium transition-opacity duration-300 hover:opacity-70"
             onClick={() => navigate("/grupos")}
