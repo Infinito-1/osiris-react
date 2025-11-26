@@ -1,7 +1,58 @@
+import React, { useState, useEffect } from 'react';
 import Filtro from "../../assets/img/icones/filtro.svg";
 import Lupa from "../../assets/img/icones/lupa.svg";
 
-const FiltroDemandas: React.FC = () => {
+// Definição da interface para o estado dos filtros
+interface Filtros {
+    tipos: string[]; // Tipos de projeto selecionados (checkboxes)
+    area: string; // Área de negócio selecionada (select)
+    complexidade: string; // Complexidade selecionada (radio)
+}
+
+// Definição da interface para as props do componente
+interface FiltroDemandasProps {
+    onFiltroChange: (filtros: Filtros) => void;
+    currentFiltros: Filtros;
+}
+
+const TIPOS_PROJETO = ['Sistema Web', 'Aplicativo Mobile', 'Landing Page', 'E-commerce'];
+const COMPLEXIDADE_NIVEIS = ['Todas', 'Básica', 'Intermediária', 'Avançada'];
+
+const FiltroDemandas: React.FC<FiltroDemandasProps> = ({ onFiltroChange, currentFiltros }) => {
+    const [filtrosInternos, setFiltrosInternos] = useState<Filtros>(currentFiltros);
+
+    // Sincroniza o estado interno com o estado externo (props)
+    useEffect(() => {
+        setFiltrosInternos(currentFiltros);
+    }, [currentFiltros]);
+
+    const handleTipoChange = (tipo: string, isChecked: boolean) => {
+        setFiltrosInternos(prevFiltros => {
+            const novosTipos = isChecked
+                ? [...prevFiltros.tipos, tipo]
+                : prevFiltros.tipos.filter(t => t !== tipo);
+            return { ...prevFiltros, tipos: novosTipos };
+        });
+    };
+
+    const handleAreaChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        setFiltrosInternos(prevFiltros => ({
+            ...prevFiltros,
+            area: event.target.value,
+        }));
+    };
+
+    const handleComplexidadeChange = (level: string) => {
+        setFiltrosInternos(prevFiltros => ({
+            ...prevFiltros,
+            complexidade: level,
+        }));
+    };
+
+    const aplicarFiltros = () => {
+        onFiltroChange(filtrosInternos);
+    };
+
     return (
         <div className="bg-white border border-gray-300 rounded-lg p-6 shadow-md h-150">
           <div className="flex gap-1">
@@ -13,11 +64,14 @@ const FiltroDemandas: React.FC = () => {
             <div className="mb-6">
                 <h4 className="font-medium text-gray-800 mb-2">Tipo de Projeto</h4>
                 <div className="space-y-2">
-                    {['Sistema Web', 'Aplicativo Mobile', 'Landing Page', 'E-commerce'].map((tipo, index) => (
+                    {TIPOS_PROJETO.map((tipo, index) => (
                         <div key={index} className="flex items-center">
-                            <input type="checkbox" id={`tipo-${index}`} 
+                            <input type="checkbox" id={`tipo-${index}`}
                             className="appearance-none h-4 w-4 border-2 border-[#782E29] rounded focus:ring-[#782E29]
-                            transition-all checked:bg-[#782E29] " />
+                            transition-all checked:bg-[#782E29] "
+                            checked={filtrosInternos.tipos.includes(tipo)}
+                            onChange={(e) => handleTipoChange(tipo, e.target.checked)}
+                            />
                             <label htmlFor={`tipo-${index}`} className="ml-2 text-gray-700">{tipo}</label>
                         </div>
                     ))}
@@ -27,7 +81,10 @@ const FiltroDemandas: React.FC = () => {
             {/* Área de Negócio */}
             <div className="mb-6">
                 <h4 className="font-medium text-gray-800 mb-2">Área de Negócio</h4>
-                <select className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#782E29]">
+                <select className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#782E29]"
+                    value={filtrosInternos.area}
+                    onChange={handleAreaChange}
+                >
                     <option>Todas as áreas</option>
                     {/* Adicione outras opções aqui */}
                 </select>
@@ -37,18 +94,24 @@ const FiltroDemandas: React.FC = () => {
             <div className="mb-6">
                 <h4 className="font-medium text-gray-800 mb-2">Complexidade</h4>
                 <div className="space-y-2">
-                    {['Todas', 'Básica', 'Intermediária', 'Avançada'].map((level, index) => (
+                    {COMPLEXIDADE_NIVEIS.map((level, index) => (
                         <div key={index} className="flex items-center">
-                            <input type="radio" id={`level-${index}`} name="complexidade" 
+                            <input type="radio" id={`level-${index}`} name="complexidade"
                             className="appearance-none rounded-full h-4 w-4 border-2 border-[#782E29] focus:ring-[#782E29]
-                            transition-all checked:bg-[#782E29] " />
+                            transition-all checked:bg-[#782E29] "
+                            checked={filtrosInternos.complexidade === level}
+                            onChange={() => handleComplexidadeChange(level)}
+                            />
                             <label htmlFor={`level-${index}`} className="ml-2 text-gray-700">{level}</label>
                         </div>
                     ))}
                 </div>
             </div>
 
-            <button className="w-full flex gap-7 justify-center items-center bg-[#782E29] text-white py-2 px-4 rounded-md text-base font-medium transition-colors duration-200 hover:bg-[#6d2823] shadow-md cursor-pointer">
+            <button
+                className="w-full flex gap-7 justify-center items-center bg-[#782E29] text-white py-2 px-4 rounded-md text-base font-medium transition-colors duration-200 hover:bg-[#6d2823] shadow-md cursor-pointer"
+                onClick={aplicarFiltros}
+            >
                 <img src={Lupa}/>
                 Aplicar Filtros
             </button>
@@ -57,5 +120,3 @@ const FiltroDemandas: React.FC = () => {
 };
 
 export default FiltroDemandas;
-
-
