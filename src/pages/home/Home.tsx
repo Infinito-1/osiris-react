@@ -1,9 +1,5 @@
 import foguete from "../../assets/img/icones/foguete.svg"
 import pessoas from "../../assets/img/icones/pessoas.svg"
-import Filtro from "../../assets/img/icones/filtro.svg";
-import Rectangle from "../../assets/img/icones/Rectangle.svg";
-import Ellipse from "../../assets/img/icones/Ellipse.svg";
-import Lupa from "../../assets/img/icones/lupa.svg";
 import Person from "../../assets/img/icones/Person.svg";
 import Tag from "../../assets/img/icones/Tag.svg";
 import Pessoas from "../../assets/img/icones/pessoas.svg";
@@ -13,6 +9,7 @@ import EllipseDescoberta from "../../assets/img/icones/Ellipse descoberta.svg";
 import EllipseExecucao from "../../assets/img/icones/Ellipse execucao.svg"
 import EllipseConexao from "../../assets/img/icones/Ellipse conexao.svg";
 import CarrosselHome from "../../components/carrosselHome/CarrosselHome";
+import FiltroDemandas from "../../components/filtro/filtroDemandas";
 
 function Home() {
   return (
@@ -37,55 +34,10 @@ function Home() {
 
         <section className="bg=[#F1F7EE]">
             <div>
-                <div>
-                <img src={Filtro}/>
-                <h3>Filtros</h3>
-                </div>
-                <h4>Tipo de Projeto</h4>
-                <div>
-                    <img src={Rectangle} />
-                    <p>Sistema Web</p>
-                </div>
-                <div>
-                    <img src={Rectangle} />
-                    <p>Aplicativo Mobile</p>
-                </div>
-                <div>
-                    <img src={Rectangle} />
-                    <p>Landing Page</p>
-                </div>
-                <div>
-                    <img src={Rectangle} />
-                    <p>E-commerce</p>
-                </div>
-                <h4>Área de Negócios</h4>
-                <div>
-                    {/* <!-- dropdown -->
-                    <!-- <img src="./assets/img/icones/setadown.svg" /> -->
-                    <!-- <p>Todas as áreas</p> --> */}
-                </div>
-                <h4>Complexidade</h4>
-                <div>
-                    <img src={Ellipse} />
-                    <p>Todas</p>
-                </div>
-                <div>
-                    <img src={Ellipse} />
-                    <p>Básica</p>
-                </div>
-                <div>
-                    <img src={Ellipse} />
-                    <p>Intermediária</p>
-                </div>
-                <div>
-                    <img src={Ellipse} />
-                    <p>Avançada</p>
-                </div>
-                <button>
-                    <img src={Lupa}/>
-                    <p>Aplicar Filtros</p>
-                </button>
+
+                <FiltroDemandas />
             </div>
+            
 
             <div>
                 <div>
