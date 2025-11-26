@@ -133,6 +133,7 @@ function Home() {
 
   return (
     <>
+      <main className="bg-[#F1F7EE]">
       <main className="w-full min-h-screen bg-[#F1F7EE]">
         <section className="bg-[#021926] p-10">
             <h1 className="text-5xl justify-center font-semibold text-[#DAD4C8] w-[70%] mx-auto text-center">Conectamos <span className="text-[#A33E38]">Empreendedores</span> com <span className="text-[#A33E38]">Estudantes de Tecnologia</span></h1>
@@ -186,25 +187,25 @@ function Home() {
             <div className="mx-[10%] my-10">
 
                 <div className="flex gap-15 justify-center">
-                    <div className="justify-center w-[25%] p-2 hover:scale-110 hover:shadow-2xl">
+                    <div className="justify-center w-[25%] p-2 hover:scale-110">
                         <img className="size-25 mx-auto" src={EllipseCadastro} />
                         <h3 className="font-semibold text-lg">1. Cadastro</h3>
                         <p>Empreendedores se cadastram e descrevem suas demandas com detalhes do projeto</p>
                     </div>
 
-                    <div className="justify-center w-[25%] hover:scale-110 hover:shadow-2xl">
+                    <div className="justify-center w-[25%] hover:scale-110">
                         <img className="size-25 mx-auto" src={EllipseDescoberta} />
                         <h3 className="font-semibold text-lg">2. Descoberta</h3>
                         <p>Estudantes exploram projetos usando filtros para encontrar oportunidades ideais</p>
                     </div>
 
-                    <div className="justify-center w-[25%] hover:scale-110 hover:shadow-2xl">
+                    <div className="justify-center w-[25%] hover:scale-110">
                         <img className="size-25 mx-auto" src={EllipseConexao} />
                         <h3 className="font-semibold text-lg">3. Conexão</h3>
                         <p>Grupos de alunos manifestam interesse e iniciam diálogo com empreendedores</p>
                     </div>
 
-                    <div className="justify-center w-[25%] hover:scale-110 hover:shadow-2xl">
+                    <div className="justify-center w-[25%] hover:scale-110">
                         <img className="size-25 mx-auto" src={EllipseExecucao} />
                         <h3 className="font-semibold text-lg">4. Execução</h3>
                         <p>Desenvolvimento colaborativo do projeto</p>
@@ -215,7 +216,7 @@ function Home() {
 
         <section className="text-center py-5">
             <h2 className="text-3xl font-semibold">Faça Parte da Plataforma</h2>
-            <p className="text-2xl w-[50%] mx-auto">Escolha como deseja participar do Osiris</p>
+            <p className="text-2xl w-[50%] mx-auto mb-2">Escolha como deseja participar do Osiris</p>
 
             <div className="">
                 <CarrosselHome />

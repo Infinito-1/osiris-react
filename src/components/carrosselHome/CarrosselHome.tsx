@@ -8,7 +8,7 @@ import EllipsePerson from "../../assets/img/icones/Ellipse person.svg";
 import PersonVideo from "../../assets/img/icones/PersonVideo3.svg";
 import leftArrow from "../../assets/img/icones/seta pra esquerda.svg";
 import rightArrow from "../../assets/img/icones/seta pra direita.svg";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 type CardData = {
   id: number;
@@ -18,6 +18,8 @@ type CardData = {
   buttonText: string;
   bgEllipse: string;
   image: string;
+  link: string;
+  buttonColor: string;
 };
 
 const cardsData: CardData[] = [
@@ -34,6 +36,8 @@ const cardsData: CardData[] = [
     buttonText: "Cadastrar como Empreendedor",
     bgEllipse: EllipseLight,
     image: Lightbulb,
+    link: "/cadastro/empreendedor",
+    buttonColor: "#792E29",
   },
   {
     id: 2,
@@ -48,6 +52,8 @@ const cardsData: CardData[] = [
     buttonText: "Cadastrar como Estudante",
     bgEllipse: EllipseMortar,
     image: MortarboardFill,
+    link: "/cadastro/estudante",
+    buttonColor: "#5F747F",
   },
   {
     id: 3,
@@ -62,6 +68,8 @@ const cardsData: CardData[] = [
     buttonText: "Cadastrar como Coodenador",
     bgEllipse: EllipseBook,
     image: Book,
+    link: "/cadastro/coordenador",
+    buttonColor: "#9FA39E",
   },
   {
     id: 4,
@@ -71,40 +79,48 @@ const cardsData: CardData[] = [
       "Verifique os grupos",
       "Dê orientações",
       "Acompanhe o desenvolvimento dos projetos",
-      "Verrique o andamento das atividades",
+      "Veja o andamento das atividades",
     ],
     buttonText: "Cadastrar como Professor",
     bgEllipse: EllipsePerson,
     image: PersonVideo,
+    link: "/cadastro/docente",
+    buttonColor: "#021926",
   },
 ];
 
-// Componente Card
 function Card({ card }: { card: CardData }) {
   return (
-    <div className="relative flex-shrink-0 w-[80vw] sm:w-[300px] md:w-[350px] lg:w-[380px] mx-2">
+    <div className="relative flex-shrink-0 w-[90%] sm:w-[50%] mx-2 my-5">
       <div className="bg-white rounded-xl shadow-xl p-6 flex flex-col items-center text-center min-h-[450px]">
         <img
           src={card.bgEllipse}
           alt="ellipse"
-          className="absolute -top-8 w-40 h-40 object-contain"
+          className="absolute -top-8 w-20 h-20 object-contain"
         />
         <img
           src={card.image}
           alt="card"
-          className="w-20 h-20 relative z-10 -mt-8"
+          className="w-10 h-10 relative z-10 -mt-8 mb-5"
         />
-        <h3 className="mt-4 text-xl font-bold">{card.title}</h3>
+        <h3 className="mt-4 text-2xl font-bold">{card.title}</h3>
         <h5 className="mt-2 text-base text-gray-600">{card.subtitle}</h5>
-        <ul className="mt-4 text-left list-disc list-inside space-y-1 w-full px-4 text-base">
+        <ul className="mt-4 text-left list-disc list-inside space-y-1 w-full px-4 pt-5 text-lg">
           <li>{card.items[0]}</li>
           <li>{card.items[1]}</li>
           <li>{card.items[2]}</li>
           <li>{card.items[3]}</li>
         </ul>
-        <button className="mt-auto bg-blue-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-blue-700 cursor-pointer">
-          {card.buttonText}
-        </button>
+        <a href={card.link} className="mt-auto w-full flex justify-center">
+          <button
+            className="text-white px-6 py-2 rounded-lg font-semibold cursor-pointer transition-all hover:brightness-90"
+            style={{
+              backgroundColor: card.buttonColor,
+            }}
+          >
+            {card.buttonText}
+          </button>
+        </a>
       </div>
     </div>
   );
@@ -112,34 +128,55 @@ function Card({ card }: { card: CardData }) {
 
 function CarrosselHome() {
   const [index, setIndex] = useState(0);
+  const [transition, setTransition] = useState(true); 
   const total = cardsData.length;
 
-  const next = () => setIndex((prev) => (prev + 1) % total);
-  const prev = () => setIndex((prev) => (prev - 1 + total) % total);
+  const next = () => setIndex((prev) => prev + 1);     
+  const prev = () => setIndex((prev) => prev - 1);     
+
+  useEffect(() => {
+    if (index === total) {
+      setTimeout(() => {
+        setTransition(false); 
+        setIndex(0);          
+      }, 500);                
+
+      setTimeout(() => setTransition(true), 510);
+    }
+
+    if (index === -1) {
+      setTimeout(() => {
+        setTransition(false);
+        setIndex(total - 1);
+      }, 500);
+
+      setTimeout(() => setTransition(true), 510);
+    }
+  }, [index, total]);
 
   return (
-    <div className="relative w-full max-w-7xl mx-auto py-10 overflow-hidden">
+    <div className="relative w-full max-w-5xl mx-auto py-10 overflow-hidden">
       {/* Setas */}
       <button
         onClick={prev}
-        className="absolute left-0 top-1/2 -translate-y-1/2 z-20 p-2 cursor-pointer"
+        className="absolute -left-4 top-1/2 -translate-y-1/2 z-20 p-2 cursor-pointer"
       >
         <img src={leftArrow} alt="Voltar" className="w-10 h-10" />
       </button>
+
       <button
         onClick={next}
-        className="absolute right-0 top-1/2 -translate-y-1/2 z-20 p-2 cursor-pointer"
+        className="absolute -right-4 top-1/2 -translate-y-1/2 z-20 p-2 cursor-pointer"
       >
         <img src={rightArrow} alt="Avançar" className="w-10 h-10" />
       </button>
 
-      {/* Carrossel */}
-      <div className="flex transition-transform duration-500"
+      <div
+        className={`flex ${transition ? "transition-transform duration-500" : ""}`}
         style={{
-          transform: `translateX(-${index * (380 + 16)}px)`,
+          transform: `translateX(-${index * 50}%)`,
         }}
       >
-        {/* Duplicação para loop infinito */}
         {[...cardsData, ...cardsData].map((card, i) => (
           <Card key={i} card={card} />
         ))}
@@ -147,6 +184,5 @@ function CarrosselHome() {
     </div>
   );
 }
-
 
 export default CarrosselHome
