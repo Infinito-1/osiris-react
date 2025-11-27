@@ -1,6 +1,8 @@
 import Book from "../../assets/img/login/book.png";
+import { useNavigate } from "react-router-dom";
 
 function CoordenadorForm() {
+  const navigate = useNavigate();
   return (
     <section className="flex flex-col items-center px-4 font-inter  bg-[#F1F7EE]">
       {/* TÍTULO E SUBTÍTULO COM BOLD SUAVE */}
@@ -102,6 +104,7 @@ function CoordenadorForm() {
             transition-opacity
             hover:opacity-90
           "
+          onClick={() => navigate("/coordenador")}
         >
           Criar Conta
         </button>

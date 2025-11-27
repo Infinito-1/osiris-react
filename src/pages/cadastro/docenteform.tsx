@@ -1,6 +1,8 @@
 import Prof from "../../assets/img/login/prof.png";
+import { useNavigate } from "react-router-dom";
 
 function DocenteForm() {
+  const navigate = useNavigate();
   return (
     <section className="flex flex-col items-center font-inter bg-[#F1F7EE]">
       {/* TÍTULO E SUBTÍTULO */}
@@ -152,6 +154,7 @@ function DocenteForm() {
             transition-opacity
             hover:opacity-90
           "
+          onClick={() => navigate("/professor")}
         >
           Criar Conta
         </button>

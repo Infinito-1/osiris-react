@@ -1,11 +1,15 @@
 import Hat from "../../assets/img/login/hat.png";
+import { useNavigate } from "react-router-dom";
 
 function EstudantesForm() {
+  const navigate = useNavigate();
   return (
     <>
       <section className="login-section flex flex-col items-center font-inter text-[#021926] bg-[#F1F7EE]">
         {/* Título */}
-        <h1 className="text-[2.5rem] font-semibold mb-[8px] mt-[60px]">Osíris</h1>
+        <h1 className="text-[2.5rem] font-semibold mb-[8px] mt-[60px]">
+          Osíris
+        </h1>
         <p className="text-[1.1rem] font-medium mb-[30px]">
           Acesse sua conta ou crie uma nova
         </p>
@@ -134,6 +138,7 @@ function EstudantesForm() {
               transition-opacity
               hover:opacity-90
             "
+            onClick={() => navigate("/aluno")}
           >
             Criar Conta
           </button>
