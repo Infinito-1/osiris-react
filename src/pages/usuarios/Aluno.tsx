@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-// --- Ícones SVG - GENÉRICOS, VAMOS UTILIZAR O LUCID POR FAVOR ---
+// --- Ícones SVG Inline ---
 
 const BellIcon = () => (
   <svg
@@ -100,7 +100,7 @@ const AvisoItem = ({
   subtitle: string;
   date: string;
 }) => (
-  <div className="border border-gray-200 rounded-md p-4 flex justify-between items-start bg-white hover:border-gray-300 transition-colors">
+  <div className="border border-gray-200 rounded-md p-4 flex justify-between items-start bg-white hover:border-gray-300 transition-colors animate-fadeIn">
     <div>
       <h4 className="font-bold text-gray-800 text-sm mb-1">{title}</h4>
       <p className="text-gray-600 text-xs">{subtitle}</p>
@@ -143,45 +143,124 @@ const PortfolioItem = ({
 // --- Seções Principais ---
 
 const QuadroAvisos = () => {
+  const [pagina, setPagina] = useState(1);
+  const itensPorPagina = 3;
+
+  const todosAvisos = [
+    // Página 1
+    {
+      title: "Entrega de Projeto",
+      subtitle: "Entrega final: 15/06/2024",
+      date: "19/05/2025",
+    },
+    {
+      title: "Palestra de Tecnologia",
+      subtitle: "Amanhã às 19h no auditório",
+      date: "17/05/2025",
+    },
+    {
+      title: "Cadastro de Grupos",
+      subtitle: "Grupos podem ser formados até 30/05",
+      date: "16/05/2025",
+    },
+    // Página 2
+    {
+      title: "Workshop de React",
+      subtitle: "Laboratório 3 - Vagas limitadas",
+      date: "14/05/2025",
+    },
+    {
+      title: "Manutenção do Sistema",
+      subtitle: "Indisponibilidade programada: 23h às 02h",
+      date: "12/05/2025",
+    },
+    {
+      title: "Resultado Parcial",
+      subtitle: "Notas da P1 disponíveis no portal",
+      date: "10/05/2025",
+    },
+    // Página 3
+    {
+      title: "Feira de Empregabilidade",
+      subtitle: "Traga seu currículo impresso",
+      date: "05/05/2025",
+    },
+    {
+      title: "Rematrícula",
+      subtitle: "Prazo final para ajuste de grade",
+      date: "02/05/2025",
+    },
+    {
+      title: "Boas-vindas aos Calouros",
+      subtitle: "Apresentação da coordenação",
+      date: "28/04/2025",
+    },
+  ];
+
+  const totalPaginas = Math.ceil(todosAvisos.length / itensPorPagina);
+  const indiceInicial = (pagina - 1) * itensPorPagina;
+  const avisosAtuais = todosAvisos.slice(
+    indiceInicial,
+    indiceInicial + itensPorPagina
+  );
+
+  const irParaProximaPagina = () => {
+    if (pagina < totalPaginas) setPagina(pagina + 1);
+  };
+
+  const irParaPaginaAnterior = () => {
+    if (pagina > 1) setPagina(pagina - 1);
+  };
+
   return (
-    <section className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
-      <div className="flex items-center gap-2 mb-2">
-        <div className="text-[#021926]">
-          <BellIcon />
+    <section className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm min-h-[420px] flex flex-col justify-between">
+      <div>
+        <div className="flex items-center gap-2 mb-2">
+          <div className="text-[#021926]">
+            <BellIcon />
+          </div>
+          <h3 className="text-lg font-bold text-[#021926]">Quadro de avisos</h3>
         </div>
-        <h3 className="text-lg font-bold text-[#021926]">Quadro de avisos</h3>
-      </div>
 
-      <p className="text-gray-500 text-sm mb-6">
-        Fique por dentro de lembretes e avisos enviados pela coordenação e
-        professores.
-      </p>
+        <p className="text-gray-500 text-sm mb-6">
+          Fique por dentro de lembretes e avisos enviados pela coordenação e
+          professores.
+        </p>
 
-      <div className="space-y-3 mb-6">
-        <AvisoItem
-          title="Entrega de Projeto"
-          subtitle="Entrega final: 15/06/2024"
-          date="19/05/2025"
-        />
-        <AvisoItem
-          title="Palestra de Tecnologia"
-          subtitle="Amanhã às 19h no auditório"
-          date="17/05/2025"
-        />
-        <AvisoItem
-          title="Cadastro de Grupos"
-          subtitle="Grupos podem ser formados até 30/05"
-          date="16/05/2025"
-        />
+        <div className="space-y-3 mb-6">
+          {avisosAtuais.map((aviso, index) => (
+            <AvisoItem
+              key={`${pagina}-${index}`}
+              title={aviso.title}
+              subtitle={aviso.subtitle}
+              date={aviso.date}
+            />
+          ))}
+        </div>
       </div>
 
       {/* Paginação */}
       <div className="flex justify-center items-center gap-4 text-gray-600">
-        <button className="p-1 hover:bg-gray-100 rounded-full transition">
+        <button
+          onClick={irParaPaginaAnterior}
+          disabled={pagina === 1}
+          className={`p-1 rounded-full transition ${pagina === 1 ? "text-gray-300 cursor-not-allowed" : "hover:bg-gray-100 text-[#021926]"}`}
+        >
           <ChevronLeftIcon />
         </button>
-        <span className="font-medium text-lg">1</span>
-        <button className="p-1 hover:bg-gray-100 rounded-full transition">
+
+        <span className="font-medium text-lg text-[#021926] select-none">
+          {pagina}{" "}
+          <span className="text-gray-400 text-sm font-normal">
+            / {totalPaginas}
+          </span>
+        </span>
+
+        <button
+          onClick={irParaProximaPagina}
+          disabled={pagina === totalPaginas}
+          className={`p-1 rounded-full transition ${pagina === totalPaginas ? "text-gray-300 cursor-not-allowed" : "hover:bg-gray-100 text-[#021926]"}`}
+        >
           <ChevronRightIcon />
         </button>
       </div>

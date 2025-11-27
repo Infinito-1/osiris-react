@@ -64,14 +64,14 @@ const TabsNavegacao = () => {
 
       <button
         className="flex-1 py-2 text-gray-200 font-medium text-sm hover:bg-white/10 rounded transition"
-        onClick={() => navigate("/empreendedorEmAndamento")}
+        onClick={() => navigate("/EmpreendedorEmAndamento")}
       >
         Em Andamento
       </button>
 
       <button
         className="flex-1 py-2 text-gray-200 font-medium text-sm hover:bg-white/10 rounded transition"
-        onClick={() => navigate("/empreendedorConcluidas")}
+        onClick={() => navigate("/EmpreendedorConcluidas")}
       >
         Concluídos
       </button>
@@ -192,6 +192,7 @@ const Estatisticas = () => {
 // --- Componente Principal ---
 
 export default function DashboardEmpreendedor() {
+  const navigate = useNavigate();
   return (
     <main className="w-full min-h-screen bg-[#E8F0E2] py-10 font-sans">
       <div className="w-11/12 max-w-6xl mx-auto">
@@ -218,7 +219,10 @@ export default function DashboardEmpreendedor() {
 
           {/* COLUNA DIREITA */}
           <div className="space-y-6">
-            <button className="w-full bg-[#550B0B] hover:bg-[#3f0808] text-white py-3 px-4 rounded-md shadow font-medium transition text-center">
+            <button
+              className="w-full bg-[#550B0B] hover:bg-[#3f0808] text-white py-3 px-4 rounded-md shadow font-medium transition text-center"
+              onClick={() => navigate("/cadastrar_demanda")}
+            >
               Nova Demanda
             </button>
 
