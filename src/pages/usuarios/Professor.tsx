@@ -43,6 +43,7 @@ const Badge = ({ text, color }: BadgeProps) => {
 
 // Card Interno de Grupo
 const CardGrupoInterno = () => {
+  const navigate = useNavigate();
   return (
     <div className="bg-white border border-gray-200 rounded-lg p-5 mb-4 hover:border-gray-300 transition-colors shadow-sm">
       <div className="flex justify-between items-start mb-2">
@@ -59,7 +60,10 @@ const CardGrupoInterno = () => {
       </div>
 
       <div className="flex gap-3">
-        <button className="flex-1 bg-white border border-gray-300 text-gray-700 py-2 rounded text-sm font-medium hover:bg-gray-50 transition">
+        <button
+          className="flex-1 bg-white border border-gray-300 text-gray-700 py-2 rounded text-sm font-medium hover:bg-gray-50 transition"
+          onClick={() => navigate("/perfil_grupo")}
+        >
           Ver Detalhes
         </button>
         <button className="flex-1 bg-white border border-gray-300 text-gray-700 py-2 rounded text-sm font-medium hover:bg-gray-50 transition">

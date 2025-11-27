@@ -46,6 +46,7 @@ const TabsNavegacao = () => {
 // --- Cards Principais ---
 
 const CardDemanda = () => {
+  const navigate = useNavigate();
   return (
     <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm mb-4 hover:border-gray-300 transition-colors">
       {/* Cabeçalho do Card */}
@@ -84,7 +85,10 @@ const CardDemanda = () => {
       </div>
 
       {/* Botão de Ação */}
-      <button className="w-full bg-[#782E29] hover:bg-[#5e231f] text-white py-2.5 rounded-md font-medium text-sm transition-colors shadow-sm">
+      <button
+        className="w-full bg-[#782E29] hover:bg-[#5e231f] text-white py-2.5 rounded-md font-medium text-sm transition-colors shadow-sm"
+        onClick={() => navigate("/classificar_demanda")}
+      >
         Analisar e Classificar
       </button>
     </div>
@@ -105,7 +109,7 @@ const MinhasInformacoes = () => {
           <p className="text-gray-500 text-xs uppercase font-semibold mb-0.5">
             Nome
           </p>
-          <p className="font-medium text-gray-900">Professora Bruna</p>
+          <p className="font-medium text-gray-900">Coordenadora Bruna</p>
         </div>
 
         <div>
