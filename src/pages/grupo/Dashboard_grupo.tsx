@@ -2,12 +2,11 @@ import React, { useState } from "react";
 
 // --- Subcomponentes ---
 
-// 1. Quadro de Avisos com Carrossel Funcional
 const QuadroAvisos: React.FC = () => {
   const [pagina, setPagina] = useState(1);
   const itensPorPagina = 3;
 
-  // Dados expandidos para testar o carrossel
+  // Dados expandidos
   const avisos = [
     // Página 1 (Originais)
     {
@@ -25,7 +24,7 @@ const QuadroAvisos: React.FC = () => {
       subtitle: "Sexta-feira às 14h",
       date: "16/05/2025",
     },
-    // Página 2 (Novos)
+    // Página 2
     {
       title: "Revisão de Código",
       subtitle: "Pull Request #42 pendente",
@@ -41,7 +40,7 @@ const QuadroAvisos: React.FC = () => {
       subtitle: "Agendado com 5 usuários",
       date: "12/05/2025",
     },
-    // Página 3 (Novos)
+    // Página 3
     {
       title: "Feedback do Cliente",
       subtitle: "Aprovação do protótipo de alta",
@@ -284,13 +283,12 @@ const ProjetoAtual: React.FC = () => {
   );
 };
 
-// 4. Galeria de Demandas com Carrossel Funcional
 const GaleriaDemandas: React.FC = () => {
   const [pagina, setPagina] = useState(1);
   const itensPorPagina = 3;
 
   const demandas = [
-    // Página 1 (Originais)
+    // Página 1
     {
       title: "App de Delivery para Restaurante",
       level: "Intermediário",
@@ -306,7 +304,7 @@ const GaleriaDemandas: React.FC = () => {
       level: "Avançado",
       semester: "5º Sem",
     },
-    // Página 2 (Novos)
+    // Página 2
     {
       title: "Sistema de Controle de Estoque",
       level: "Intermediário",
@@ -322,7 +320,7 @@ const GaleriaDemandas: React.FC = () => {
       level: "Avançado",
       semester: "6º Sem",
     },
-    // Página 3 (Novos)
+    // Página 3
     {
       title: "Chatbot para Atendimento",
       level: "Avançado",
@@ -545,14 +543,14 @@ const DashboardGrupo: React.FC = () => {
 
         {/* Grid Principal do Dashboard */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Coluna 1 (2/3 da largura em telas grandes) */}
+          {/* Coluna 1 */}
           <div className="lg:col-span-2 space-y-8">
             <QuadroAvisos />
             <ProjetoAtual />
             <HistoricoEntregas />
           </div>
 
-          {/* Coluna 2 (1/3 da largura em telas grandes) */}
+          {/* Coluna 2 */}
           <div className="lg:col-span-1 space-y-8">
             <InformacoesGrupo />
             <GaleriaDemandas />
