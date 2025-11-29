@@ -1,4 +1,3 @@
-import React from "react";
 import { useNavigate } from "react-router-dom";
 import ArrowIn from "../../assets/img/login/arrowin.png";
 

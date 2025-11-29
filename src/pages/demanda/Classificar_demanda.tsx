@@ -1,4 +1,3 @@
-import React from "react";
 
 // Componente para um campo de formulário com label e input/textarea
 interface FormFieldProps {

@@ -1,4 +1,3 @@
-import React from "react";
 import { useNavigate } from "react-router-dom";
 
 // Ícone de Enviar gerado de modo genérico por enquanto, TODO: substituir por icone do lucid.

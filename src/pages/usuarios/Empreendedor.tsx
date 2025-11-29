@@ -1,4 +1,3 @@
-import React from "react";
 import { useNavigate } from "react-router-dom";
 
 // --- Ícones SVG - gerados de modo genérico. TODO: Trocar por icones do lucid ---
