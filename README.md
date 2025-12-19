@@ -20,7 +20,7 @@ O projeto está alinhado com os **Objetivos de Desenvolvimento Sustentável (ODS
 ## 🌐 Acesso ao Site
 
 **Link de Acesso:**
-`[INSERIR LINK DE DEPLOY AQUI]`
+`https://osiris-fateczl.netlify.app/`
 
 ## 🛠️ Tecnologias Utilizadas
 
@@ -40,3 +40,4 @@ Este projeto foi desenvolvido por um grupo de alunos do curso de Desenvolvimento
 *   GUSTAVO HENRIQUE TEIXEIRA
 *   LARISSA TEIXEIRA
 *   RAFAELA BOTELHO
+
