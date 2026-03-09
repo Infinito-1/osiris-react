@@ -223,8 +223,7 @@ const QuadroAvisos = () => {
         </div>
 
         <p className="text-gray-500 text-sm mb-6">
-          Fique por dentro de lembretes e avisos enviados pela coordenação e
-          professores.
+          Fique por dentro de lembretes e avisos enviados pela coordenação.
         </p>
 
         <div className="space-y-3 mb-6">

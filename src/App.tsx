@@ -12,7 +12,6 @@ import CodigoSenha from "./pages/login/codigosenha";
 import RedefinirSenha from "./pages/login/redefinirsenha";
 import EmpreendedorForm from "./pages/cadastro/empreendedorform";
 import EstudantesForm from "./pages/cadastro/estudantesform";
-import DocenteForm from "./pages/cadastro/docenteform";
 import CoordenadorForm from "./pages/cadastro/coordenadorform";
 import Projeto from "./pages/projeto/Projeto";
 import Entrega from "./pages/projeto/Entrega";
@@ -22,14 +21,11 @@ import ClassificarDemanda from "./pages/demanda/Classificar_demanda";
 import GaleriaDemanda from "./pages/demanda/Demandas";
 import DashboardAluno from "./pages/usuarios/Aluno";
 import DashboardCoordenador from "./pages/usuarios/Coordenador";
-import DashboardProfessor from "./pages/usuarios/Professor";
 import DashboardEmpreendedor from "./pages/usuarios/Empreendedor";
 import CoordenadorEmAndamento from "./pages/usuarios/CoordenadorEmAndamento";
 import CoordenadorConcluidas from "./pages/usuarios/CoordenadorConcluidas";
 import EmpreendedorConcluidas from "./pages/usuarios/EmpreendedorConcluidas";
 import EmpreendedorEmAndamento from "./pages/usuarios/EmpreendedorEmAndamento";
-import ProfessorLembrete from "./pages/usuarios/ProfessorLembrete";
-import ProfessorAvaliar from "./pages/usuarios/ProfessorAvaliar";
 
 function App() {
   return (
@@ -52,7 +48,6 @@ function App() {
               element={<EmpreendedorForm />}
             />
             <Route path="/cadastro/estudante" element={<EstudantesForm />} />
-            <Route path="/cadastro/docente" element={<DocenteForm />} />
             <Route path="/cadastro/coordenador" element={<CoordenadorForm />} />
             <Route path="/projeto" element={<Projeto />} />
             <Route path="/entrega" element={<Entrega />} />
@@ -65,7 +60,6 @@ function App() {
             <Route path="/demandas" element={<GaleriaDemanda />} />
             <Route path="/aluno" element={<DashboardAluno />} />
             <Route path="/coordenador" element={<DashboardCoordenador />} />
-            <Route path="/professor" element={<DashboardProfessor />} />
             <Route path="/empreendedor" element={<DashboardEmpreendedor />} />
             <Route
               path="/CoordenadorEmAndamento"
@@ -83,8 +77,6 @@ function App() {
               path="/EmpreendedorEmAndamento"
               element={<EmpreendedorEmAndamento />}
             />
-            <Route path="/ProfessorLembrete" element={<ProfessorLembrete />} />
-            <Route path="/ProfessorAvaliar" element={<ProfessorAvaliar />} />
           </Routes>
         </div>
         <Footer />

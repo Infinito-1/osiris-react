@@ -112,14 +112,6 @@ export default function Login() {
           </button>
 
           <button
-            onClick={() => navigate("/cadastro/docente")}
-            className="w-full py-4 text-[1.05rem] font-medium rounded-lg text-white mt-4 cursor-pointer transition hover:opacity-90"
-            style={{ backgroundColor: "#021926" }}
-          >
-            Docente
-          </button>
-
-          <button
             onClick={() => navigate("/cadastro/coordenador")}
             className="w-full py-4 text-[1.05rem] font-medium rounded-lg text-white mt-4 cursor-pointer transition hover:opacity-90"
             style={{ backgroundColor: "#9fa39e" }}
