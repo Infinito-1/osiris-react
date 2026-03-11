@@ -2,6 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import logo from "../../assets/img/login/logo.png";
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
+import ThemeToggle from "../ThemeToggle";
 
 function Navbar() {
   const navigate = useNavigate();
@@ -37,6 +38,7 @@ function Navbar() {
                   <MenuItem><a href="#"className="block px-4 py-2 text-sm bg-none border-none text-[#dad4c8] cursor-pointer transition-opacity duration-300 hover:opacity-70" onClick={() => navigate("/grupos")}> Grupos </a></MenuItem>
                 </div>
                   <div className="py-1">
+                    <MenuItem><div className="px-4 py-2"><ThemeToggle /></div></MenuItem>
                     <MenuItem><a href="#"className="block px-4 py-2 text-sm text-gray-300 data-focus:bg-white/5 data-focus:text-white data-focus:outline-hidden" onClick={() => navigate("/login")}> Login </a></MenuItem>
                     <MenuItem><a href="#"className="block px-4 py-2 text-sm text-gray-300 data-focus:bg-white/5 data-focus:text-white data-focus:outline-hidden" onClick={() => navigate("/login")}> Cadastrar </a></MenuItem>
                   </div>
@@ -86,6 +88,7 @@ function Navbar() {
 
             {/* Direita */}
             <div className="flex items-center gap-[30px]">
+              <ThemeToggle />
               <button
                 className="text-[1.1rem] rounded-[10px] px-[22px] py-[10px] font-semibold cursor-pointer border border-solid border-white bg-white text-black transition-opacity duration-300 hover:opacity-85"
                 onClick={() => navigate("/login")}

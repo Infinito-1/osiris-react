@@ -141,7 +141,7 @@ function CarrosselHome() {
       {/* Setas */}
       <button
         onClick={prev}
-        className="absolute -left-4 top-1/2 -translate-y-1/2 z-20 p-2 cursor-pointer"
+        className="absolute -left-2 top-1/2 -translate-y-1/2 z-20 p-2 cursor-pointer"
       >
         <img src={leftArrow} alt="Voltar" className="w-10 h-10" />
       </button>

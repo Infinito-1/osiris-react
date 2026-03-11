@@ -381,7 +381,7 @@ const MeuGrupo = () => {
 
 export default function DashboardAluno() {
   return (
-    <main className="w-full min-h-screen bg-[#E8F0E2] py-10 font-sans">
+    <main className="w-full min-h-screen bg-[#F1F7EE] py-10 font-sans">
       <div className="w-11/12 max-w-6xl mx-auto">
         {/* Header */}
         <header className="text-center mb-10">

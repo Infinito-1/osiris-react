@@ -1,1 +1,98 @@
 @import "tailwindcss";
+
+/* ============================================
+                 TEMA ESCURO 
+   ============================================ */
+
+/* Navbar */
+.dark nav {
+  background-color: #3D1310 !important;
+}
+
+/* Fundo */
+.dark main.bg-\[\#F1F7EE\],
+.dark section.bg-\[\#F1F7EE\]{
+  background-color: #848484;
+}
+
+.dark .bg-\[\#021926\]{
+  background-color: black;
+}
+
+.dark button.bg-\[\#5F747F\]{
+  background-color: #354046;
+}
+
+.dark .bg-\[\#792E29\],
+.dark .bg-\[\#782E29\] {
+  background-color: #3D1310;
+}
+
+.dark .bg-\[\#782E29\]:hover {
+  background-color: #36110e;
+}
+
+/* Cartões */
+.dark div.bg-white {
+  background-color: #242424;
+  color: #f5f5f5 !important;
+  border-color: #404040 !important;
+}
+
+.dark h2{
+  color: #000000;
+}
+
+.dark .text-gray-800, 
+.dark h4{
+  color: white;
+}
+
+.dark .btn-detalhes {
+  color: #000000;
+}
+
+/* Inputs no tema escuro */
+.dark input,
+.dark textarea,
+.dark select {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+  border-color: #947260 !important;
+}
+
+.dark input[type="checkbox"]:checked,
+.dark input[type="radio"]:focus {
+  background-color: #D7B8A7 !important;
+}
+
+/* Texto cinza no tema escuro */
+.dark .text-gray-700,
+.dark .text-gray-600,
+.dark .text-gray-500,
+.dark .text-gray-400 {
+  color: #d1d5db !important;
+}
+
+/* Sombras no tema escuro */
+.dark .shadow,
+.dark .shadow-sm,
+.dark .shadow-md,
+.dark .shadow-lg {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Transições suaves */
+* {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* LOGIN / CADASTRO */
+.dark h2.text-\[\#021926\],
+.dark label.text-\[\#021926\]{
+  color: white;
+}
+
+.dark p.text-\[\#333\]{
+  color: #d1d5db;
+}

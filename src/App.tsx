@@ -1,4 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { ThemeProvider } from "./contexts/ThemeContext";
 import Navbar from "./components/navbar/Navbar";
 import Footer from "./components/footer/Footer";
 import Home from "./pages/home/Home";
@@ -29,7 +30,7 @@ import EmpreendedorEmAndamento from "./pages/usuarios/EmpreendedorEmAndamento";
 
 function App() {
   return (
-    <>
+    <ThemeProvider>
       <BrowserRouter>
         <Navbar />
         <div className="min-h-[80vh]">
@@ -79,9 +80,9 @@ function App() {
             />
           </Routes>
         </div>
-        <Footer />
+               <Footer />
       </BrowserRouter>
-    </>
+    </ThemeProvider>
   );
 }
 

@@ -28,7 +28,7 @@ const CardDemanda: React.FC<CardDemandaProps> = ({ titulo, empreendedor, tipo, c
                 <button className="w-full bg-[#782E29] text-white py-2 px-4 rounded-md text-base font-medium transition-colors duration-200 hover:bg-[#6d2823] shadow-md">
                     Manifestar Interesse
                 </button>
-                <button className="w-full bg-gray-200 text-gray-800 py-2 px-4 rounded-md text-base font-medium transition-colors duration-200 hover:bg-gray-300 shadow-md"
+                <button className="btn-detalhes w-full bg-gray-200 text-gray-800 py-2 px-4 rounded-md text-base font-medium transition-colors duration-200 hover:bg-gray-300 shadow-md"
                 onClick={() => navigate("/projeto")}>
                     Ver Detalhes
                 </button>
