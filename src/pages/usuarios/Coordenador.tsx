@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 // Badge de Status
 const StatusBadge = ({ text }: { text: string }) => (
-  <span className="border border-gray-300 text-gray-600 text-[10px] px-3 py-1 rounded-full font-medium uppercase tracking-wide bg-white">
+  <span className="status-pendente border border-gray-300 text-gray-600 text-[10px] px-3 py-1 rounded-full font-medium uppercase tracking-wide bg-white">
     {text}
   </span>
 );

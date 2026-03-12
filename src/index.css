@@ -39,17 +39,38 @@
   border-color: #404040 !important;
 }
 
+.dark section.bg-white{
+  background-color: #242424;
+}
+
 .dark h2{
   color: #000000;
 }
 
 .dark .text-gray-800, 
-.dark h4{
+.dark h4.text-gray-800{
+  color: white;
+}
+
+.dark .demandas.text-gray-800{
+  color: #242424;
+}
+
+.dark h3.text-gray-900,
+.dark p.text-gray-900,
+.dark span.text-gray-900{
   color: white;
 }
 
 .dark .btn-detalhes {
   color: #000000;
+}
+
+.dark .status-aberta,
+.dark .status-pendente {
+  color: #ffffff;
+  background-color: #1a1a1a;
+  border-color: #d4d4d4;
 }
 
 /* Inputs no tema escuro */
@@ -60,6 +81,8 @@
   color: #000000 !important;
   border-color: #947260 !important;
 }
+
+
 
 .dark input[type="checkbox"]:checked,
 .dark input[type="radio"]:focus {

@@ -40,7 +40,7 @@ const TrashIcon = () => (
 
 // Badge de Status
 const StatusBadge = ({ text }: { text: string }) => (
-  <span className="border border-gray-300 text-gray-600 text-[10px] px-3 py-1 rounded-full font-medium uppercase tracking-wide bg-white">
+  <span className="status-aberta border border-gray-300 text-gray-600 text-[10px] px-3 py-1 rounded-full font-medium uppercase tracking-wide bg-white">
     {text}
   </span>
 );
@@ -57,7 +57,7 @@ const TabsNavegacao = () => {
   const navigate = useNavigate();
   return (
     <div className="flex w-full bg-[#A7ACA6] rounded-md p-1">
-      <button className="flex-1 py-2 bg-white text-gray-800 rounded-md font-medium shadow-sm text-sm">
+      <button className="demandas flex-1 py-2 bg-white text-gray-800 rounded-md font-medium shadow-sm text-sm">
         Demandas Pendentes
       </button>
 
@@ -82,7 +82,7 @@ const TabsNavegacao = () => {
 const CardDemanda = () => {
   return (
     <div className="bg-white border border-gray-200 rounded-b-lg rounded-tr-lg p-6 mb-4 shadow-sm first:rounded-tl-none">
-      <div className="flex justify-between items-start mb-2">
+      <div className="btnAberta flex justify-between items-start mb-2">
         <h3 className="text-xl font-bold text-gray-900">
           Sistema de Gestão de Estoque
         </h3>
