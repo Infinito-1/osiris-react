@@ -6,7 +6,7 @@ import EllipseBook from "../../assets/img/icones/Ellipse book.svg";
 import Book from "../../assets/img/icones/Book.svg";
 import leftArrow from "../../assets/img/icones/seta pra esquerda.svg";
 import rightArrow from "../../assets/img/icones/seta pra direita.svg";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 
 type CardData = {
   id: number;
