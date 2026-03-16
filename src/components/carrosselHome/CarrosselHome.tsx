@@ -6,7 +6,7 @@ import EllipseBook from "../../assets/img/icones/Ellipse book.svg";
 import Book from "../../assets/img/icones/Book.svg";
 import leftArrow from "../../assets/img/icones/seta pra esquerda.svg";
 import rightArrow from "../../assets/img/icones/seta pra direita.svg";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 type CardData = {
   id: number;
@@ -73,7 +73,7 @@ const cardsData: CardData[] = [
 
 function Card({ card }: { card: CardData }) {
   return (
-    <div className="relative flex-shrink-0 w-[90%] sm:w-[50%] mx-2 my-5">
+    <div className="relative flex-shrink-0 w-full sm:w-1/2 px-2 my-5">
       <div className="bg-white rounded-xl shadow-xl p-6 flex flex-col items-center text-center min-h-[450px]">
         <img
           src={card.bgEllipse}
@@ -91,7 +91,6 @@ function Card({ card }: { card: CardData }) {
           <li>{card.items[0]}</li>
           <li>{card.items[1]}</li>
           <li>{card.items[2]}</li>
-          <li>{card.items[3]}</li>
         </ul>
         <a href={card.link} className="mt-auto w-full flex justify-center">
           <button
@@ -112,6 +111,8 @@ function CarrosselHome() {
   const [index, setIndex] = useState(0);
   const [transition, setTransition] = useState(true); 
   const total = cardsData.length;
+
+  const step = window.innerWidth >= 640 ? 50 : 100;
 
   const next = () => setIndex((prev) => prev + 1);     
   const prev = () => setIndex((prev) => prev - 1);     
@@ -156,7 +157,7 @@ function CarrosselHome() {
       <div
         className={`flex ${transition ? "transition-transform duration-500" : ""}`}
         style={{
-          transform: `translateX(-${index * 50}%)`,
+          transform: `translateX(-${index * step}%)`, 
         }}
       >
         {[...cardsData, ...cardsData].map((card, i) => (
