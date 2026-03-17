@@ -51,18 +51,12 @@ const Status: React.FC = () => {
                         placeholder="Os fulaninhos"
                     />
 
-                    {/* Aceite da coordenação e Professor orientador (Duas Colunas) */}
+                    {/* Aceite da coordenação*/}
                     <div className="grid grid-cols-2 gap-4">
                         <StatusField
                             label="Aceite da coordenação"
                             id="aceiteCoordenacao"
                             placeholder="Reprovado"
-                            colSpan="half"
-                        />
-                        <StatusField
-                            label="Aceite do Professor orientador"
-                            id="aceiteOrientador"
-                            placeholder="Aprovado"
                             colSpan="half"
                         />
                     </div>

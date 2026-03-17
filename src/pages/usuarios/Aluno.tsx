@@ -216,15 +216,14 @@ const QuadroAvisos = () => {
     <section className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm min-h-[420px] flex flex-col justify-between">
       <div>
         <div className="flex items-center gap-2 mb-2">
-          <div className="text-[#021926]">
+          <div className="text-gray-900">
             <BellIcon />
           </div>
-          <h3 className="text-lg font-bold text-[#021926]">Quadro de avisos</h3>
+          <h3 className="text-lg font-bold text-gray-900">Quadro de avisos</h3>
         </div>
 
         <p className="text-gray-500 text-sm mb-6">
-          Fique por dentro de lembretes e avisos enviados pela coordenação e
-          professores.
+          Fique por dentro de lembretes e avisos enviados pela coordenação.
         </p>
 
         <div className="space-y-3 mb-6">
@@ -271,7 +270,7 @@ const QuadroAvisos = () => {
 const MeuPortfolio = () => {
   return (
     <section className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
-      <h3 className="text-lg font-bold text-[#021926] mb-1">Meu Portfólio</h3>
+      <h3 className="text-lg font-bold text-gray-900 mb-1">Meu Portfólio</h3>
       <p className="text-gray-500 text-sm mb-6">
         Demandas disponíveis para novos projetos
       </p>
@@ -303,7 +302,7 @@ const MeuPortfolio = () => {
 const MinhasInformacoes = () => {
   return (
     <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
-      <h3 className="text-lg font-bold text-[#021926] mb-4">
+      <h3 className="text-lg font-bold text-gray-900 mb-4">
         Minhas Informações
       </h3>
 
@@ -350,7 +349,7 @@ const MeuGrupo = () => {
   const navigate = useNavigate();
   return (
     <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
-      <h3 className="text-lg font-bold text-[#021926] mb-4">Meu Grupo</h3>
+      <h3 className="text-lg font-bold text-gray-900 mb-4">Meu Grupo</h3>
 
       <div className="space-y-4 text-sm mb-6">
         <div>
@@ -382,7 +381,7 @@ const MeuGrupo = () => {
 
 export default function DashboardAluno() {
   return (
-    <main className="w-full min-h-screen bg-[#E8F0E2] py-10 font-sans">
+    <main className="w-full min-h-screen bg-[#F1F7EE] py-10 font-sans">
       <div className="w-11/12 max-w-6xl mx-auto">
         {/* Header */}
         <header className="text-center mb-10">

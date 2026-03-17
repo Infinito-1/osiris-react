@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 // Badge de Status
 const StatusBadge = ({ text }: { text: string }) => (
-  <span className="border border-gray-300 text-gray-600 text-[10px] px-3 py-1 rounded-full font-medium uppercase tracking-wide bg-white">
+  <span className="status-pendente border border-gray-300 text-gray-600 text-[10px] px-3 py-1 rounded-full font-medium uppercase tracking-wide bg-white">
     {text}
   </span>
 );
@@ -174,7 +174,7 @@ const Relatorios = () => {
 
 export default function DashboardCoordenador() {
   return (
-    <main className="w-full min-h-screen bg-[#E8F0E2] py-10 font-sans">
+    <main className="w-full min-h-screen bg-[#F1F7EE] py-10 font-sans">
       <div className="w-11/12 max-w-6xl mx-auto">
         {/* Header */}
         <header className="text-center mb-10">

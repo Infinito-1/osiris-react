@@ -4,8 +4,6 @@ import EllipseMortar from "../../assets/img/icones/Ellipse  mortar.svg";
 import MortarboardFill from "../../assets/img/icones/MortarboardFill.svg";
 import EllipseBook from "../../assets/img/icones/Ellipse book.svg";
 import Book from "../../assets/img/icones/Book.svg";
-import EllipsePerson from "../../assets/img/icones/Ellipse person.svg";
-import PersonVideo from "../../assets/img/icones/PersonVideo3.svg";
 import leftArrow from "../../assets/img/icones/seta pra esquerda.svg";
 import rightArrow from "../../assets/img/icones/seta pra direita.svg";
 import { useEffect, useState } from "react";
@@ -70,23 +68,7 @@ const cardsData: CardData[] = [
     image: Book,
     link: "/cadastro/coordenador",
     buttonColor: "#9FA39E",
-  },
-  {
-    id: 4,
-    title: "Sou Professor",
-    subtitle: "Preciso acompanhar projetos e orientar alunos",
-    items: [
-      "Verifique os grupos",
-      "Dê orientações",
-      "Acompanhe o desenvolvimento dos projetos",
-      "Veja o andamento das atividades",
-    ],
-    buttonText: "Cadastrar como Professor",
-    bgEllipse: EllipsePerson,
-    image: PersonVideo,
-    link: "/cadastro/docente",
-    buttonColor: "#021926",
-  },
+  }
 ];
 
 function Card({ card }: { card: CardData }) {
@@ -159,7 +141,7 @@ function CarrosselHome() {
       {/* Setas */}
       <button
         onClick={prev}
-        className="absolute -left-4 top-1/2 -translate-y-1/2 z-20 p-2 cursor-pointer"
+        className="absolute -left-2 top-1/2 -translate-y-1/2 z-20 p-2 cursor-pointer"
       >
         <img src={leftArrow} alt="Voltar" className="w-10 h-10" />
       </button>
