@@ -8,20 +8,24 @@ export default function Login() {
   const navigate = useNavigate();
 
   return (
-    <section className="flex flex-col items-center py-10 bg-[#F1F7EE]">
-      <h1 className="text-3xl md:text-4xl font-semibold text-[#021926] mb-2">
-        Osíris
-      </h1>
-      <p className="text-lg mb-6">Acesse sua conta ou crie uma nova</p>
+    <section className="flex flex-col items-center justify-center min-h-screen py-6 sm:py-10 px-4 sm:px-6 bg-[#F1F7EE]">
+      {/* Header */}
+      <div className="text-center mb-8 sm:mb-10">
+        <h1 className="text-2xl sm:text-3xl md:text-4xl font-semibold text-[#021926] mb-2">
+          Osíris
+        </h1>
+        <p className="text-sm sm:text-base md:text-lg text-gray-700">
+          Acesse sua conta ou crie uma nova
+        </p>
+      </div>
 
-      {/* TAB BUTTONS */}
-      <div className="flex w-[440px] mb-6 rounded-lg overflow-hidden bg-[#dce2d7] border border-[#cbd2c6]">
+      <div className="flex w-full sm:w-[440px] mb-6 sm:mb-8 rounded-lg overflow-hidden bg-[#dce2d7] border border-[#cbd2c6] max-w-md">
         <button
           onClick={() => setActiveTab("login")}
-          className={`flex-1 py-3 text-[1.05rem] transition ${
+          className={`loginCadastro flex-1 py-2.5 sm:py-3 text-sm sm:text-base md:text-[1.05rem] font-medium transition duration-200 ${
             activeTab === "login"
-              ? "bg-white"
-              : "hover:bg-[#e7ece3] bg-transparent"
+              ? "bg-white text-[#021926] shadow-sm"
+              : "hover:bg-[#e7ece3] bg-transparent text-gray-700"
           }`}
         >
           Entrar
@@ -29,54 +33,55 @@ export default function Login() {
 
         <button
           onClick={() => setActiveTab("register")}
-          className={`flex-1 py-3 text-[1.05rem] transition ${
+          className={`loginCadastro flex-1 py-2.5 sm:py-3 text-sm sm:text-base md:text-[1.05rem] font-medium transition duration-200 ${
             activeTab === "register"
-              ? "bg-white"
-              : "hover:bg-[#e7ece3] bg-transparent"
+              ? "bg-white text-[#021926] shadow-sm"
+              : "hover:bg-[#e7ece3] bg-transparent text-gray-700"
           }`}
         >
           Cadastrar
         </button>
       </div>
 
-      {/* LOGIN BOX */}
       {activeTab === "login" && (
-        <div className="bg-white border border-[#d3d3d3] rounded-xl p-12 w-[520px] shadow-md">
-          <div className="flex items-center gap-3 mb-6">
-            <img src={ArrowIn} alt="Ícone de login" className="w-7 h-7" />
-            <h2 className="text-[1.6rem] text-[#021926] font-semibold">
+        <div className="bg-white border border-[#d3d3d3] rounded-xl p-6 sm:p-8 md:p-12 w-full sm:w-[520px] shadow-md max-w-md">
+          <div className="flex items-center gap-2 sm:gap-3 mb-6 sm:mb-8">
+            <img src={ArrowIn} alt="Ícone de login" className="w-6 sm:w-7 h-6 sm:h-7" />
+            <h2 className="text-xl sm:text-2xl md:text-[1.6rem] text-[#021926] font-semibold">
               Fazer Login
             </h2>
           </div>
 
-          <div className="mb-6 text-left">
-            <label className="block mb-2 text-[1rem] text-[#021926] font-medium">
+          <div className="mb-5 sm:mb-6 text-left">
+            <label className="block mb-2 text-sm sm:text-base md:text-[1rem] text-[#021926] font-medium">
               E-mail
             </label>
             <input
               type="email"
-              className="w-full p-3 border border-gray-300 rounded-lg text-[1rem]"
+              className="w-full p-2.5 sm:p-3 border border-gray-300 rounded-lg text-sm sm:text-base md:text-[1rem] focus:outline-none focus:border-[#782e29] focus:ring-1 focus:ring-[#782e29] transition"
+              placeholder="seu.email@exemplo.com"
             />
           </div>
 
-          <div className="mb-6 text-left">
-            <label className="block mb-2 text-[1rem] text-[#021926] font-medium">
+          <div className="mb-6 sm:mb-8 text-left">
+            <label className="block mb-2 text-sm sm:text-base md:text-[1rem] text-[#021926] font-medium">
               Senha
             </label>
             <input
               type="password"
-              className="w-full p-3 border border-gray-300 rounded-lg text-[1rem]"
+              className="w-full p-2.5 sm:p-3 border border-gray-300 rounded-lg text-sm sm:text-base md:text-[1rem] focus:outline-none focus:border-[#782e29] focus:ring-1 focus:ring-[#782e29] transition"
+              placeholder="••••••••"
             />
           </div>
 
-          <button className="w-full bg-[#782e29] text-white py-3 text-[1.1rem] rounded-lg cursor-pointer transition hover:opacity-90">
+          <button className="w-full bg-[#782e29] text-white py-2.5 sm:py-3 text-sm sm:text-base md:text-[1.1rem] rounded-lg font-medium cursor-pointer transition hover:bg-[#5e231f] active:scale-95">
             Entrar
           </button>
 
-          <div className="text-center mt-3 text-[0.95rem]">
+          <div className="text-center mt-4 sm:mt-5">
             <button
               onClick={() => navigate("/esqueceu-senha")}
-              className="underline"
+              className="text-xs sm:text-sm md:text-[0.95rem] text-[#782e29] underline hover:no-underline transition"
             >
               Esqueceu sua senha?
             </button>
@@ -84,36 +89,37 @@ export default function Login() {
         </div>
       )}
 
-      {/* REGISTER BOX */}
       {activeTab === "register" && (
-        <div className="bg-white border border-[#d3d3d3] rounded-xl p-12 w-[520px] shadow-md">
-          <div className="flex items-center gap-3 mb-6">
-            <img src={PersonPlus} alt="Ícone de cadastro" className="w-7 h-7" />
-            <h2 className="text-[1.6rem] text-[#021926] font-semibold">
+        <div className="bg-white border border-[#d3d3d3] rounded-xl p-6 sm:p-8 md:p-12 w-full sm:w-[520px] shadow-md max-w-md">
+          <div className="flex items-center gap-2 sm:gap-3 mb-6 sm:mb-8">
+            <img src={PersonPlus} alt="Ícone de cadastro" className="w-6 sm:w-7 h-6 sm:h-7" />
+            <h2 className="text-xl sm:text-2xl md:text-[1.6rem] text-[#021926] font-semibold">
               Criar Conta
             </h2>
           </div>
 
-          {/* BUTTONS */}
+          <p className="text-xs sm:text-sm text-gray-600 mb-6 sm:mb-8">
+            Escolha o tipo de conta que deseja criar:
+          </p>
+
           <button
             onClick={() => navigate("/cadastro/empreendedor")}
-            className="w-full py-4 text-[1.05rem] font-medium rounded-lg text-white mt-4 cursor-pointer transition hover:opacity-90"
-            style={{ backgroundColor: "#782e29" }}
+            className="w-full py-3 sm:py-4 text-sm sm:text-base md:text-[1.05rem] font-medium rounded-lg text-white mt-3 sm:mt-4 cursor-pointer transition hover:opacity-90 active:scale-95 bg-[#782e29]"
           >
             Empreendedor
           </button>
 
           <button
             onClick={() => navigate("/cadastro/estudante")}
-            className="w-full py-4 text-[1.05rem] font-medium rounded-lg text-white mt-4 cursor-pointer transition hover:opacity-90"
-            style={{ backgroundColor: "#546873" }}
+            className="w-full py-3 sm:py-4 text-sm sm:text-base md:text-[1.05rem] font-medium rounded-lg text-white mt-3 sm:mt-4 cursor-pointer transition hover:opacity-90 active:scale-95 bg-[#546873]"
           >
             Estudante
           </button>
 
           <button
             onClick={() => navigate("/cadastro/coordenador")}
-            className="w-full py-4 text-[1.05rem] font-medium rounded-lg text-white mt-4 cursor-pointer transition hover:opacity-90 bg-[#9fa39e]">
+            className="w-full py-3 sm:py-4 text-sm sm:text-base md:text-[1.05rem] font-medium rounded-lg text-white mt-3 sm:mt-4 cursor-pointer transition hover:opacity-90 active:scale-95 bg-[#9fa39e]"
+          >
             Coordenador
           </button>
         </div>

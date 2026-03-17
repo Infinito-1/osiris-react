@@ -5,8 +5,8 @@
    ============================================ */
 
 /* Navbar */
-.dark nav {
-  background-color: #3D1310 !important;
+.dark nav.bg-\[\#782e29\] {
+  background-color: #3D1310 ;
 }
 
 /* Fundo */
@@ -86,11 +86,13 @@
   border-color: #947260 !important;
 }
 
-
-
 .dark input[type="checkbox"]:checked,
 .dark input[type="radio"]:focus {
   background-color: #D7B8A7 !important;
+}
+
+.dark .loginCadastro {
+  color: #021926 !important;
 }
 
 /* Texto cinza no tema escuro */
@@ -98,7 +100,7 @@
 .dark .text-gray-600,
 .dark .text-gray-500,
 .dark .text-gray-400 {
-  color: #d1d5db !important;
+  color: #d1d5db;
 }
 
 /* Sombras no tema escuro */
