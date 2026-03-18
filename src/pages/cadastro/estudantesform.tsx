@@ -135,8 +135,10 @@ function EstudantesForm() {
               text-[1.1rem]
               rounded-lg
               mt-[20px]
-              transition-opacity
-              hover:opacity-90
+             hover:bg-[#495a63] 
+              transition
+              cursor-pointer
+              active:scale-95
             "
             onClick={() => navigate("/aluno")}
           >

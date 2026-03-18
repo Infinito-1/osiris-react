@@ -101,8 +101,9 @@ function CoordenadorForm() {
             text-[1.05rem]
             bg-[#9fa39e]
             mt-[20px]
-            transition-opacity
-            hover:opacity-90
+            transition
+            hover:bg-[#717271] 
+            active:scale-95
           "
           onClick={() => navigate("/coordenador")}
         >

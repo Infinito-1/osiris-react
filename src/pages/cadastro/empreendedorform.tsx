@@ -123,8 +123,10 @@ function EmpreendedorForm() {
               text-[1.1rem]
               rounded-lg
               mt-[20px]
-              transition-opacity
-              hover:opacity-90
+              transition 
+              hover:bg-[#5e231f] 
+              cursor-pointer
+              active:scale-95
             "
             onClick={() => navigate("/empreendedor")}
           >
