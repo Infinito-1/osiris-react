@@ -85,7 +85,7 @@ const CardDemanda = () => {
 
       {/* Botão de Ação */}
       <button
-        className="w-full bg-[#782E29] hover:bg-[#5e231f] text-white py-2.5 rounded-md font-medium text-sm transition-colors shadow-sm"
+        className="w-full hover:bg-[#5e231f] active:scale-95 bg-[#782e29] text-white py-2.5 rounded-md font-medium text-sm transition-colors shadow-sm"
         onClick={() => navigate("/classificar_demanda")}
       >
         Analisar e Classificar
