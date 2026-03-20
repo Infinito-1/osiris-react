@@ -27,60 +27,94 @@ import CoordenadorEmAndamento from "./pages/usuarios/CoordenadorEmAndamento";
 import CoordenadorConcluidas from "./pages/usuarios/CoordenadorConcluidas";
 import EmpreendedorConcluidas from "./pages/usuarios/EmpreendedorConcluidas";
 import EmpreendedorEmAndamento from "./pages/usuarios/EmpreendedorEmAndamento";
+import { useState } from "react";
 
 function App() {
+  const [zoom, setZoom] = useState(1);
+
+  const aumentarFonte = () => {
+    setZoom((prev) => prev + 0.1);
+  };
+
+  const diminuirFonte = () => {
+    setZoom((prev) => (prev > 0.7 ? prev - 0.1 : prev));
+  };
+
   return (
     <ThemeProvider>
       <BrowserRouter>
-        <Navbar />
-        <div className="min-h-[80vh]">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/grupos" element={<Grupos />} />
-            <Route path="/perfil_grupo" element={<SobreGrupo />} />
-            <Route path="/form_grupo" element={<FormGrupo />} />
-            <Route path="/dashboard_grupo" element={<Dashboard />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/esqueceu-senha" element={<EsqueceuSenha />} />
-            <Route path="/codigo-senha" element={<CodigoSenha />} />
-            <Route path="/redefinir-senha" element={<RedefinirSenha />} />
-            <Route
-              path="/cadastro/empreendedor"
-              element={<EmpreendedorForm />}
-            />
-            <Route path="/cadastro/estudante" element={<EstudantesForm />} />
-            <Route path="/cadastro/coordenador" element={<CoordenadorForm />} />
-            <Route path="/projeto" element={<Projeto />} />
-            <Route path="/entrega" element={<Entrega />} />
-            <Route path="/status" element={<Status />} />
-            <Route path="/cadastrar_demanda" element={<CadastrarDemanda />} />
-            <Route
-              path="/classificar_demanda"
-              element={<ClassificarDemanda />}
-            />
-            <Route path="/demandas" element={<GaleriaDemanda />} />
-            <Route path="/aluno" element={<DashboardAluno />} />
-            <Route path="/coordenador" element={<DashboardCoordenador />} />
-            <Route path="/empreendedor" element={<DashboardEmpreendedor />} />
-            <Route
-              path="/CoordenadorEmAndamento"
-              element={<CoordenadorEmAndamento />}
-            />
-            <Route
-              path="/CoordenadorConcluidas"
-              element={<CoordenadorConcluidas />}
-            />
-            <Route
-              path="/EmpreendedorConcluidas"
-              element={<EmpreendedorConcluidas />}
-            />
-            <Route
-              path="/EmpreendedorEmAndamento"
-              element={<EmpreendedorEmAndamento />}
-            />
-          </Routes>
+        {/* ZOOM GLOBAL */}
+        <div style={{ fontSize: `${zoom}em` }}>
+          
+          <Navbar />
+
+          {/* BOTÕES */}
+          <div className="fixed top-4 right-4 flex gap-2 z-50">
+            <button
+              onClick={aumentarFonte}
+              className="bg-blue-500 text-white px-3 py-1 rounded"
+            >
+              A+
+            </button>
+
+            <button
+              onClick={diminuirFonte}
+              className="bg-gray-500 text-white px-3 py-1 rounded"
+            >
+              A-
+            </button>
+          </div>
+
+          <div className="min-h-[80vh]">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/grupos" element={<Grupos />} />
+              <Route path="/perfil_grupo" element={<SobreGrupo />} />
+              <Route path="/form_grupo" element={<FormGrupo />} />
+              <Route path="/dashboard_grupo" element={<Dashboard />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/esqueceu-senha" element={<EsqueceuSenha />} />
+              <Route path="/codigo-senha" element={<CodigoSenha />} />
+              <Route path="/redefinir-senha" element={<RedefinirSenha />} />
+              <Route
+                path="/cadastro/empreendedor"
+                element={<EmpreendedorForm />}
+              />
+              <Route path="/cadastro/estudante" element={<EstudantesForm />} />
+              <Route path="/cadastro/coordenador" element={<CoordenadorForm />} />
+              <Route path="/projeto" element={<Projeto />} />
+              <Route path="/entrega" element={<Entrega />} />
+              <Route path="/status" element={<Status />} />
+              <Route path="/cadastrar_demanda" element={<CadastrarDemanda />} />
+              <Route
+                path="/classificar_demanda"
+                element={<ClassificarDemanda />}
+              />
+              <Route path="/demandas" element={<GaleriaDemanda />} />
+              <Route path="/aluno" element={<DashboardAluno />} />
+              <Route path="/coordenador" element={<DashboardCoordenador />} />
+              <Route path="/empreendedor" element={<DashboardEmpreendedor />} />
+              <Route
+                path="/CoordenadorEmAndamento"
+                element={<CoordenadorEmAndamento />}
+              />
+              <Route
+                path="/CoordenadorConcluidas"
+                element={<CoordenadorConcluidas />}
+              />
+              <Route
+                path="/EmpreendedorConcluidas"
+                element={<EmpreendedorConcluidas />}
+              />
+              <Route
+                path="/EmpreendedorEmAndamento"
+                element={<EmpreendedorEmAndamento />}
+              />
+            </Routes>
+          </div>
+
+          <Footer />
         </div>
-               <Footer />
       </BrowserRouter>
     </ThemeProvider>
   );
