@@ -27,7 +27,10 @@ import CoordenadorEmAndamento from "./pages/usuarios/CoordenadorEmAndamento";
 import CoordenadorConcluidas from "./pages/usuarios/CoordenadorConcluidas";
 import EmpreendedorConcluidas from "./pages/usuarios/EmpreendedorConcluidas";
 import EmpreendedorEmAndamento from "./pages/usuarios/EmpreendedorEmAndamento";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+
+// Heroicons
+import { PlusIcon, MinusIcon } from "@heroicons/react/24/solid";
 
 function App() {
   const [zoom, setZoom] = useState(1);
@@ -40,81 +43,84 @@ function App() {
     setZoom((prev) => (prev > 0.7 ? prev - 0.1 : prev));
   };
 
+  // Atualiza o font-size do <html> sempre que o zoom mudar
+  useEffect(() => {
+    document.documentElement.style.fontSize = `${zoom}em`;
+  }, [zoom]);
+
   return (
     <ThemeProvider>
       <BrowserRouter>
-        {/* ZOOM GLOBAL */}
-        <div style={{ fontSize: `${zoom}em` }}>
-          
-          <Navbar />
+        <Navbar />
 
-          {/* BOTÕES */}
-          <div className="fixed top-4 right-4 flex gap-2 z-50">
-            <button
-              onClick={aumentarFonte}
-              className="bg-blue-500 text-white px-3 py-1 rounded"
-            >
-              A+
-            </button>
+        {/* BOTÕES DE ZOOM COM ÍCONES */}
+        <div className="fixed top-4 right-4 flex gap-2 z-50">
+          <button
+            onClick={aumentarFonte}
+            className="bg-blue-500 text-white px-3 py-2 rounded flex items-center gap-1"
+            aria-label="Aumentar fonte"
+          >
+            <PlusIcon className="h-5 w-5" />
+          </button>
 
-            <button
-              onClick={diminuirFonte}
-              className="bg-gray-500 text-white px-3 py-1 rounded"
-            >
-              A-
-            </button>
-          </div>
-
-          <div className="min-h-[80vh]">
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/grupos" element={<Grupos />} />
-              <Route path="/perfil_grupo" element={<SobreGrupo />} />
-              <Route path="/form_grupo" element={<FormGrupo />} />
-              <Route path="/dashboard_grupo" element={<Dashboard />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/esqueceu-senha" element={<EsqueceuSenha />} />
-              <Route path="/codigo-senha" element={<CodigoSenha />} />
-              <Route path="/redefinir-senha" element={<RedefinirSenha />} />
-              <Route
-                path="/cadastro/empreendedor"
-                element={<EmpreendedorForm />}
-              />
-              <Route path="/cadastro/estudante" element={<EstudantesForm />} />
-              <Route path="/cadastro/coordenador" element={<CoordenadorForm />} />
-              <Route path="/projeto" element={<Projeto />} />
-              <Route path="/entrega" element={<Entrega />} />
-              <Route path="/status" element={<Status />} />
-              <Route path="/cadastrar_demanda" element={<CadastrarDemanda />} />
-              <Route
-                path="/classificar_demanda"
-                element={<ClassificarDemanda />}
-              />
-              <Route path="/demandas" element={<GaleriaDemanda />} />
-              <Route path="/aluno" element={<DashboardAluno />} />
-              <Route path="/coordenador" element={<DashboardCoordenador />} />
-              <Route path="/empreendedor" element={<DashboardEmpreendedor />} />
-              <Route
-                path="/CoordenadorEmAndamento"
-                element={<CoordenadorEmAndamento />}
-              />
-              <Route
-                path="/CoordenadorConcluidas"
-                element={<CoordenadorConcluidas />}
-              />
-              <Route
-                path="/EmpreendedorConcluidas"
-                element={<EmpreendedorConcluidas />}
-              />
-              <Route
-                path="/EmpreendedorEmAndamento"
-                element={<EmpreendedorEmAndamento />}
-              />
-            </Routes>
-          </div>
-
-          <Footer />
+          <button
+            onClick={diminuirFonte}
+            className="bg-gray-500 text-white px-3 py-2 rounded flex items-center gap-1"
+            aria-label="Diminuir fonte"
+          >
+            <MinusIcon className="h-5 w-5" />
+          </button>
         </div>
+
+        <div className="min-h-[80vh]">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/grupos" element={<Grupos />} />
+            <Route path="/perfil_grupo" element={<SobreGrupo />} />
+            <Route path="/form_grupo" element={<FormGrupo />} />
+            <Route path="/dashboard_grupo" element={<Dashboard />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/esqueceu-senha" element={<EsqueceuSenha />} />
+            <Route path="/codigo-senha" element={<CodigoSenha />} />
+            <Route path="/redefinir-senha" element={<RedefinirSenha />} />
+            <Route
+              path="/cadastro/empreendedor"
+              element={<EmpreendedorForm />}
+            />
+            <Route path="/cadastro/estudante" element={<EstudantesForm />} />
+            <Route path="/cadastro/coordenador" element={<CoordenadorForm />} />
+            <Route path="/projeto" element={<Projeto />} />
+            <Route path="/entrega" element={<Entrega />} />
+            <Route path="/status" element={<Status />} />
+            <Route path="/cadastrar_demanda" element={<CadastrarDemanda />} />
+            <Route
+              path="/classificar_demanda"
+              element={<ClassificarDemanda />}
+            />
+            <Route path="/demandas" element={<GaleriaDemanda />} />
+            <Route path="/aluno" element={<DashboardAluno />} />
+            <Route path="/coordenador" element={<DashboardCoordenador />} />
+            <Route path="/empreendedor" element={<DashboardEmpreendedor />} />
+            <Route
+              path="/CoordenadorEmAndamento"
+              element={<CoordenadorEmAndamento />}
+            />
+            <Route
+              path="/CoordenadorConcluidas"
+              element={<CoordenadorConcluidas />}
+            />
+            <Route
+              path="/EmpreendedorConcluidas"
+              element={<EmpreendedorConcluidas />}
+            />
+            <Route
+              path="/EmpreendedorEmAndamento"
+              element={<EmpreendedorEmAndamento />}
+            />
+          </Routes>
+        </div>
+
+        <Footer />
       </BrowserRouter>
     </ThemeProvider>
   );
