@@ -64,6 +64,18 @@ function EstudantesForm() {
             />
           </div>
 
+          {/* Nome do Grupo */}
+          <div className="form-group mb-[30px]">
+            <label htmlFor="nomeGrupo" className="font-medium">
+              Nome do Grupo (Usuário)
+            </label>
+            <input
+              type="text"
+              id="nomeGrupo"
+              className="w-full border border-[#d3d3d3] rounded p-2 mt-1"
+            />
+          </div>
+
           {/* Linha de Email e RA */}
           <div className="form-row flex gap-[35px] mb-[30px] max-[700px]:flex-col max-[700px]:gap-[20px]">
             <div className="form-group flex-1">
@@ -140,7 +152,7 @@ function EstudantesForm() {
               cursor-pointer
               active:scale-95
             "
-            onClick={() => navigate("/aluno")}
+            onClick={() => navigate("/dashboard_grupo")}
           >
             Criar Conta
           </button>
