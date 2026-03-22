@@ -55,7 +55,7 @@ const Grupos: React.FC = () => {
                         <input
                             type="text"
                             name="name"
-                            placeholder="Busque um Projeto"
+                            placeholder="Busque um grupo"
                             required
                             className="flex-grow py-3 px-6 border-none outline-none text-gray-800 placeholder-gray-500 text-base"
                         />
@@ -66,7 +66,7 @@ const Grupos: React.FC = () => {
                     </form>
 
                     {/* Botões de Ação (Cadastrar Projeto e Formar Equipe) */}
-                    <div className="flex space-x-4 mt-2">
+                    <div className="flex gap-4 mt-2 justify-center max-[500px]:flex-wrap">
                         <button className="flex items-center space-x-2 bg-[#5F747F] text-white py-3 px-5 rounded-lg text-base font-medium transition-colors duration-200 hover:bg-[#556872]">
                             <img src={foguete} alt="Cadastrar Projeto" className="w-5 h-5" />
                             <p>Cadastrar Projeto</p>
