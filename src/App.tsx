@@ -27,12 +27,51 @@ import CoordenadorEmAndamento from "./pages/usuarios/CoordenadorEmAndamento";
 import CoordenadorConcluidas from "./pages/usuarios/CoordenadorConcluidas";
 import EmpreendedorConcluidas from "./pages/usuarios/EmpreendedorConcluidas";
 import EmpreendedorEmAndamento from "./pages/usuarios/EmpreendedorEmAndamento";
+import { useState, useEffect } from "react";
+
+// Heroicons
+import { PlusIcon, MinusIcon } from "@heroicons/react/24/solid";
 
 function App() {
+  const [zoom, setZoom] = useState(1);
+
+  const aumentarFonte = () => {
+    setZoom((prev) => prev + 0.1);
+  };
+
+  const diminuirFonte = () => {
+    setZoom((prev) => (prev > 0.7 ? prev - 0.1 : prev));
+  };
+
+  // Atualiza o font-size do <html> sempre que o zoom mudar
+  useEffect(() => {
+    document.documentElement.style.fontSize = `${zoom}em`;
+  }, [zoom]);
+
   return (
     <ThemeProvider>
       <BrowserRouter>
         <Navbar />
+
+        {/* BOTÕES DE ZOOM COM ÍCONES */}
+        <div className="fixed top-4 right-4 flex gap-2 z-50">
+          <button
+            onClick={aumentarFonte}
+            className="bg-blue-500 text-white px-3 py-2 rounded flex items-center gap-1"
+            aria-label="Aumentar fonte"
+          >
+            <PlusIcon className="h-5 w-5" />
+          </button>
+
+          <button
+            onClick={diminuirFonte}
+            className="bg-gray-500 text-white px-3 py-2 rounded flex items-center gap-1"
+            aria-label="Diminuir fonte"
+          >
+            <MinusIcon className="h-5 w-5" />
+          </button>
+        </div>
+
         <div className="min-h-[80vh]">
           <Routes>
             <Route path="/" element={<Home />} />
@@ -80,7 +119,8 @@ function App() {
             />
           </Routes>
         </div>
-               <Footer />
+
+        <Footer />
       </BrowserRouter>
     </ThemeProvider>
   );
