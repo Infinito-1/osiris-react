@@ -95,19 +95,19 @@ const GaleriaDemanda: React.FC = () => {
         <main className="w-full min-h-screen bg-[#F1F7EE]">
             {/* Seção Superior (Header da Página) */}
             <header className="bg-[#021926] text-[#F1F7EE] py-30 text-center">
-                <h1 className="text-4xl font-bold mb-4">Galeria de Demanda</h1>
+                <h1 className="text-4xl font-bold mb-4">Galeria de Demandas</h1>
                 <div className="w-11/12 max-w-2xl mx-auto">
                     <div className="relative flex items-center w-full bg-[#FFFBF2] rounded-full overflow-hidden mb-8 shadow-lg">
                         <input
                             type="text"
-                            placeholder="Busque um Projeto"
+                            placeholder="Busque uma demanda"
                             className="w-full p-3 rounded-full text-gray-800 focus:outline-none"
                         />
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 absolute right-4 top-1/2 -translate-y-1/2 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                             <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                         </svg>
                     </div>
-                     <div className="flex space-x-4 mt-2 justify-center">
+                     <div className="flex gap-4 mt-2 justify-center max-[500px]:flex-wrap">
                         <button className="flex items-center space-x-2 bg-[#5F747F] text-white py-3 px-5 rounded-lg text-base font-medium transition-colors duration-200 hover:bg-[#556872]">
                             <img src={foguete} alt="Cadastrar Projeto" className="w-5 h-5" />
                             <p>Cadastrar Projeto</p>
@@ -129,8 +129,8 @@ const GaleriaDemanda: React.FC = () => {
 
                 {/* Coluna de Cards */}
                 <div className="lg:col-span-3">
-                    <div className="flex justify-between items-center mb-6">
-                        <h2 className="text-2xl font-semibold text-gray-800">Projetos Disponíveis ({demandasFiltradas.length})</h2>
+                    <div className="flex justify-between items-center mb-6 max-[500px]:flex-wrap">
+                        <h2 className="text-2xl font-semibold text-gray-800">Demandas Disponíveis ({demandasFiltradas.length})</h2>
                         <select className="p-2 border border-gray-300 rounded-md focus:outline-none bg-white">
                             <option>Mais recentes</option>
                             {/* Adicione outras opções de ordenação aqui */}
