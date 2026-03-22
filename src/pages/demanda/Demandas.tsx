@@ -95,7 +95,7 @@ const GaleriaDemanda: React.FC = () => {
         <main className="w-full min-h-screen bg-[#F1F7EE]">
             {/* Seção Superior (Header da Página) */}
             <header className="bg-[#021926] text-[#F1F7EE] py-30 text-center">
-                <h1 className="text-4xl font-bold mb-4">Galeria de Demanda</h1>
+                <h1 className="text-4xl font-bold mb-4">Galeria de Demandas</h1>
                 <div className="w-11/12 max-w-2xl mx-auto">
                     <div className="relative flex items-center w-full bg-[#FFFBF2] rounded-full overflow-hidden mb-8 shadow-lg">
                         <input

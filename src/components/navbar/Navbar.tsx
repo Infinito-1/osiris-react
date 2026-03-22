@@ -33,7 +33,7 @@ function Navbar() {
               bg-[#782e29] outline-1 -outline-offset-1 outline-white/10 transition data-closed:scale-95 data-closed:transform data-closed:opacity-0 
               data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in">
                 <div className="py-1">
-                  <MenuItem><a href="#"className="block px-4 py-2 text-sm bg-none border-none text-[#dad4c8] cursor-pointer transition-opacity duration-300 hover:opacity-70" onClick={() => navigate("/demandas")}> Projetos </a></MenuItem>
+                  <MenuItem><a href="#"className="block px-4 py-2 text-sm bg-none border-none text-[#dad4c8] cursor-pointer transition-opacity duration-300 hover:opacity-70" onClick={() => navigate("/demandas")}> Demandas </a></MenuItem>
                   <MenuItem><a href="#"className="block px-4 py-2 text-sm bg-none border-none text-[#dad4c8] cursor-pointer transition-opacity duration-300 hover:opacity-70" onClick={() => navigate("/#como-funciona")}> Como Funciona </a></MenuItem>
                   <MenuItem><a href="#"className="block px-4 py-2 text-sm bg-none border-none text-[#dad4c8] cursor-pointer transition-opacity duration-300 hover:opacity-70" onClick={() => navigate("/grupos")}> Grupos </a></MenuItem>
                 </div>
