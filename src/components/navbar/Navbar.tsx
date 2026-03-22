@@ -1,82 +1,112 @@
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../../assets/img/login/logo.png";
-import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
-import { ChevronDownIcon } from '@heroicons/react/20/solid';
+import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
+import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import ThemeToggle from "../ThemeToggle";
 
 function Navbar() {
   const navigate = useNavigate();
   return (
-    <div>
-      {/* Mobile */}
-      <div className="block sm:hidden">
-        <nav className="flex justify-between items-center bg-[#782e29] px-4 py-3 w-full">
-          {/* Logo */}
-          <Link to='/' className="flex items-center gap-3">
-            <div
-              className="w-12 h-12 rounded-full bg-center bg-cover"
-              style={{ backgroundImage: `url(${logo})` }}
-            ></div>
-            <div>
-              <h1 className="m-0 text-[clamp(1.3rem,4vw,1.6rem)] font-medium text-[#e9e4da]">Osíris</h1>
-              <span className="text-[clamp(0.85rem,2.5vw,1rem)] text-[#bab9b5]">Fatec Zona Leste</span>
-            </div>
-          </Link>
-
-          {/* Menu Hamburger */}
-          <Menu as="div" className="relative">
-            <MenuButton className="inline-flex items-center gap-1.5 rounded-md bg-white/10 px-3 py-2 text-white font-semibold hover:bg-white/20">
-              Menu <ChevronDownIcon className="h-5 w-5 text-gray-400" />
-            </MenuButton>
-            <MenuItems className="absolute right-0 mt-2 w-40 divide-y divide-white/10 rounded-md bg-[#782e29]">
-              <div className="py-1">
-                <MenuItem><a href="#" onClick={() => navigate("/demandas")} className="block px-4 py-2 text-sm text-[#dad4c8] hover:opacity-70">Projetos</a></MenuItem>
-                <MenuItem><a href="#" onClick={() => navigate("/#como-funciona")} className="block px-4 py-2 text-sm text-[#dad4c8] hover:opacity-70">Como Funciona</a></MenuItem>
-                <MenuItem><a href="#" onClick={() => navigate("/grupos")} className="block px-4 py-2 text-sm text-[#dad4c8] hover:opacity-70">Grupos</a></MenuItem>
+    <>
+      <div>
+        <div className="block min-[808px]:hidden">
+          <nav className="flex justify-evenly items-center bg-[#782e29] px-[60px] py-[15px]">
+            {/* Esquerda */}
+            <Link to='/' className="flex items-center gap-[12px] cursor-pointer transition-opacity duration-300 hover:opacity-70">
+              <div
+                className="w-[48px] h-[48px] rounded-full bg-center bg-cover bg-no-repeat"
+                style={{ backgroundImage: `url(${logo})` }}
+              ></div>
+              <div>
+                <h1 className="m-0 text-[1.6rem] font-medium text-[#e9e4da]">
+                  Osíris
+                </h1>
+                <span className="text-[1rem] text-[#bab9b5]">Fatec Zona Leste</span>
               </div>
-              <div className="py-1">
-                <MenuItem><div className="px-4 py-2"><ThemeToggle /></div></MenuItem>
-                <MenuItem><a href="#" onClick={() => navigate("/login")} className="block px-4 py-2 text-sm text-gray-300 hover:opacity-70">Login</a></MenuItem>
-                <MenuItem><a href="#" onClick={() => navigate("/login")} className="block px-4 py-2 text-sm text-gray-300 hover:opacity-70">Cadastrar</a></MenuItem>
+            </Link>
+
+            <Menu as="div" className="relative inline-block">
+              <MenuButton className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white/10 px-3 py-2 text-sm font-semibold 
+              text-white inset-ring-1 inset-ring-white/5 hover:bg-white/20"> Menu <ChevronDownIcon aria-hidden="true" className="-mr-1 size-5 text-gray-400" />
+              </MenuButton>
+              <MenuItems transition className="absolute right-0 z-10 mt-2 w-40 origin-top-right divide-y divide-white/10 rounded-md 
+              bg-[#782e29] outline-1 -outline-offset-1 outline-white/10 transition data-closed:scale-95 data-closed:transform data-closed:opacity-0 
+              data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in">
+                <div className="py-1">
+                  <MenuItem><a href="#"className="block px-4 py-2 text-sm bg-none border-none text-[#dad4c8] cursor-pointer transition-opacity duration-300 hover:opacity-70" onClick={() => navigate("/demandas")}> Projetos </a></MenuItem>
+                  <MenuItem><a href="#"className="block px-4 py-2 text-sm bg-none border-none text-[#dad4c8] cursor-pointer transition-opacity duration-300 hover:opacity-70" onClick={() => navigate("/#como-funciona")}> Como Funciona </a></MenuItem>
+                  <MenuItem><a href="#"className="block px-4 py-2 text-sm bg-none border-none text-[#dad4c8] cursor-pointer transition-opacity duration-300 hover:opacity-70" onClick={() => navigate("/grupos")}> Grupos </a></MenuItem>
+                </div>
+                  <div className="py-1">
+                    <MenuItem><div className="px-4 py-2"><ThemeToggle /></div></MenuItem>
+                    <MenuItem><a href="#"className="block px-4 py-2 text-sm text-gray-300 data-focus:bg-white/5 data-focus:text-white data-focus:outline-hidden" onClick={() => navigate("/login")}> Login </a></MenuItem>
+                    <MenuItem><a href="#"className="block px-4 py-2 text-sm text-gray-300 data-focus:bg-white/5 data-focus:text-white data-focus:outline-hidden" onClick={() => navigate("/login")}> Cadastrar </a></MenuItem>
+                  </div>
+                </MenuItems>
+            </Menu>
+
+          </nav>
+        </div>
+      
+        <div className="hidden min-[808px]:block">
+          <nav className="flex justify-between items-center bg-[#782e29] px-[60px] py-[15px]">
+            {/* Esquerda */}
+            <Link to='/' className="flex items-center gap-[12px] cursor-pointer transition-opacity duration-300 hover:opacity-70">
+              <div
+                className="w-[48px] h-[48px] rounded-full bg-center bg-cover bg-no-repeat"
+                style={{ backgroundImage: `url(${logo})` }}
+              ></div>
+              <div>
+                <h1 className="m-0 text-[1.6rem] font-medium text-[#e9e4da]">
+                  Osíris
+                </h1>
+                <span className="text-[1rem] text-[#bab9b5]">Fatec Zona Leste</span>
               </div>
-            </MenuItems>
-          </Menu>
-        </nav>
-      </div>
+            </Link>
 
-      {/* Desktop / Tablet */}
-      <div className="hidden sm:block">
-        <nav className="flex justify-between items-center bg-[#782e29] px-6 py-3 w-full">
-          {/* Esquerda - Logo */}
-          <Link to='/' className="flex items-center gap-3">
-            <div
-              className="w-[clamp(2.5rem,6vw,3rem)] h-[clamp(2.5rem,6vw,3rem)] rounded-full bg-center bg-cover"
-              style={{ backgroundImage: `url(${logo})` }}
-            ></div>
-            <div>
-              <h1 className="m-0 text-[clamp(1.3rem,4vw,1.6rem)] font-medium text-[#e9e4da]">Osíris</h1>
-              <span className="text-[clamp(0.85rem,2vw,1rem)] text-[#bab9b5]">Fatec Zona Leste</span>
+            {/* Centro */}
+            <div className="flex items-center gap-[30px]">
+              <button
+                className="bg-none border-none text-[#dad4c8] text-[1.15rem] cursor-pointer font-medium transition-opacity duration-300 hover:opacity-70"
+                // onClick={() => navigate("/aluno")}
+                // onClick={() => navigate("/coordenador")}
+                // onClick={() => navigate("/empreendedor")}
+                onClick={() => navigate("/demandas")}
+              >
+                Projetos
+              </button>
+              <Link to="/#como-funciona" className="bg-none border-none text-[#dad4c8] text-[1.15rem] cursor-pointer font-medium transition-opacity duration-300 hover:opacity-70">
+                Como Funciona
+              </Link>
+              <button
+                className="bg-none border-none text-[#dad4c8] text-[1.15rem] cursor-pointer font-medium transition-opacity duration-300 hover:opacity-70"
+                onClick={() => navigate("/grupos")}
+              >
+                Grupos
+              </button>
             </div>
-          </Link>
 
-          {/* Centro - Links */}
-          <div className="flex items-center gap-[clamp(1rem,4vw,2rem)]">
-            <button className="text-[#dad4c8] text-[clamp(0.95rem,2vw,1.15rem)] font-medium hover:opacity-70" onClick={() => navigate("/demandas")}>Projetos</button>
-            <Link to="/#como-funciona" className="text-[#dad4c8] text-[clamp(0.95rem,2vw,1.15rem)] font-medium hover:opacity-70">Como Funciona</Link>
-            <button className="text-[#dad4c8] text-[clamp(0.95rem,2vw,1.15rem)] font-medium hover:opacity-70" onClick={() => navigate("/grupos")}>Grupos</button>
-          </div>
-
-          {/* Direita - ThemeToggle + Botões */}
-          <div className="flex items-center gap-[clamp(1rem,4vw,2rem)]">
-            <div className="w-[clamp(1.5rem,3vw,2rem)] h-[clamp(1.5rem,3vw,2rem)] flex items-center justify-center">
+            {/* Direita */}
+            <div className="flex items-center gap-[30px]">
               <ThemeToggle />
+              <button
+                className="text-[1.1rem] rounded-[10px] px-[22px] py-[10px] font-semibold cursor-pointer border border-solid border-white bg-white text-black transition-opacity duration-300 hover:opacity-85"
+                onClick={() => navigate("/login")}
+              >
+                Login
+              </button>
+              <button
+                className="text-[1.1rem] rounded-[10px] px-[22px] py-[10px] font-semibold cursor-pointer border border-solid border-white bg-white text-black transition-opacity duration-300 hover:opacity-85"
+                onClick={() => navigate("/login")}
+              >
+                Cadastrar
+              </button>
             </div>
-            <button className="text-[clamp(0.9rem,2vw,1.1rem)] rounded-lg px-[clamp(16px,2vw,22px)] py-[clamp(6px,1.5vw,10px)] font-semibold border border-white bg-white text-black hover:opacity-85" onClick={() => navigate("/login")}>Login</button>
-            <button className="text-[clamp(0.9rem,2vw,1.1rem)] rounded-lg px-[clamp(16px,2vw,22px)] py-[clamp(6px,1.5vw,10px)] font-semibold border border-white bg-white text-black hover:opacity-85" onClick={() => navigate("/login")}>Cadastrar</button>
-          </div>
-        </nav>
+          </nav>
+        </div>
       </div>
-    </div>
+      
+    </>
   );
 }
 
