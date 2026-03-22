@@ -147,16 +147,15 @@ function Home() {
             <h1 className="text-5xl justify-center font-semibold text-[#DAD4C8] w-[70%] mx-auto text-center">Conectamos <span className="text-[#A33E38]">Empreendedores</span> com <span className="text-[#A33E38]">Estudantes de Tecnologia</span></h1>
             <p className="text-[#DAD4C8] text-center py-5 text-2xl w-[80%] mx-auto">Plataforma que une demandas reais de negócios com projetos acadêmicos da Fatec Zona Leste, criando oportunidades de aprendizado prático e soluções inovadoras.</p>
 
-            <div className="flex gap-5 justify-center">
-                <button className="text-white text-2x1 flex gap-1 bg-[#5F747F] rounded-2xl p-3 items-center cursor-pointer transition-opacity duration-300 hover:opacity-70">
-                    <img className="size-6" src={foguete}/>
-                    <p>Cadastrar Projeto</p>
-                </button>
-
-                <button className="bg-[#F1F7EE] text-2x1 flex gap-1 rounded-2xl p-3 items-center cursor-pointer transition-opacity duration-300 hover:opacity-70">
-                    <img className="size-4" src={pessoas}/>
-                    <p className="text-[#021926]">Formar Equipe </p>
-                </button>
+            <div className="flex space-x-4 mt-2 justify-center">
+                        <button className="flex items-center space-x-2 bg-[#5F747F] text-white py-3 px-5 rounded-lg text-base font-medium transition-colors duration-200 hover:bg-[#556872]">
+                            <img src={foguete} alt="Cadastrar Projeto" className="w-5 h-5" />
+                            <p>Cadastrar Projeto</p>
+                        </button>
+                        <button className="flex items-center space-x-2 bg-[#F1F7EE] text-[#000000] py-3 px-5 rounded-lg text-base font-medium transition-colors duration-200 hover:bg-[#c4c9c2]">
+                            <img src={pessoas} alt="Formar Equipe" className="w-5 h-5" />
+                            <p>Formar Equipe</p>
+                        </button>
             </div>
         </section>
 
@@ -195,25 +194,25 @@ function Home() {
             <div className="mx-[10%] my-10 ">
 
                 <div className="flex flex-wrap gap-10 justify-center">
-                    <div className="w-full sm:w-[45%] lg:w-[20%]  p-2 hover:scale-110">
+                    <div className="w-full sm:w-[45%] lg:w-[20%]  p-2 hover:scale-110 transition-transform duration-200">
                         <img className="size-25 mx-auto" src={EllipseCadastro} />
                         <h3 className="font-semibold text-lg">1. Cadastro</h3>
                         <p>Empreendedores se cadastram e descrevem suas demandas com detalhes do projeto</p>
                     </div>
 
-                    <div className="w-full sm:w-[45%] lg:w-[20%]  hover:scale-110">
+                    <div className="w-full sm:w-[45%] lg:w-[20%]  hover:scale-110 transition-transform duration-200">
                         <img className="size-25 mx-auto" src={EllipseDescoberta} />
                         <h3 className="font-semibold text-lg">2. Descoberta</h3>
                         <p>Estudantes exploram projetos usando filtros para encontrar oportunidades ideais</p>
                     </div>
 
-                    <div className="w-full sm:w-[45%] lg:w-[20%]  hover:scale-110">
+                    <div className="w-full sm:w-[45%] lg:w-[20%]  hover:scale-110 transition-transform duration-200">
                         <img className="size-25 mx-auto" src={EllipseConexao} />
                         <h3 className="font-semibold text-lg">3. Conexão</h3>
                         <p>Grupos de alunos manifestam interesse e iniciam diálogo com empreendedores</p>
                     </div>
 
-                    <div className="w-full sm:w-[45%] lg:w-[20%]  hover:scale-110">
+                    <div className="w-full sm:w-[45%] lg:w-[20%]  hover:scale-110 transition-transform duration-200">
                         <img className="size-25 mx-auto" src={EllipseExecucao} />
                         <h3 className="font-semibold text-lg">4. Execução</h3>
                         <p>Desenvolvimento colaborativo do projeto</p>

@@ -91,7 +91,18 @@ function CoordenadorForm() {
 
         {/* BOTÃO */}
         <button
-          className="w-full py-2.5 sm:py-3 md:py-4 rounded-lg text-white text-sm sm:text-base md:text-[1.05rem] font-medium bg-[#9fa39e] mt-4 sm:mt-[20px] transition-all hover:bg-[#8a8e89] active:scale-95"
+          className="
+            w-full
+            py-4
+            rounded-lg
+            text-white
+            text-[1.05rem]
+            bg-[#9fa39e]
+            mt-[20px]
+            transition
+            hover:bg-[#717271] 
+            active:scale-95
+          "
           onClick={() => navigate("/coordenador")}
         >
           Criar Conta

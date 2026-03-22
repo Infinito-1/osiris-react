@@ -219,7 +219,7 @@ export default function DashboardEmpreendedor() {
           {/* COLUNA DIREITA */}
           <div className="space-y-6">
             <button
-              className="w-full bg-[#550B0B] hover:bg-[#3f0808] text-white py-3 px-4 rounded-md shadow font-medium transition text-center"
+              className="w-full hover:bg-[#5e231f] active:scale-95 bg-[#782e29] text-white py-3 px-4 rounded-md shadow font-medium transition text-center"
               onClick={() => navigate("/cadastrar_demanda")}
             >
               Nova Demanda

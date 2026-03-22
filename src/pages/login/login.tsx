@@ -104,21 +104,21 @@ export default function Login() {
 
           <button
             onClick={() => navigate("/cadastro/empreendedor")}
-            className="w-full py-3 sm:py-4 text-sm sm:text-base md:text-[1.05rem] font-medium rounded-lg text-white mt-3 sm:mt-4 cursor-pointer transition hover:opacity-90 active:scale-95 bg-[#782e29]"
+            className="w-full py-3 sm:py-4 text-sm sm:text-base md:text-[1.05rem] font-medium rounded-lg text-white mt-3 sm:mt-4 cursor-pointer transition hover:bg-[#5e231f] active:scale-95 bg-[#782e29]"
           >
             Empreendedor
           </button>
 
           <button
             onClick={() => navigate("/cadastro/estudante")}
-            className="w-full py-3 sm:py-4 text-sm sm:text-base md:text-[1.05rem] font-medium rounded-lg text-white mt-3 sm:mt-4 cursor-pointer transition hover:opacity-90 active:scale-95 bg-[#546873]"
+            className="w-full py-3 sm:py-4 text-sm sm:text-base md:text-[1.05rem] font-medium rounded-lg text-white mt-3 sm:mt-4 cursor-pointer transition hover:bg-[#495a63] active:scale-95 bg-[#546873]"
           >
             Estudante
           </button>
 
           <button
             onClick={() => navigate("/cadastro/coordenador")}
-            className="w-full py-3 sm:py-4 text-sm sm:text-base md:text-[1.05rem] font-medium rounded-lg text-white mt-3 sm:mt-4 cursor-pointer transition hover:opacity-90 active:scale-95 bg-[#9fa39e]"
+            className="w-full py-3 sm:py-4 text-sm sm:text-base md:text-[1.05rem] font-medium rounded-lg text-white mt-3 sm:mt-4 cursor-pointer transition hover:bg-[#717271] active:scale-95 bg-[#9fa39e]"
           >
             Coordenador
           </button>

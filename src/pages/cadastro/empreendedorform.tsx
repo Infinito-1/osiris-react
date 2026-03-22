@@ -102,7 +102,19 @@ function EmpreendedorForm() {
           </div>
 
           <button
-            className="w-full text-white bg-[#782e29] py-2.5 sm:py-3 md:py-4 text-sm sm:text-base md:text-[1.1rem] rounded-lg font-medium mt-4 sm:mt-[20px] transition-all hover:bg-[#5e231f] active:scale-95"
+            className="
+              w-full
+              text-white
+              bg-[#782e29]
+              py-4
+              text-[1.1rem]
+              rounded-lg
+              mt-[20px]
+              transition 
+              hover:bg-[#5e231f] 
+              cursor-pointer
+              active:scale-95
+            "
             onClick={() => navigate("/empreendedor")}
           >
             Criar Conta

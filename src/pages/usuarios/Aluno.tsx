@@ -368,7 +368,7 @@ const MeuGrupo = () => {
       </div>
 
       <button
-        className="w-full bg-[#782E29] hover:bg-[#632420] text-white py-3 rounded-md shadow text-sm font-medium transition text-center"
+        className="w-full hover:bg-[#5e231f] active:scale-95 bg-[#782e29] text-white py-3 rounded-md shadow text-sm font-medium transition text-center"
         onClick={() => navigate("/dashboard_grupo")}
       >
         Acessar Dashboard do Grupo
@@ -410,7 +410,7 @@ export default function DashboardAluno() {
               <button className="w-full bg-[#021926] hover:bg-[#0f293a] text-white py-3 rounded-md shadow text-sm font-medium transition text-center">
                 Cadastrar Grupo
               </button>
-              <button className="w-full bg-[#550B0B] hover:bg-[#3f0808] text-white py-3 rounded-md shadow text-sm font-medium transition text-center">
+              <button className="w-full hover:bg-[#5e231f] active:scale-95 bg-[#782e29] text-white py-3 rounded-md shadow text-sm font-medium transition text-center">
                 Grupos com vagas em aberto
               </button>
             </div>

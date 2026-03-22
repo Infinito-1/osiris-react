@@ -48,9 +48,22 @@ function EstudantesForm() {
             />
           </div>
 
-          <div className="form-row grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 md:gap-[35px] mb-5 sm:mb-[30px]">
-            <div className="form-group">
-              <label htmlFor="emailStud" className="block text-sm sm:text-base font-medium mb-2 text-[#021926]">
+          {/* Nome do Grupo */}
+          <div className="form-group mb-[30px]">
+            <label htmlFor="nomeGrupo" className="font-medium">
+              Nome do Grupo (Usuário)
+            </label>
+            <input
+              type="text"
+              id="nomeGrupo"
+              className="w-full border border-[#d3d3d3] rounded p-2 mt-1"
+            />
+          </div>
+
+          {/* Linha de Email e RA */}
+          <div className="form-row flex gap-[35px] mb-[30px] max-[700px]:flex-col max-[700px]:gap-[20px]">
+            <div className="form-group flex-1">
+              <label htmlFor="emailStud" className="font-medium">
                 E-mail
               </label>
               <input
@@ -111,8 +124,20 @@ function EstudantesForm() {
           </div>
 
           <button
-            className="w-full text-white bg-[#546873] py-2.5 sm:py-3 md:py-4 text-sm sm:text-base md:text-[1.1rem] rounded-lg font-medium mt-4 sm:mt-[20px] transition-all hover:bg-[#445561] active:scale-95"
-            onClick={() => navigate("/aluno")}
+            className="
+              w-full
+              text-white
+              bg-[#546873]
+              py-4
+              text-[1.1rem]
+              rounded-lg
+              mt-[20px]
+             hover:bg-[#495a63] 
+              transition
+              cursor-pointer
+              active:scale-95
+            "
+            onClick={() => navigate("/dashboard_grupo")}
           >
             Criar Conta
           </button>
