@@ -14,8 +14,8 @@ const CardDemanda: React.FC<CardDemandaProps> = ({ titulo, empreendedor, tipo, c
     const navigate = useNavigate();
     return (
         <div className="bg-white border border-gray-300 rounded-lg p-6 shadow-md h-full flex flex-col">
-            <h3 className="text-xl font-semibold text-gray-800 mb-1">{titulo}</h3>
-            <div className="flex items-center space-x-4 text-sm text-gray-600 mb-2">
+            <h3 className="text-xl break-words font-semibold text-gray-800 mb-1">{titulo}</h3>
+            <div className="flex-wrap break-words items-center space-x-4 text-sm text-gray-600 mb-2">
                 <span>{empreendedor}</span>
                 <span>/</span>
                 <span>{tipo}</span>
