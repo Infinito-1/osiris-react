@@ -190,30 +190,30 @@ function Home() {
 
         <section id="como-funciona" className="text-center py-5">
             <h2 className="text-3xl font-semibold">Como Funciona</h2>
-            <p className="text-2xl w-[50%] mx-auto">Um processo simples e eficiente para conectar demandas reais com estudantes talentosos</p>
+            <p className="w-[50%] mx-auto lg:text-2xl md:text-lg sm:text-sm">Um processo simples e eficiente para conectar demandas reais com estudantes talentosos</p>
 
-            <div className="mx-[10%] my-10">
+            <div className="mx-[10%] my-10 ">
 
-                <div className="flex gap-15 justify-center">
-                    <div className="justify-center w-[25%] p-2 hover:scale-110">
+                <div className="flex flex-wrap gap-10 justify-center">
+                    <div className="w-full sm:w-[45%] lg:w-[20%]  p-2 hover:scale-110">
                         <img className="size-25 mx-auto" src={EllipseCadastro} />
                         <h3 className="font-semibold text-lg">1. Cadastro</h3>
                         <p>Empreendedores se cadastram e descrevem suas demandas com detalhes do projeto</p>
                     </div>
 
-                    <div className="justify-center w-[25%] hover:scale-110">
+                    <div className="w-full sm:w-[45%] lg:w-[20%]  hover:scale-110">
                         <img className="size-25 mx-auto" src={EllipseDescoberta} />
                         <h3 className="font-semibold text-lg">2. Descoberta</h3>
                         <p>Estudantes exploram projetos usando filtros para encontrar oportunidades ideais</p>
                     </div>
 
-                    <div className="justify-center w-[25%] hover:scale-110">
+                    <div className="w-full sm:w-[45%] lg:w-[20%]  hover:scale-110">
                         <img className="size-25 mx-auto" src={EllipseConexao} />
                         <h3 className="font-semibold text-lg">3. Conexão</h3>
                         <p>Grupos de alunos manifestam interesse e iniciam diálogo com empreendedores</p>
                     </div>
 
-                    <div className="justify-center w-[25%] hover:scale-110">
+                    <div className="w-full sm:w-[45%] lg:w-[20%]  hover:scale-110">
                         <img className="size-25 mx-auto" src={EllipseExecucao} />
                         <h3 className="font-semibold text-lg">4. Execução</h3>
                         <p>Desenvolvimento colaborativo do projeto</p>

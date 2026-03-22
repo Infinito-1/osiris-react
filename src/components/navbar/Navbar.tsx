@@ -9,7 +9,7 @@ function Navbar() {
   return (
     <>
       <div>
-        <div className="block sm:hidden">
+        <div className="block min-[808px]:hidden">
           <nav className="flex justify-evenly items-center bg-[#782e29] px-[60px] py-[15px]">
             {/* Esquerda */}
             <Link to='/' className="flex items-center gap-[12px] cursor-pointer transition-opacity duration-300 hover:opacity-70">
@@ -48,7 +48,7 @@ function Navbar() {
           </nav>
         </div>
       
-        <div className="hidden sm:block">
+        <div className="hidden min-[808px]:block">
           <nav className="flex justify-between items-center bg-[#782e29] px-[60px] py-[15px]">
             {/* Esquerda */}
             <Link to='/' className="flex items-center gap-[12px] cursor-pointer transition-opacity duration-300 hover:opacity-70">
