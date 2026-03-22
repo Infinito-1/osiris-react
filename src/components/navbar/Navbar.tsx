@@ -73,7 +73,7 @@ function Navbar() {
                 // onClick={() => navigate("/empreendedor")}
                 onClick={() => navigate("/demandas")}
               >
-                Projetos
+                Demandas
               </button>
               <Link to="/#como-funciona" className="bg-none border-none text-[#dad4c8] text-[1.15rem] cursor-pointer font-medium transition-opacity duration-300 hover:opacity-70">
                 Como Funciona
