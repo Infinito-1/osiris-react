@@ -62,7 +62,7 @@ const FiltroDemandas: React.FC<FiltroDemandasProps> = ({ onFiltroChange, current
 
             {/* Tipo de Projeto */}
             <div className="mb-6">
-                <h4 className="font-medium text-gray-800 mb-2">Tipo de Projeto</h4>
+                <h4 className="font-medium text-gray-800 mb-2">Formato</h4>
                 <div className="space-y-2">
                     {TIPOS_PROJETO.map((tipo, index) => (
                         <div key={index} className="flex items-center">
