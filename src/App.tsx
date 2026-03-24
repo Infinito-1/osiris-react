@@ -2,7 +2,6 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import Navbar from "./components/navbar/Navbar";
 import Footer from "./components/footer/Footer";
-import VLibrasAccessibility from "./components/VLibrasAccessibility";
 import Home from "./pages/home/Home";
 import Grupos from "./pages/grupo/Grupos";
 import SobreGrupo from "./pages/grupo/Perfil_grupo";
@@ -52,7 +51,6 @@ function App() {
   return (
     <ThemeProvider>
       <BrowserRouter>
-        <VLibrasAccessibility />
         <Navbar />
 
         {/* BOTÕES DE ZOOM COM ÍCONES */}
