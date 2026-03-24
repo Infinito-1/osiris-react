@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+
 const VLibrasAccessibility = () => {
   useEffect(() => {
     const scriptId = 'vlibras-plugin-script';
@@ -31,9 +32,7 @@ const VLibrasAccessibility = () => {
 
   return (
     <>
-      {
-        
-      }
+      {}
       <div 
         {...{ vw: 'true' as 'true' }}
         className="enabled fixed z-[9999]"
