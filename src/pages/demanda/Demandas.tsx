@@ -92,7 +92,7 @@ const GaleriaDemanda: React.FC = () => {
     }, [filtros]);
 
     return (
-        <main className="w-full min-h-screen bg-[#F1F7EE]">
+        <div className="w-full min-h-screen bg-[#F1F7EE]">
             {/* Seção Superior (Header da Página) */}
             <header className="bg-[#021926] text-[#F1F7EE] py-30 text-center">
                 <h1 className="text-4xl font-bold mb-4">Galeria de Demandas</h1>
@@ -146,7 +146,7 @@ const GaleriaDemanda: React.FC = () => {
                     )}
                 </div>
             </div>
-        </main>
+        </div>
     );
 };
 

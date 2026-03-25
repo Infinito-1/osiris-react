@@ -61,7 +61,7 @@ const FormField: React.FC<FormFieldProps> = ({ label, id, type, placeholder, req
 // Componente Principal da Página de Entrega
 const Entrega: React.FC = () => {
     return (
-        <main className="flex justify-center w-full min-h-screen bg-[#F1F7EE] py-10">
+        <div className="flex justify-center w-full min-h-screen bg-[#F1F7EE] py-10">
             <div className="w-11/12 max-w-2xl bg-white border border-gray-300 rounded-lg p-8 shadow-xl">
                 <h1 className="text-3xl font-bold text-gray-800 text-center mb-8">
                     Entrega de Projeto
@@ -134,7 +134,7 @@ const Entrega: React.FC = () => {
                     </div>
                 </form>
             </div>
-        </main>
+        </div>
     );
 };
 

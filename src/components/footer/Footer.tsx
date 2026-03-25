@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 function Footer() {
   return (
     <>
-      <main className="flex flex-col bg-[#F1F7EE]">
+      <div className="flex flex-col bg-[#F1F7EE]">
         <footer className="bg-[#021926] text-[#dad4c8] pt-8 sm:pt-12 md:pt-[50px] px-4 sm:px-6 md:px-[80px] pb-5 sm:pb-[20px] mt-12 sm:mt-16 md:mt-[80px]">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8 md:gap-[40px] mb-6 sm:mb-[30px]">
             <div>
@@ -70,7 +70,7 @@ function Footer() {
             © 2025 Osíris - Fatec Zona Leste. Todos os direitos reservados.
           </div>
         </footer>
-      </main>
+      </div>
     </>
   );
 }

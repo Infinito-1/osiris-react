@@ -142,7 +142,7 @@ function Home() {
 
   return (
     <>
-      <main className="w-full min-h-screen bg-[#F1F7EE]">
+      <div className="w-full min-h-screen bg-[#F1F7EE]">
         <section className="bg-[#021926] p-10">
             <h1 className="text-4xl justify-center font-semibold text-[#DAD4C8] w-[70%] mx-auto text-center md:text-5xl break-words">Conectamos <span className="text-[#A33E38]">Empreendedores</span> com <span className="text-[#A33E38]">Estudantes de Tecnologia</span></h1>
             <p className="text-[#DAD4C8] text-center py-5 text-2xl w-[80%] mx-auto">Plataforma que une demandas reais de negócios com projetos acadêmicos da Fatec Zona Leste, criando oportunidades de aprendizado prático e soluções inovadoras.</p>
@@ -230,7 +230,7 @@ function Home() {
             </div>
 
         </section>
-      </main>
+      </div>
     </>
   )
 }
