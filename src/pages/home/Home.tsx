@@ -142,7 +142,7 @@ function Home() {
 
   return (
     <>
-      <div className="w-full min-h-screen bg-[#F1F7EE]">
+      <div className="w-full min-h-screen ">
         <section className="bg-[#021926] p-10">
             <h1 className="text-4xl justify-center font-semibold text-[#DAD4C8] w-[70%] mx-auto text-center md:text-5xl break-words">Conectamos <span className="text-[#A33E38]">Empreendedores</span> com <span className="text-[#A33E38]">Estudantes de Tecnologia</span></h1>
             <p className="text-[#DAD4C8] text-center py-5 text-2xl w-[80%] mx-auto">Plataforma que une demandas reais de negócios com projetos acadêmicos da Fatec Zona Leste, criando oportunidades de aprendizado prático e soluções inovadoras.</p>
@@ -159,7 +159,7 @@ function Home() {
             </div>
         </section>
 
-        <section className="bg=[#F1F7EE] py-10">
+        <section className="bg-[#F1F7EE] py-10">
             <div className="w-11/12 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-4 gap-8">
                 {/* Coluna de Filtros */}
                 <div className="lg:col-span-1">
@@ -190,7 +190,7 @@ function Home() {
             </div>
         </section>
 
-        <section id="como-funciona" className="text-center py-5">
+        <section id="como-funciona" className="text-center py-5 bg-[#F1F7EE]">
             <h2 className="text-3xl font-semibold">Como Funciona</h2>
             <p className="w-[50%] mx-auto lg:text-2xl md:text-lg sm:text-sm">Um processo simples e eficiente para conectar demandas reais com estudantes talentosos</p>
 
@@ -224,7 +224,7 @@ function Home() {
             </div>
         </section>
 
-        <section className="text-center py-5">
+        <section className="text-center py-5 bg-[#F1F7EE]">
             <h2 className="text-3xl font-semibold">Faça Parte da Plataforma</h2>
             <p className="text-2xl w-[50%] mx-auto mb-2">Escolha como deseja participar do Osiris</p>
 

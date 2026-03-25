@@ -10,7 +10,7 @@
 }
 
 /* Fundo */
-.dark main.bg-\[\#F1F7EE\],
+.dark .bg-\[\#F1F7EE\],
 .dark section.bg-\[\#F1F7EE\]{
   background-color: #848484;
 }
@@ -21,10 +21,6 @@
 
 .dark button.bg-\[\#5F747F\]{
   background-color: #354046;
-}
-
-.dark button.bg-\[\#9fa39e\]{
-  background-color: #4f534e;
 }
 
 .dark .bg-\[\#792E29\],
