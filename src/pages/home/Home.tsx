@@ -170,7 +170,10 @@ function Home() {
                 <div className="lg:col-span-3">
                     <div className="flex justify-between items-center mb-6 max-[500px]:flex-wrap">
                         <h2 className="text-2xl font-semibold text-gray-800">Demandas Disponíveis ({demandasFiltradas.length})</h2>
-                        <select className="p-2 border border-gray-300 rounded-md focus:outline-none bg-white">
+                        <select 
+                            id="ordenar"
+                            name="ordenar"
+                            className="p-2 border border-gray-300 rounded-md focus:outline-none bg-white">
                             <option>Mais recentes</option>
                             {/* Adicione outras opções de ordenação aqui */}
                         </select>

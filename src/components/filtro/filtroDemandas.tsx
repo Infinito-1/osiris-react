@@ -81,7 +81,10 @@ const FiltroDemandas: React.FC<FiltroDemandasProps> = ({ onFiltroChange, current
             {/* Área de Negócio */}
             <div className="mb-6">
                 <h4 className="font-medium text-gray-800 mb-2">Área de Negócio</h4>
-                <select className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#782E29]"
+                <select 
+                    id= "area_selecionada"
+                    name= "area_selecionada"
+                    className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#782E29]"
                     value={filtrosInternos.area}
                     onChange={handleAreaChange}
                 >
