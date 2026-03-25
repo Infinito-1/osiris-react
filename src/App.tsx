@@ -28,10 +28,10 @@ import CoordenadorConcluidas from "./pages/usuarios/CoordenadorConcluidas";
 import EmpreendedorConcluidas from "./pages/usuarios/EmpreendedorConcluidas";
 import EmpreendedorEmAndamento from "./pages/usuarios/EmpreendedorEmAndamento";
 import { useState, useEffect } from "react";
-
-// Heroicons
 import { PlusIcon, MinusIcon } from "@heroicons/react/24/solid";
+import useFocusMain from "./components/hooks/useFocusMain";
 
+  
 function App() {
   const [zoom, setZoom] = useState(1);
 
@@ -48,9 +48,18 @@ function App() {
     document.documentElement.style.fontSize = `${zoom}em`;
   }, [zoom]);
 
+  useFocusMain();
+
   return (
     <ThemeProvider>
       <BrowserRouter>
+      {/* Skip link */}
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-50 focus:bg-black focus:text-white focus:px-4 focus:py-2"
+      >
+        Saltar para o conteúdo principal
+      </a>
         <Navbar />
 
         {/* BOTÕES DE ZOOM COM ÍCONES */}
@@ -72,7 +81,7 @@ function App() {
           </button>
         </div>
 
-        <div className="min-h-[80vh]">
+        <main id="main-content" tabIndex={-1} className="min-h-[80vh]">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/grupos" element={<Grupos />} />
@@ -118,7 +127,7 @@ function App() {
               element={<EmpreendedorEmAndamento />}
             />
           </Routes>
-        </div>
+        </main>
 
         <Footer />
       </BrowserRouter>
