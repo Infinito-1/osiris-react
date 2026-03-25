@@ -4,11 +4,13 @@ import AppContent from "./components/AppContent";
   
 function App() {
   return (
-    <ThemeProvider>
-      <BrowserRouter>
-      <AppContent />
-      </BrowserRouter>
-    </ThemeProvider>
+    <>
+      <ThemeProvider>
+        <BrowserRouter>
+        <AppContent />
+        </BrowserRouter>
+      </ThemeProvider>
+    </>
   );
 }
 

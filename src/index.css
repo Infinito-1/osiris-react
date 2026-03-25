@@ -10,7 +10,7 @@
 }
 
 /* Fundo */
-.dark main.bg-\[\#F1F7EE\],
+.dark .bg-\[\#F1F7EE\],
 .dark section.bg-\[\#F1F7EE\]{
   background-color: #848484;
 }

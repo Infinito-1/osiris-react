@@ -59,6 +59,7 @@ export default function AppContent() {
       >
         Saltar para o conteúdo principal
       </a>
+      <div className="flex flex-col min-h-screen">
         <Navbar />
 
         {/* BOTÕES DE ZOOM COM ÍCONES */}
@@ -80,7 +81,7 @@ export default function AppContent() {
           </button>
         </div>
 
-        <main id="main-content" tabIndex={-1} className="min-h-[80vh]">
+        <main id="main-content" tabIndex={-1} className="flex-1 bg-[#F1F7EE] dark:bg-[#848484]">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/grupos" element={<Grupos />} />
@@ -129,6 +130,7 @@ export default function AppContent() {
         </main>
 
         <Footer />
+      </div>
     </>
   );
 }
