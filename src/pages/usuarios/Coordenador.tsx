@@ -174,7 +174,7 @@ const Relatorios = () => {
 
 export default function DashboardCoordenador() {
   return (
-    <main className="w-full min-h-screen bg-[#F1F7EE] py-10 font-sans">
+    <div className="w-full min-h-screen bg-[#F1F7EE] py-10 font-sans">
       <div className="w-11/12 max-w-6xl mx-auto">
         {/* Header */}
         <header className="text-center mb-10">
@@ -206,6 +206,6 @@ export default function DashboardCoordenador() {
           </div>
         </div>
       </div>
-    </main>
+    </div>
   );
 }

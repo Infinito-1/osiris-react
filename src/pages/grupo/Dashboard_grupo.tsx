@@ -530,7 +530,7 @@ const HistoricoEntregas: React.FC = () => {
 // --- Componente Principal do Dashboard ---
 const DashboardGrupo: React.FC = () => {
   return (
-    <main className="flex flex-col items-center w-full bg-[#F1F7EE] py-10 pb-20 font-sans">
+    <div className="flex flex-col items-center w-full bg-[#F1F7EE] py-10 pb-20 font-sans">
       <div className="w-11/12 max-w-6xl">
         {/* Título Principal */}
         <h1 className="text-3xl md:text-4xl font-bold text-gray-800 text-center mb-2">
@@ -556,7 +556,7 @@ const DashboardGrupo: React.FC = () => {
           </div>
         </div>
       </div>
-    </main>
+    </div>
   );
 };
 

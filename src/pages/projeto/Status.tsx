@@ -30,7 +30,7 @@ const StatusField: React.FC<StatusFieldProps> = ({ label, id, placeholder, colSp
 // Componente Principal da Página de Status
 const Status: React.FC = () => {
     return (
-        <main className="flex justify-center w-full h-160 bg-[#F1F7EE] py-20">
+        <div className="flex justify-center w-full h-160 bg-[#F1F7EE] py-20">
             <div className="w-11/12 max-w-2xl bg-white border border-gray-300 rounded-lg p-8 shadow-xl">
                 <h1 className="text-3xl font-bold text-gray-800 text-center mb-8">
                     Status do Projeto
@@ -69,7 +69,7 @@ const Status: React.FC = () => {
                     />
                 </form>
             </div>
-        </main>
+        </div>
     );
 };
 

@@ -43,7 +43,7 @@ const Grupos: React.FC = () => {
     const cards = Array.from({ length: 6 }, (_, i) => <GrupoCard key={i} />);
 
     return (
-        <main className="flex flex-col items-center w-full min-h-screen bg-[#F1F7EE]">
+        <div className="flex flex-col items-center w-full min-h-screen bg-[#F1F7EE]">
             {/* Seção do Cabeçalho (Fundo Azul Escuro) */}
             <section className="w-full bg-[#021926] text-[#FFFBF2] py-10 md:py-16 flex justify-center">
                 <div className="w-11/12 max-w-6xl flex flex-col items-center text-center">
@@ -85,7 +85,7 @@ const Grupos: React.FC = () => {
                     {cards}
                 </div>
             </section>
-        </main>
+        </div>
     );
 };
 
