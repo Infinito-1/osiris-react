@@ -31,7 +31,7 @@ const StatusBadge = ({ text }: { text: string }) => (
 const TabsNavegacao = () => {
   const navigate = useNavigate();
   return (
-    <div className="flex w-full bg-[#A7ACA6] rounded-md p-1 shadow-sm">
+    <div className="flex w-full bg-[#4f534e] rounded-md p-1 shadow-sm">
       <button
         className="flex-1 py-2 text-white font-medium text-sm hover:bg-white/10 rounded transition-colors"
         onClick={() => navigate("/empreendedor")}

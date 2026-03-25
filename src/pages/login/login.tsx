@@ -118,7 +118,7 @@ export default function Login() {
 
           <button
             onClick={() => navigate("/cadastro/coordenador")}
-            className="w-full py-3 sm:py-4 text-sm sm:text-base md:text-[1.05rem] font-medium rounded-lg text-white mt-3 sm:mt-4 cursor-pointer transition hover:bg-[#717271] active:scale-95 bg-[#9fa39e]"
+            className="w-full py-3 sm:py-4 text-sm sm:text-base md:text-[1.05rem] font-medium rounded-lg text-white mt-3 sm:mt-4 cursor-pointer transition hover:bg-[#717271] active:scale-95 bg-[#4f534e]"
           >
             Coordenador
           </button>

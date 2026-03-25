@@ -23,7 +23,7 @@ function CoordenadorForm() {
           <img
             src={Book}
             alt="Ícone Coordenador"
-            className="w-16 sm:w-20 md:w-[90px] h-16 sm:h-20 md:h-[90px] rounded-full p-3 sm:p-4 md:p-[15px] bg-[#9fa39e]"
+            className="w-16 sm:w-20 md:w-[90px] h-16 sm:h-20 md:h-[90px] rounded-full p-3 sm:p-4 md:p-[15px] bg-[#4f534e]"
           />
         </div>
 
@@ -46,7 +46,7 @@ function CoordenadorForm() {
             type="text"
             id="nomeCoo"
             placeholder="Digite seu nome completo"
-            className="w-full border border-gray-300 rounded-lg p-2.5 sm:p-3 text-sm sm:text-base outline-none focus:ring-2 focus:ring-[#9fa39e] transition"
+            className="w-full border border-gray-300 rounded-lg p-2.5 sm:p-3 text-sm sm:text-base outline-none focus:ring-2 focus:ring-[#4f534e] transition"
           />
         </div>
 
@@ -59,7 +59,7 @@ function CoordenadorForm() {
             type="email"
             id="emailCoo"
             placeholder="seu.email@exemplo.com"
-            className="w-full border border-gray-300 rounded-lg p-2.5 sm:p-3 text-sm sm:text-base outline-none focus:ring-2 focus:ring-[#9fa39e] transition"
+            className="w-full border border-gray-300 rounded-lg p-2.5 sm:p-3 text-sm sm:text-base outline-none focus:ring-2 focus:ring-[#4f534e] transition"
           />
         </div>
 
@@ -72,7 +72,7 @@ function CoordenadorForm() {
             type="text"
             id="cursoCoo"
             placeholder="Ex: Análise e Desenvolvimento de Sistemas"
-            className="w-full border border-gray-300 rounded-lg p-2.5 sm:p-3 text-sm sm:text-base outline-none focus:ring-2 focus:ring-[#9fa39e] transition"
+            className="w-full border border-gray-300 rounded-lg p-2.5 sm:p-3 text-sm sm:text-base outline-none focus:ring-2 focus:ring-[#4f534e] transition"
           />
         </div>
 
@@ -85,7 +85,7 @@ function CoordenadorForm() {
             type="password"
             id="senhaCoo"
             placeholder="••••••••"
-            className="w-full border border-gray-300 rounded-lg p-2.5 sm:p-3 text-sm sm:text-base outline-none focus:ring-2 focus:ring-[#9fa39e] transition"
+            className="w-full border border-gray-300 rounded-lg p-2.5 sm:p-3 text-sm sm:text-base outline-none focus:ring-2 focus:ring-[#4f534e] transition"
           />
         </div>
 
@@ -97,7 +97,7 @@ function CoordenadorForm() {
             rounded-lg
             text-white
             text-[1.05rem]
-            bg-[#9fa39e]
+            bg-[#4f534e]
             mt-[20px]
             transition
             hover:bg-[#717271] 
@@ -113,7 +113,7 @@ function CoordenadorForm() {
             Já tem uma conta?{" "}
             <button
               onClick={() => navigate("/login")}
-              className="text-[#9fa39e] font-medium underline hover:no-underline transition"
+              className="text-[#4f534e] font-medium underline hover:no-underline transition"
             >
               Faça login aqui
             </button>

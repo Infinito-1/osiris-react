@@ -20,7 +20,7 @@ const Tag = ({ text }: { text: string }) => (
 const TabsNavegacao = () => {
   const navigate = useNavigate();
   return (
-    <div className="flex w-full bg-[#A7ACA6] rounded-md p-1 shadow-sm">
+    <div className="flex w-full bg-[#4f534e] rounded-md p-1 shadow-sm">
       <button className="flex-1 py-2 bg-white text-gray-900 rounded-md font-medium shadow-sm text-sm transition-all">
         Demandas Pendentes
       </button>

@@ -67,7 +67,7 @@ const cardsData: CardData[] = [
     bgEllipse: EllipseBook,
     image: Book,
     link: "/cadastro/coordenador",
-    buttonColor: "#9FA39E",
+    buttonColor: "#4f534e",
   }
 ];
 
