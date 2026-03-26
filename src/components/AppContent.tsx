@@ -1,3 +1,4 @@
+import { Route, Routes } from "react-router-dom";
 import Navbar from "../components/navbar/Navbar";
 import Footer from "../components/footer/Footer";
 import Home from "../pages/home/Home";
@@ -25,63 +26,24 @@ import CoordenadorEmAndamento from "../pages/usuarios/CoordenadorEmAndamento";
 import CoordenadorConcluidas from "../pages/usuarios/CoordenadorConcluidas";
 import EmpreendedorConcluidas from "../pages/usuarios/EmpreendedorConcluidas";
 import EmpreendedorEmAndamento from "../pages/usuarios/EmpreendedorEmAndamento";
-import { Route, Routes } from "react-router-dom";
-import { PlusIcon, MinusIcon } from "@heroicons/react/24/solid";
 import useFocusMain from "../components/hooks/useFocusMain";
-import { useState, useEffect } from "react";
-
-  
+import AccessibilityButton from "../components/AccessibilityButton";
 
 export default function AppContent() {
-  const [zoom, setZoom] = useState(1);
-
-  const aumentarFonte = () => {
-    setZoom((prev) => prev + 0.1);
-  };
-
-  const diminuirFonte = () => {
-    setZoom((prev) => (prev > 0.7 ? prev - 0.1 : prev));
-  };
-
-  // Atualiza o font-size do <html> sempre que o zoom mudar
-  useEffect(() => {
-    document.documentElement.style.fontSize = `${zoom}em`;
-  }, [zoom]);
-
   useFocusMain();
 
   return (
     <>
-      {/* Skip link */}
-      <a
-        href="#main-content"
-        className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-50 focus:bg-black focus:text-white focus:px-4 focus:py-2"
-      >
-        Saltar para o conteúdo principal
-      </a>
       <div className="flex flex-col min-h-screen">
         <Navbar />
 
-        {/* BOTÕES DE ZOOM COM ÍCONES */}
-        <div className="fixed top-4 right-4 flex gap-2 z-50">
-          <button
-            onClick={aumentarFonte}
-            className="bg-blue-500 text-white px-3 py-2 rounded flex items-center gap-1"
-            aria-label="Aumentar fonte"
-          >
-            <PlusIcon className="h-5 w-5" />
-          </button>
+        <AccessibilityButton />
 
-          <button
-            onClick={diminuirFonte}
-            className="bg-gray-500 text-white px-3 py-2 rounded flex items-center gap-1"
-            aria-label="Diminuir fonte"
-          >
-            <MinusIcon className="h-5 w-5" />
-          </button>
-        </div>
-
-        <main id="main-content" tabIndex={-1} className="flex-1 bg-[#F1F7EE] dark:bg-[#848484]">
+        <main
+          id="main-content"
+          tabIndex={-1}
+          className="flex-1 bg-[#F1F7EE] dark:bg-[#848484]"
+        >
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/grupos" element={<Grupos />} />
@@ -92,40 +54,22 @@ export default function AppContent() {
             <Route path="/esqueceu-senha" element={<EsqueceuSenha />} />
             <Route path="/codigo-senha" element={<CodigoSenha />} />
             <Route path="/redefinir-senha" element={<RedefinirSenha />} />
-            <Route
-              path="/cadastro/empreendedor"
-              element={<EmpreendedorForm />}
-            />
+            <Route path="/cadastro/empreendedor" element={<EmpreendedorForm />} />
             <Route path="/cadastro/estudante" element={<EstudantesForm />} />
             <Route path="/cadastro/coordenador" element={<CoordenadorForm />} />
             <Route path="/projeto" element={<Projeto />} />
             <Route path="/entrega" element={<Entrega />} />
             <Route path="/status" element={<Status />} />
             <Route path="/cadastrar_demanda" element={<CadastrarDemanda />} />
-            <Route
-              path="/classificar_demanda"
-              element={<ClassificarDemanda />}
-            />
+            <Route path="/classificar_demanda" element={<ClassificarDemanda />} />
             <Route path="/demandas" element={<GaleriaDemanda />} />
             <Route path="/aluno" element={<DashboardAluno />} />
             <Route path="/coordenador" element={<DashboardCoordenador />} />
             <Route path="/empreendedor" element={<DashboardEmpreendedor />} />
-            <Route
-              path="/CoordenadorEmAndamento"
-              element={<CoordenadorEmAndamento />}
-            />
-            <Route
-              path="/CoordenadorConcluidas"
-              element={<CoordenadorConcluidas />}
-            />
-            <Route
-              path="/EmpreendedorConcluidas"
-              element={<EmpreendedorConcluidas />}
-            />
-            <Route
-              path="/EmpreendedorEmAndamento"
-              element={<EmpreendedorEmAndamento />}
-            />
+            <Route path="/CoordenadorEmAndamento" element={<CoordenadorEmAndamento />} />
+            <Route path="/CoordenadorConcluidas" element={<CoordenadorConcluidas />} />
+            <Route path="/EmpreendedorConcluidas" element={<EmpreendedorConcluidas />} />
+            <Route path="/EmpreendedorEmAndamento" element={<EmpreendedorEmAndamento />} />
           </Routes>
         </main>
 
