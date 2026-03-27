@@ -32,7 +32,7 @@ export default function AccessibilityButton() {
 
   return (
     <div
-      className="fixed bottom-[calc(8.5rem+100px)] right-2.5 z-50"
+      className="fixed bottom-[230px] right-[10px] z-50"
       onMouseEnter={() => setOpen(true)}
       onMouseLeave={() => setOpen(false)}
     >
@@ -44,45 +44,46 @@ export default function AccessibilityButton() {
       </button>
 
       {open && (
-        <div className="mt-3 bg-white dark:bg-gray-800 shadow-lg rounded-lg p-4 flex flex-col gap-3 w-56">
-          {/* Zoom de fonte */}
-          <div className="flex gap-2 items-center">
+        <div className="mt-3 mr-11 bg-white dark:bg-gray-800 shadow-lg rounded-lg p-4 flex flex-col gap-3 w-56 max-w-[90vw] overflow-hidden leading-normal font-normal max-h-[70vh] overflow-y-auto">
+          
+          {/* Zoom */}
+          <div className="flex gap-2 items-center min-w-0">
             <button
               onClick={aumentarFonte}
-              className="bg-blue-500 text-white px-3 py-2 rounded"
+              className="bg-blue-500 text-white px-3 py-2 rounded flex-shrink-0"
             >
               A+
             </button>
             <button
               onClick={diminuirFonte}
-              className="bg-gray-500 text-white px-3 py-2 rounded"
+              className="bg-gray-500 text-white px-3 py-2 rounded flex-shrink-0"
             >
               A−
             </button>
-            <span className="text-sm text-gray-700 dark:text-gray-300">
+            <span className="text-sm text-gray-700 dark:text-gray-300 truncate">
               {(zoom * 100).toFixed(0)}%
             </span>
           </div>
 
           {/* Negrito */}
-          <div className="flex items-center justify-between gap-2">
-            <span className="text-sm text-gray-700 dark:text-gray-300">
+          <div className="flex items-center justify-between gap-2 min-w-0">
+            <span className="text-sm text-gray-700 dark:text-gray-300 truncate">
               Letra destacada
             </span>
             <button
               onClick={alternarBold}
-              className="bg-purple-500 text-white px-3 py-2 rounded"
+              className="bg-purple-500 text-white px-3 py-2 rounded flex-shrink-0 font-normal"
             >
               {bold ? "Normal" : "Negrito"}
             </button>
           </div>
 
-          {/* Espaçamento de linha */}
-          <div className="flex items-center justify-between gap-2">
-            <span className="text-sm text-gray-700 dark:text-gray-300">
+          {/* Espaçamento */}
+          <div className="flex items-center justify-between gap-2 min-w-0">
+            <span className="text-sm text-gray-700 dark:text-gray-300 truncate">
               Espaçamento de linha
             </span>
-            <div className="flex gap-2">
+            <div className="flex gap-2 flex-shrink-0">
               <button
                 onClick={aumentarEspaco}
                 className="bg-blue-400 text-white px-3 py-2 rounded"
@@ -99,25 +100,26 @@ export default function AccessibilityButton() {
           </div>
 
           {/* Áudio */}
-          <div className="flex items-center justify-between gap-2">
-            <span className="text-sm text-gray-700 dark:text-gray-300">
+          <div className="flex items-center justify-between gap-2 min-w-0">
+            <span className="text-sm text-gray-700 dark:text-gray-300 truncate">
               Descrição em áudio
             </span>
-            <div className="flex gap-2">
+            <div className="flex gap-2 flex-shrink-0">
               <button
                 onClick={ativarAudio}
-                className="bg-green-500 text-white px-3 py-2 rounded"
+                className="bg-green-500 text-white px-3 py-2 rounded font-normal"
               >
                 Ativar
               </button>
               <button
                 onClick={pararAudio}
-                className="bg-red-500 text-white px-3 py-2 rounded"
+                className="bg-red-500 text-white px-3 py-2 rounded font-normal"
               >
                 Parar
               </button>
             </div>
           </div>
+
         </div>
       )}
     </div>
