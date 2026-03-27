@@ -47,6 +47,10 @@
   color: #000000;
 }
 
+.dark h2.text-\[\#DAD4C8\]{
+  color: #DAD4C8;
+}
+
 .dark .text-gray-800, 
 .dark h4.text-gray-800{
   color: white;
