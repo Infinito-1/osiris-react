@@ -34,6 +34,12 @@ export default function AppContent() {
 
   return (
     <>
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-50 focus:text-white focus:px-4 focus:py-2"
+      >
+        Saltar para o conteúdo principal
+      </a>
       <div className="flex flex-col min-h-screen">
         <Navbar />
 
@@ -42,7 +48,7 @@ export default function AppContent() {
         <main
           id="main-content"
           tabIndex={-1}
-          className="flex-1 bg-[#F1F7EE] dark:bg-[#848484]"
+          className="flex-1 bg-[#F1F7EE] dark:bg-[#848484] focus:outline-none"
         >
           <Routes>
             <Route path="/" element={<Home />} />

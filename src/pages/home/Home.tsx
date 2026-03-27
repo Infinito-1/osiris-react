@@ -145,7 +145,7 @@ function Home() {
       <div className="w-full min-h-screen ">
         <section className="bg-[#021926] p-10">
             <h1 className="text-4xl justify-center font-semibold text-[#DAD4C8] w-[70%] mx-auto text-center md:text-5xl break-words">Conectamos <span className="text-[#A33E38]">Empreendedores</span> com <span className="text-[#A33E38]">Estudantes de Tecnologia</span></h1>
-            <p className="text-[#DAD4C8] text-center py-5 text-2xl w-[80%] mx-auto">Plataforma que une demandas reais de negócios com projetos acadêmicos da Fatec Zona Leste, criando oportunidades de aprendizado prático e soluções inovadoras.</p>
+            <h2 className="text-[#DAD4C8] text-center py-5 text-2xl w-[80%] mx-auto">Plataforma que une demandas reais de negócios com projetos acadêmicos da Fatec Zona Leste, criando oportunidades de aprendizado prático e soluções inovadoras.</h2>
 
             <div className="flex gap-4 mt-2 justify-center max-[500px]:flex-wrap">
                         <button className="flex items-center space-x-2 bg-[#5F747F] text-white py-3 px-5 rounded-lg text-base font-medium transition-colors duration-200 hover:bg-[#556872]">
