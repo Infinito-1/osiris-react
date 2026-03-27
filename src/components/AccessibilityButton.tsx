@@ -32,7 +32,7 @@ export default function AccessibilityButton() {
 
   return (
     <div
-      className="fixed bottom-[230px] right-[10px] z-50"
+      className="fixed bottom-[40%] right-[10px] z-50"
       onMouseEnter={() => setOpen(true)}
       onMouseLeave={() => setOpen(false)}
     >
