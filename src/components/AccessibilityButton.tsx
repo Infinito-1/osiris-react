@@ -44,10 +44,10 @@ export default function AccessibilityButton() {
       </button>
 
       {open && (
-        <div className="mt-3 mr-11 bg-white dark:bg-gray-800 shadow-lg rounded-lg p-4 flex flex-col gap-3 w-56 max-w-[90vw] overflow-hidden leading-normal font-normal max-h-[70vh] overflow-y-auto">
+        <div className="mt-3 mr-11 bg-white dark:bg-gray-800 shadow-lg rounded-lg p-4 flex flex-col gap-3 w-64 max-w-[90vw] leading-normal font-normal max-h-[70vh] overflow-y-auto">
           
           {/* Zoom */}
-          <div className="flex gap-2 items-center min-w-0">
+          <div className="flex items-center gap-3 min-w-0">
             <button
               onClick={aumentarFonte}
               className="bg-blue-500 text-white px-3 py-2 rounded flex-shrink-0"
@@ -60,14 +60,14 @@ export default function AccessibilityButton() {
             >
               A−
             </button>
-            <span className="text-sm text-gray-700 dark:text-gray-300 truncate">
+            <span className="text-sm text-gray-700 dark:text-gray-300 flex-1">
               {(zoom * 100).toFixed(0)}%
             </span>
           </div>
 
           {/* Negrito */}
-          <div className="flex items-center justify-between gap-2 min-w-0">
-            <span className="text-sm text-gray-700 dark:text-gray-300 truncate">
+          <div className="flex items-center gap-3 min-w-0">
+            <span className="text-sm text-gray-700 dark:text-gray-300 flex-1">
               Letra destacada
             </span>
             <button
@@ -79,8 +79,8 @@ export default function AccessibilityButton() {
           </div>
 
           {/* Espaçamento */}
-          <div className="flex items-center justify-between gap-2 min-w-0">
-            <span className="text-sm text-gray-700 dark:text-gray-300 truncate">
+          <div className="flex items-center gap-3 min-w-0">
+            <span className="text-sm text-gray-700 dark:text-gray-300 flex-1">
               Espaçamento de linha
             </span>
             <div className="flex gap-2 flex-shrink-0">
@@ -100,8 +100,8 @@ export default function AccessibilityButton() {
           </div>
 
           {/* Áudio */}
-          <div className="flex items-center justify-between gap-2 min-w-0">
-            <span className="text-sm text-gray-700 dark:text-gray-300 truncate">
+          <div className="flex items-center gap-3 min-w-0">
+            <span className="text-sm text-gray-700 dark:text-gray-300 flex-1">
               Descrição em áudio
             </span>
             <div className="flex gap-2 flex-shrink-0">
