@@ -77,7 +77,7 @@ const CardDemandaHome: React.FC<Demanda> = ({ titulo, empreendedor, tipo, comple
     return (
         <div className="bg-white p-4 rounded-lg shadow-lg border border-gray-200">
             <h3 className="text-xl font-semibold  mb-2">{titulo}</h3>
-            <h5 className="text-sm font-medium text-[#792E29] mb-3">Complexidade: {complexidade}</h5>
+            <p className="text-sm font-medium text-[#792E29] mb-3">Complexidade: {complexidade}</p>
 
             <div className="flex items-center space-x-4 mb-3">
                 <div className="flex items-center text-gray-700">
