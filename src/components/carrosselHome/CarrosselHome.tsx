@@ -86,7 +86,7 @@ function Card({ card }: { card: CardData }) {
           className="w-10 h-10 relative z-10 -mt-8 mb-5"
         />
         <h3 className="mt-4 text-2xl font-bold">{card.title}</h3>
-        <h5 className="mt-2 text-base text-gray-600">{card.subtitle}</h5>
+        <p className="mt-2 text-base text-gray-600">{card.subtitle}</p>
         <ul className="mt-4 text-left list-disc list-inside space-y-1 w-full px-4 pt-5 text-lg">
           <li>{card.items[0]}</li>
           <li>{card.items[1]}</li>
