@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-// --- Componentes de UI - Genéricos ---
-
-// Badge de Status
 const StatusBadge = ({ text, status }: { text: string; status?: string }) => {
   const getStatusColor = (s?: string) => {
     switch (s?.toLowerCase()) {
@@ -29,14 +26,11 @@ const StatusBadge = ({ text, status }: { text: string; status?: string }) => {
   );
 };
 
-// Tag para categorias
 const Tag = ({ text }: { text: string }) => (
-  <span className="bg-[#021926] text-white text-[10px] px-3 py-1 rounded-full font-medium">
+  <span className="bg-[#021926] text-[#DAD4C8] text-[10px] px-3 py-1 rounded-full font-medium">
     {text}
   </span>
 );
-
-// --- Abas de Navegação ---
 
 const TabsNavegacao = ({
   abaAtiva,
@@ -46,12 +40,12 @@ const TabsNavegacao = ({
   setAbaAtiva: (aba: "candidaturas" | "usuarios") => void;
 }) => {
   return (
-    <div className="flex w-full bg-[#4f534e] rounded-md p-1 shadow-sm">
+    <div className="flex w-full bg-[#5F747F] rounded-md p-1 shadow-sm">
       <button
         className={`flex-1 py-2 rounded-md font-medium text-sm transition-all ${
           abaAtiva === "candidaturas"
-            ? "bg-white text-gray-900 shadow-sm"
-            : "text-white hover:bg-white/10"
+            ? "bg-white text-[#021926] shadow-sm"
+            : "text-[#DAD4C8] hover:bg-white/10"
         }`}
         onClick={() => setAbaAtiva("candidaturas")}
       >
@@ -61,8 +55,8 @@ const TabsNavegacao = ({
       <button
         className={`flex-1 py-2 rounded-md font-medium text-sm transition-all ${
           abaAtiva === "usuarios"
-            ? "bg-white text-gray-900 shadow-sm"
-            : "text-white hover:bg-white/10"
+            ? "bg-white text-[#021926] shadow-sm"
+            : "text-[#DAD4C8] hover:bg-white/10"
         }`}
         onClick={() => setAbaAtiva("usuarios")}
       >
@@ -71,8 +65,6 @@ const TabsNavegacao = ({
     </div>
   );
 };
-
-// --- Cards de Candidaturas ---
 
 const CardCandidatura = ({
   candidatura,
@@ -87,10 +79,10 @@ const CardCandidatura = ({
 
   return (
     <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm mb-4 hover:border-gray-300 transition-colors">
-      {/* Cabeçalho do Card */}
+
       <div className="flex justify-between items-start mb-2">
         <div>
-          <h3 className="text-lg font-bold text-gray-900">
+          <h3 className="text-lg font-bold text-[#021926]">
             {candidatura.demanda?.demStrNome || "Demanda sem nome"}
           </h3>
           <p className="text-gray-600 text-sm">
@@ -100,7 +92,6 @@ const CardCandidatura = ({
         <StatusBadge text={candidatura.canStrStatus} status={candidatura.canStrStatus} />
       </div>
 
-      {/* Informações */}
       <div className="grid grid-cols-2 gap-4 mb-5">
         <div>
           <p className="text-gray-500 text-xs uppercase font-semibold mb-0.5">
@@ -130,11 +121,10 @@ const CardCandidatura = ({
         </div>
       </div>
 
-      {/* Botões de Ação */}
       <div className="flex gap-3">
         {isAtiva ? (
           <button
-            className="flex-1 bg-red-600 hover:bg-red-700 text-white py-2 rounded-md font-medium text-sm transition-colors"
+            className="flex-1 bg-[#782E29] hover:bg-[#3D1310] text-white py-2 rounded-md font-medium text-sm transition-colors"
             onClick={() => onDesativar(candidatura.canIntId)}
           >
             Desativar
@@ -152,8 +142,6 @@ const CardCandidatura = ({
   );
 };
 
-// --- Cards de Utilizadores ---
-
 const CardUsuario = ({
   usuario,
   onPromover,
@@ -169,10 +157,10 @@ const CardUsuario = ({
 
   return (
     <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm mb-4 hover:border-gray-300 transition-colors">
-      {/* Cabeçalho */}
+
       <div className="flex justify-between items-start mb-2">
         <div>
-          <h3 className="text-lg font-bold text-gray-900">
+          <h3 className="text-lg font-bold text-[#021926]">
             {usuario.usuStrNome}
           </h3>
           <p className="text-gray-600 text-sm">{usuario.usuStrEmail}</p>
@@ -180,7 +168,6 @@ const CardUsuario = ({
         <Tag text={usuario.usuStrTipo} />
       </div>
 
-      {/* Informações */}
       <div className="grid grid-cols-2 gap-4 mb-5">
         <div>
           <p className="text-gray-500 text-xs uppercase font-semibold mb-0.5">
@@ -199,18 +186,17 @@ const CardUsuario = ({
         </div>
       </div>
 
-      {/* Botões de Ação */}
       <div className="flex gap-3">
         {isAdmin ? (
           <button
-            className="flex-1 bg-yellow-600 hover:bg-yellow-700 text-white py-2 rounded-md font-medium text-sm transition-colors"
+            className="flex-1 bg-[#5F747F] hover:bg-[#354046] text-white py-2 rounded-md font-medium text-sm transition-colors"
             onClick={() => onRemoverAdmin(usuario.usuIntId)}
           >
             Remover Admin
           </button>
         ) : (
           <button
-            className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-md font-medium text-sm transition-colors"
+            className="flex-1 bg-[#021926] hover:bg-black text-white py-2 rounded-md font-medium text-sm transition-colors"
             onClick={() => onPromover(usuario.usuIntId)}
           >
             Promover Admin
@@ -218,7 +204,7 @@ const CardUsuario = ({
         )}
 
         <button
-          className="flex-1 bg-red-600 hover:bg-red-700 text-white py-2 rounded-md font-medium text-sm transition-colors"
+          className="flex-1 bg-[#782E29] hover:bg-[#3D1310] text-white py-2 rounded-md font-medium text-sm transition-colors"
           onClick={() => onDesativar(usuario.usuIntId)}
         >
           Desativar
@@ -228,31 +214,29 @@ const CardUsuario = ({
   );
 };
 
-// --- Sidebar Components ---
-
 const EstatisticasGerais = ({ stats }: { stats: any }) => {
   return (
     <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm space-y-3">
-      <h3 className="text-lg font-bold text-gray-900 mb-4">
+      <h3 className="text-lg font-bold text-[#021926] mb-4">
         Estatísticas Gerais
       </h3>
 
-      <div className="w-full py-3 bg-[#BC9595] text-gray-900 rounded flex justify-between px-4 font-medium text-sm">
+      <div className="w-full py-3 bg-[#5F747F] text-[#DAD4C8] rounded flex justify-between px-4 font-medium text-sm">
         <span>Total de Utilizadores</span>
         <span className="font-bold">{stats?.totalUsuarios || 0}</span>
       </div>
 
-      <div className="w-full py-3 bg-[#7D888F] text-gray-900 rounded flex justify-between px-4 font-medium text-sm">
+      <div className="w-full py-3 bg-[#021926] text-[#DAD4C8] rounded flex justify-between px-4 font-medium text-sm">
         <span>Total de Candidaturas</span>
         <span className="font-bold">{stats?.totalCandidaturas || 0}</span>
       </div>
 
-      <div className="w-full py-3 bg-[#A6ACB1] text-gray-900 rounded flex justify-between px-4 font-medium text-sm">
+      <div className="w-full py-3 bg-[#782E29] text-[#DAD4C8] rounded flex justify-between px-4 font-medium text-sm">
         <span>Candidaturas Ativas</span>
         <span className="font-bold">{stats?.candidaturasAtivas || 0}</span>
       </div>
 
-      <div className="w-full py-3 bg-[#D4A574] text-gray-900 rounded flex justify-between px-4 font-medium text-sm">
+      <div className="w-full py-3 bg-[#DAD4C8] text-[#021926] rounded flex justify-between px-4 font-medium text-sm border border-gray-300">
         <span>Candidaturas Desativadas</span>
         <span className="font-bold">{stats?.candidaturasDesativadas || 0}</span>
       </div>
@@ -263,34 +247,32 @@ const EstatisticasGerais = ({ stats }: { stats: any }) => {
 const UtilizadoresPorTipo = ({ stats }: { stats: any }) => {
   return (
     <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm space-y-3">
-      <h3 className="text-lg font-bold text-gray-900 mb-4">
+      <h3 className="text-lg font-bold text-[#021926] mb-4">
         Utilizadores por Tipo
       </h3>
 
-      <div className="w-full py-2 bg-blue-100 text-gray-900 rounded flex justify-between px-4 font-medium text-sm">
+      <div className="w-full py-2 bg-blue-50 text-blue-700 border border-blue-100 rounded flex justify-between px-4 font-medium text-sm">
         <span>Empreendedores</span>
         <span className="font-bold">{stats?.usuariosPorTipo?.empreendedores || 0}</span>
       </div>
 
-      <div className="w-full py-2 bg-purple-100 text-gray-900 rounded flex justify-between px-4 font-medium text-sm">
+      <div className="w-full py-2 bg-purple-50 text-purple-700 border border-purple-100 rounded flex justify-between px-4 font-medium text-sm">
         <span>Coordenadores</span>
         <span className="font-bold">{stats?.usuariosPorTipo?.coordenadores || 0}</span>
       </div>
 
-      <div className="w-full py-2 bg-green-100 text-gray-900 rounded flex justify-between px-4 font-medium text-sm">
+      <div className="w-full py-2 bg-green-50 text-green-700 border border-green-100 rounded flex justify-between px-4 font-medium text-sm">
         <span>Grupos</span>
         <span className="font-bold">{stats?.usuariosPorTipo?.grupos || 0}</span>
       </div>
 
-      <div className="w-full py-2 bg-red-100 text-gray-900 rounded flex justify-between px-4 font-medium text-sm">
+      <div className="w-full py-2 bg-red-50 text-red-700 border border-red-100 rounded flex justify-between px-4 font-medium text-sm">
         <span>Administradores</span>
         <span className="font-bold">{stats?.usuariosPorTipo?.admins || 0}</span>
       </div>
     </div>
   );
 };
-
-// --- Componente Principal ---
 
 export default function DashboardAdmin() {
   const navigate = useNavigate();
@@ -309,7 +291,6 @@ export default function DashboardAdmin() {
       try {
         setLoading(true);
 
-        // Dados mockados para demonstração
         const candidaturasMock = [
           {
             canIntId: 1,
@@ -448,7 +429,7 @@ export default function DashboardAdmin() {
   return (
     <div className="w-full min-h-screen bg-[#F1F7EE] py-10 font-sans">
       <div className="w-11/12 max-w-6xl mx-auto">
-        {/* Header */}
+
         <header className="text-center mb-10">
           <h1 className="text-3xl md:text-4xl font-semibold text-[#021926] mb-2">
             Painel de Administrador
@@ -459,14 +440,13 @@ export default function DashboardAdmin() {
         </header>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
-          {/* COLUNA ESQUERDA */}
+
           <div className="lg:col-span-2">
             <TabsNavegacao abaAtiva={abaAtiva} setAbaAtiva={setAbaAtiva} />
 
             <div className="mt-6">
               {abaAtiva === "candidaturas" && (
                 <>
-                  {/* Filtro de Status */}
                   <div className="mb-4 flex gap-2">
                     {["Todas", "Ativa", "Desativada"].map((status) => (
                       <button
@@ -483,7 +463,6 @@ export default function DashboardAdmin() {
                     ))}
                   </div>
 
-                  {/* Cards de Candidaturas */}
                   {candidaturasFiltradas.length > 0 ? (
                     candidaturasFiltradas.map((candidatura) => (
                       <CardCandidatura
@@ -503,7 +482,6 @@ export default function DashboardAdmin() {
 
               {abaAtiva === "usuarios" && (
                 <>
-                  {/* Cards de Utilizadores */}
                   {usuarios.length > 0 ? (
                     usuarios.map((usuario) => (
                       <CardUsuario
@@ -524,7 +502,6 @@ export default function DashboardAdmin() {
             </div>
           </div>
 
-          {/* COLUNA DIREITA */}
           <div className="space-y-6">
             <EstatisticasGerais stats={stats} />
             <UtilizadoresPorTipo stats={stats} />
