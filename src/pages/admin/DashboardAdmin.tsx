@@ -82,7 +82,7 @@ const CardCandidatura = ({
 
       <div className="flex justify-between items-start mb-2">
         <div>
-          <h3 className="text-lg font-bold text-[#021926]">
+          <h3 className="admin-text text-lg font-bold text-[#021926]">
             {candidatura.demanda?.demStrNome || "Demanda sem nome"}
           </h3>
           <p className="text-gray-600 text-sm">
@@ -196,7 +196,7 @@ const CardUsuario = ({
           </button>
         ) : (
           <button
-            className="flex-1 bg-[#021926] hover:bg-black text-white py-2 rounded-md font-medium text-sm transition-colors"
+            className="admin-text flex-1 bg-[#021926] hover:bg-black text-white py-2 rounded-md font-medium text-sm transition-colors"
             onClick={() => onPromover(usuario.usuIntId)}
           >
             Promover Admin
@@ -217,7 +217,7 @@ const CardUsuario = ({
 const EstatisticasGerais = ({ stats }: { stats: any }) => {
   return (
     <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm space-y-3">
-      <h3 className="text-lg font-bold text-[#021926] mb-4">
+      <h3 className="admin-text text-lg font-bold text-[#021926] mb-4">
         Estatísticas Gerais
       </h3>
 
@@ -247,7 +247,7 @@ const EstatisticasGerais = ({ stats }: { stats: any }) => {
 const UtilizadoresPorTipo = ({ stats }: { stats: any }) => {
   return (
     <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm space-y-3">
-      <h3 className="text-lg font-bold text-[#021926] mb-4">
+      <h3 className="admin-text text-lg font-bold text-[#021926] mb-4">
         Utilizadores por Tipo
       </h3>
 
