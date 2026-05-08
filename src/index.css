@@ -129,3 +129,8 @@
 .dark p.text-\[\#333\]{
   color: #d1d5db;
 }
+
+
+.dark .admin-text {
+  color: #DAD4C8 !important;
+}
