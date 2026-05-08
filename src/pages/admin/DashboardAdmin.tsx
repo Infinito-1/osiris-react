@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+
 
 const StatusBadge = ({ text, status }: { text: string; status?: string }) => {
   const getStatusColor = (s?: string) => {
@@ -53,7 +53,7 @@ const TabsNavegacao = ({
       </button>
 
       <button
-        className={`flex-1 py-2 rounded-md font-medium text-sm transition-all ${
+        className={`admin-text flex-1 py-2 rounded-md font-medium text-sm transition-all ${
           abaAtiva === "usuarios"
             ? "bg-white text-[#021926] shadow-sm"
             : "text-[#DAD4C8] hover:bg-white/10"
@@ -160,7 +160,7 @@ const CardUsuario = ({
 
       <div className="flex justify-between items-start mb-2">
         <div>
-          <h3 className="text-lg font-bold text-[#021926]">
+          <h3 className="admin-text text-lg font-bold text-[#021926]">
             {usuario.usuStrNome}
           </h3>
           <p className="text-gray-600 text-sm">{usuario.usuStrEmail}</p>
@@ -275,7 +275,7 @@ const UtilizadoresPorTipo = ({ stats }: { stats: any }) => {
 };
 
 export default function DashboardAdmin() {
-  const navigate = useNavigate();
+
   const [abaAtiva, setAbaAtiva] = useState<"candidaturas" | "usuarios">(
     "candidaturas"
   );
