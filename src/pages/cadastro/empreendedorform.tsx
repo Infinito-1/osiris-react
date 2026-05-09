@@ -1,8 +1,19 @@
 import Lamp from "../../assets/img/login/lamp.png";
 import { useNavigate } from "react-router-dom";
+import { usePasswordValidation } from "../../hooks/usePasswordValidation";
+import { PasswordInput } from "../../components/PasswordInput";
 
 function EmpreendedorForm() {
   const navigate = useNavigate();
+  const passwordHook = usePasswordValidation();
+
+  function handleSubmit(): void {
+    passwordHook.setTouched(true);
+
+    if (!passwordHook.isValid) return;
+
+    navigate("/empreendedor");
+  }
 
   return (
     <>
@@ -20,7 +31,6 @@ function EmpreendedorForm() {
           id="empreendedorForm"
           className="empreendedor-form text-left w-full sm:w-[680px] max-w-md sm:max-w-none bg-white border border-[#d3d3d3] rounded-xl p-6 sm:p-8 md:p-[50px] shadow-[0_4px_10px_rgba(0,0,0,0.08)]"
         >
-
           <div className="top-icon flex justify-center mb-6 sm:mb-[25px]">
             <img
               src={Lamp}
@@ -89,19 +99,15 @@ function EmpreendedorForm() {
             </div>
           </div>
 
-          <div className="form-group mb-6 sm:mb-[30px]">
-            <label htmlFor="senhaEmp" className="block text-sm sm:text-base font-medium mb-2 text-[#021926]">
-              Senha
-            </label>
-            <input
-              type="password"
-              id="senhaEmp"
-              placeholder="••••••••"
-              className="w-full border border-[#d3d3d3] rounded-lg p-2.5 sm:p-3 text-sm sm:text-base outline-none focus:ring-2 focus:ring-[#782e29] transition"
-            />
-          </div>
+          {/* ✅ Campo de senha com validação */}
+          <PasswordInput
+            id="senhaEmp"
+            label="Senha"
+            hook={passwordHook}
+          />
 
           <button
+            type="button"
             className="
               w-full
               text-white
@@ -110,12 +116,13 @@ function EmpreendedorForm() {
               text-[1.1rem]
               rounded-lg
               mt-[20px]
-              transition 
-              hover:bg-[#5e231f] 
+              transition
+              hover:bg-[#5e231f]
               cursor-pointer
               active:scale-95
+              disabled:opacity-50 disabled:cursor-not-allowed
             "
-            onClick={() => navigate("/empreendedor")}
+            onClick={handleSubmit}
           >
             Criar Conta
           </button>
@@ -124,6 +131,7 @@ function EmpreendedorForm() {
             <p className="text-xs sm:text-sm text-gray-600">
               Já tem uma conta?{" "}
               <button
+                type="button"
                 onClick={() => navigate("/login")}
                 className="text-[#782e29] font-medium underline hover:no-underline transition"
               >
