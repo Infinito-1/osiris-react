@@ -1,12 +1,9 @@
 import React, { useEffect, useState } from 'react';
-
-import { useNavigate } from "react-router-dom";
-
 import pessoas from "../../assets/img/icones/pessoas.svg";
-import Person from "../../assets/img/icones/Person.svg";
 import Lupa from "../../assets/img/icones/lupa.svg";
 import foguete from "../../assets/img/icones/foguete.svg";
-import { getGruposByNome, type getGrupos } from '../../services/grupos.service';
+import { getGruposByNome, getGrupos } from '../../services/grupos.service';
+import { GrupoCard } from '../../components/grupoCard/grupocard';
 
 
 
@@ -74,7 +71,9 @@ const Grupos: React.FC = () => {
             {/* Seção da Lista de Grupos */}
             <section className="w-11/12 max-w-6xl py-10">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    {cards}
+                     {grupos.map((grupo) => (
+                        <GrupoCard key={grupo.id} grupo={grupo} />
+                    ))}
                 </div>
             </section>
         </div>
