@@ -6,6 +6,6 @@ export function mapGrupo(g: any) {
     lider: g.usuario?.usuStrNome,
     tamanho: g.gruIntTamanho,
     membros: g.gruStrMembros,
-    semestre: g.semestre?.semStrNome,
+    semestre: g.semestre?.semStrDescricao,
   };
 }

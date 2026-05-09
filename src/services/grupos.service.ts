@@ -9,7 +9,7 @@ export async function getGrupos() {
 
 export async function getGruposByNome(grupos: string) {
   const response = await api.get(
-    `/grupos/${encodeURIComponent(grupos)}`
+    `/grupos/nome/${encodeURIComponent(grupos)}`
   );
 
   return response.data.map(mapGrupo);
