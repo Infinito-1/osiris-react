@@ -1,9 +1,10 @@
+import { mapGrupo } from '../mappers/grupo.mapper';
 import { api } from './api';
 
 export async function getGrupos() {
   const response = await api.get('/grupos');
 
-  return response.data;
+  return response.data.map(mapGrupo);
 }
 
 export async function getGruposByNome(grupos: string) {
@@ -11,5 +12,5 @@ export async function getGruposByNome(grupos: string) {
     `/grupos/${encodeURIComponent(grupos)}`
   );
 
-  return response.data;
+  return response.data.map(mapGrupo);
 }
