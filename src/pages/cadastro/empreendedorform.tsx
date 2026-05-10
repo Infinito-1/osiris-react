@@ -2,6 +2,8 @@ import Lamp from "../../assets/img/login/lamp.png";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { api } from "../../api/axios";
+import { usePasswordValidation } from "../../hooks/usePasswordValidation";
+import { PasswordInput } from "../../components/PasswordInput";
 
 interface CreateUsuarioDto {
   usuStrNome: string;
@@ -18,6 +20,7 @@ function EmpreendedorForm() {
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<CreateUsuarioDto>();
+  const passwordHook = usePasswordValidation();
 
   const onSubmit = async (data: CreateUsuarioDto) => {
     try {
@@ -36,6 +39,14 @@ function EmpreendedorForm() {
       );
     }
   };
+
+  function handleSubmit(): void {
+    passwordHook.setTouched(true);
+
+    if (!passwordHook.isValid) return;
+
+    navigate("/empreendedor");
+  }
 
   return (
     <>
@@ -147,8 +158,13 @@ function EmpreendedorForm() {
                 placeholder="••••••••"
                 className="w-full border border-[#d3d3d3] rounded-lg p-2.5 sm:p-3 text-sm sm:text-base outline-none focus:ring-2 focus:ring-[#782e29] transition"
               />
+              
             </div>
-
+            <PasswordInput
+            id="senhaEmp"
+            label="Senha"
+            hook={passwordHook}
+          />
             <button
               type="submit"
               disabled={isSubmitting}
@@ -167,6 +183,7 @@ function EmpreendedorForm() {
                 disabled:opacity-60
                 disabled:cursor-not-allowed
               "
+              onClick={handleSubmit}
             >
               {isSubmitting ? "Criando conta..." : "Criar Conta"}
             </button>
@@ -176,6 +193,7 @@ function EmpreendedorForm() {
             <p className="text-xs sm:text-sm text-gray-600">
               Já tem uma conta?{" "}
               <button
+                type="button"
                 onClick={() => navigate("/login")}
                 className="text-[#782e29] font-medium underline hover:no-underline transition"
               >

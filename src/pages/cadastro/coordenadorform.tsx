@@ -1,12 +1,22 @@
 import Book from "../../assets/img/login/book.png";
 import { useNavigate } from "react-router-dom";
+import { usePasswordValidation } from "../../hooks/usePasswordValidation";
+import { PasswordInput } from "../../components/PasswordInput";
 
 function CoordenadorForm() {
   const navigate = useNavigate();
+  const passwordHook = usePasswordValidation();
+
+  function handleSubmit(): void {
+    passwordHook.setTouched(true);
+
+    if (!passwordHook.isValid) return;
+
+    navigate("/coordenador");
+  }
 
   return (
     <section className="flex flex-col items-center justify-center min-h-screen py-6 sm:py-10 md:py-[60px] px-4 sm:px-6 font-inter bg-[#F1F7EE]">
-      {/* TÍTULO E SUBTÍTULO */}
       <div className="text-center mb-8 sm:mb-10 w-full">
         <h1 className="text-[#021926] text-2xl sm:text-3xl md:text-[2.4rem] font-semibold mb-2">
           Osíris
@@ -16,9 +26,7 @@ function CoordenadorForm() {
         </p>
       </div>
 
-      {/* FORMULÁRIO */}
       <div className="w-full sm:w-[680px] max-w-md sm:max-w-none bg-white border border-[#d3d3d3] rounded-xl p-6 sm:p-8 md:p-[50px] shadow-[0_4px_10px_rgba(0,0,0,0.08)]">
-        {/* ÍCONE CENTRALIZADO */}
         <div className="flex justify-center mb-6 sm:mb-[25px]">
           <img
             src={Book}
@@ -27,17 +35,14 @@ function CoordenadorForm() {
           />
         </div>
 
-        {/* TÍTULO DO FORMULÁRIO */}
         <h3 className="coordenador text-center text-lg sm:text-xl md:text-[1.35rem] font-semibold mb-2 text-[#021926]">
           Sou Coordenador
         </h3>
 
-        {/* SUBTÍTULO */}
         <p className="text-center text-xs sm:text-sm md:text-[0.95rem] text-gray-600 mb-6 sm:mb-[45px]">
           Preciso verificar demandas
         </p>
 
-        {/* Nome */}
         <div className="mb-5 sm:mb-[30px]">
           <label htmlFor="nomeCoo" className="block mb-2 text-sm sm:text-base font-medium text-[#021926]">
             Nome
@@ -50,7 +55,6 @@ function CoordenadorForm() {
           />
         </div>
 
-        {/* Email */}
         <div className="mb-5 sm:mb-[30px]">
           <label htmlFor="emailCoo" className="block mb-2 text-sm sm:text-base font-medium text-[#021926]">
             E-mail
@@ -63,7 +67,6 @@ function CoordenadorForm() {
           />
         </div>
 
-        {/* Curso */}
         <div className="mb-5 sm:mb-[30px]">
           <label htmlFor="cursoCoo" className="block mb-2 text-sm sm:text-base font-medium text-[#021926]">
             Curso
@@ -76,21 +79,15 @@ function CoordenadorForm() {
           />
         </div>
 
-        {/* Senha */}
-        <div className="mb-6 sm:mb-[30px]">
-          <label htmlFor="senhaCoo" className="block mb-2 text-sm sm:text-base font-medium text-[#021926]">
-            Senha
-          </label>
-          <input
-            type="password"
-            id="senhaCoo"
-            placeholder="••••••••"
-            className="w-full border border-gray-300 rounded-lg p-2.5 sm:p-3 text-sm sm:text-base outline-none focus:ring-2 focus:ring-[#4f534e] transition"
-          />
-        </div>
+        {/* ✅ Campo de senha com validação */}
+        <PasswordInput
+          id="senhaCoo"
+          label="Senha"
+          hook={passwordHook}
+        />
 
-        {/* BOTÃO */}
         <button
+          type="button"
           className="
             w-full
             py-4
@@ -100,10 +97,11 @@ function CoordenadorForm() {
             bg-[#4f534e]
             mt-[20px]
             transition
-            hover:bg-[#717271] 
+            hover:bg-[#717271]
             active:scale-95
+            disabled:opacity-50 disabled:cursor-not-allowed
           "
-          onClick={() => navigate("/coordenador")}
+          onClick={handleSubmit}
         >
           Criar Conta
         </button>
@@ -112,6 +110,7 @@ function CoordenadorForm() {
           <p className="text-xs sm:text-sm text-gray-600">
             Já tem uma conta?{" "}
             <button
+              type="button"
               onClick={() => navigate("/login")}
               className="text-[#4f534e] font-medium underline hover:no-underline transition"
             >

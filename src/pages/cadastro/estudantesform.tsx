@@ -1,8 +1,19 @@
 import Hat from "../../assets/img/login/hat.png";
 import { useNavigate } from "react-router-dom";
+import { usePasswordValidation } from "../../hooks/usePasswordValidation";
+import { PasswordInput } from "../../components/PasswordInput";
 
 function EstudantesForm() {
   const navigate = useNavigate();
+  const passwordHook = usePasswordValidation();
+
+  function handleSubmit(): void {
+    passwordHook.setTouched(true);
+
+    if (!passwordHook.isValid) return;
+
+    navigate("/dashboard_grupo");
+  }
 
   return (
     <>
@@ -37,7 +48,10 @@ function EstudantesForm() {
           </p>
 
           <div className="form-group mb-5 sm:mb-[30px]">
-            <label htmlFor="nomeRep" className="block text-sm sm:text-base font-medium mb-2 text-[#021926]">
+            <label
+              htmlFor="nomeRep"
+              className="block text-sm sm:text-base font-medium mb-2 text-[#021926]"
+            >
               Nome do Representante
             </label>
             <input
@@ -48,7 +62,6 @@ function EstudantesForm() {
             />
           </div>
 
-          {/* Nome do Grupo */}
           <div className="form-group mb-[30px]">
             <label htmlFor="nomeGrupo" className="font-medium">
               Nome do Grupo (Usuário)
@@ -60,7 +73,6 @@ function EstudantesForm() {
             />
           </div>
 
-          {/* Linha de Email e RA */}
           <div className="form-row flex gap-[35px] mb-[30px] max-[700px]:flex-col max-[700px]:gap-[20px]">
             <div className="form-group flex-1">
               <label htmlFor="emailStud" className="font-medium">
@@ -75,7 +87,10 @@ function EstudantesForm() {
             </div>
 
             <div className="form-group">
-              <label htmlFor="raStud" className="block text-sm sm:text-base font-medium mb-2 text-[#021926]">
+              <label
+                htmlFor="raStud"
+                className="block text-sm sm:text-base font-medium mb-2 text-[#021926]"
+              >
                 RA (Registro Acadêmico)
               </label>
               <input
@@ -88,7 +103,10 @@ function EstudantesForm() {
           </div>
 
           <div className="form-group mb-5 sm:mb-[30px]">
-            <label htmlFor="semestre" className="block text-sm sm:text-base font-medium mb-2 text-[#021926]">
+            <label
+              htmlFor="semestre"
+              className="block text-sm sm:text-base font-medium mb-2 text-[#021926]"
+            >
               Semestre Atual
             </label>
             <input
@@ -100,7 +118,10 @@ function EstudantesForm() {
           </div>
 
           <div className="form-group mb-5 sm:mb-[30px]">
-            <label htmlFor="membros" className="block text-sm sm:text-base font-medium mb-2 text-[#021926]">
+            <label
+              htmlFor="membros"
+              className="block text-sm sm:text-base font-medium mb-2 text-[#021926]"
+            >
               Membros do Grupo
             </label>
             <textarea
@@ -108,22 +129,17 @@ function EstudantesForm() {
               placeholder="Liste os nomes dos membros do seu grupo (um por linha)"
               className="w-full border border-[#d3d3d3] rounded-lg p-2.5 sm:p-3 text-sm sm:text-base outline-none focus:ring-2 focus:ring-[#546873] transition resize-none"
               rows={3}
-            ></textarea>
-          </div>
-
-          <div className="form-group mb-6 sm:mb-[30px]">
-            <label htmlFor="senhaStud" className="block text-sm sm:text-base font-medium mb-2 text-[#021926]">
-              Senha
-            </label>
-            <input
-              type="password"
-              id="senhaStud"
-              placeholder="••••••••"
-              className="w-full border border-[#d3d3d3] rounded-lg p-2.5 sm:p-3 text-sm sm:text-base outline-none focus:ring-2 focus:ring-[#546873] transition"
             />
           </div>
 
+          <PasswordInput
+            id="senhaStud"
+            label="Senha"
+            hook={passwordHook}
+          />
+
           <button
+            type="button"
             className="
               w-full
               text-white
@@ -132,12 +148,13 @@ function EstudantesForm() {
               text-[1.1rem]
               rounded-lg
               mt-[20px]
-             hover:bg-[#495a63] 
+              hover:bg-[#495a63]
               transition
               cursor-pointer
               active:scale-95
+              disabled:opacity-50 disabled:cursor-not-allowed
             "
-            onClick={() => navigate("/dashboard_grupo")}
+            onClick={handleSubmit}
           >
             Criar Conta
           </button>
@@ -146,6 +163,7 @@ function EstudantesForm() {
             <p className="text-xs sm:text-sm text-gray-600">
               Já tem uma conta?{" "}
               <button
+                type="button"
                 onClick={() => navigate("/login")}
                 className="text-[#546873] font-medium underline hover:no-underline transition"
               >
