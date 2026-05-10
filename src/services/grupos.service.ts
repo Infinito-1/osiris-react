@@ -1,5 +1,5 @@
 import { mapGrupo } from '../mappers/grupo.mapper';
-import { api } from './api';
+import { api } from '../api/axios';
 
 export async function getGrupos() {
   const response = await api.get('/grupos');

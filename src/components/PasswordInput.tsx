@@ -1,11 +1,13 @@
 import { useState } from "react";
 import type { UsePasswordValidationReturn } from "../hooks/usePasswordValidation";
+import type { UseFormRegisterReturn } from "react-hook-form";
 
 interface PasswordInputProps {
   id: string;
   label: string;
   placeholder?: string;
   hook: UsePasswordValidationReturn;
+  register: UseFormRegisterReturn;
 }
 
 export function PasswordInput({
@@ -13,6 +15,7 @@ export function PasswordInput({
   label,
   placeholder = "••••••••",
   hook,
+  register,
 }: PasswordInputProps) {
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
@@ -48,14 +51,21 @@ export function PasswordInput({
       
       <div className="relative">
         <input
+          {...register}
           type={showPassword ? "text" : "password"}
           id={id}
-          value={password}
+          defaultValue=""
           placeholder={placeholder}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            setPassword(e.target.value)
-          }
-          onBlur={() => setTouched(true)}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+            setPassword(e.target.value);
+
+            register.onChange(e);
+          }}
+          onBlur={(e) => {
+            setTouched(true);
+
+            register.onBlur(e);
+          }}
           className={`w-full border rounded-lg p-2.5 sm:p-3 pr-10 text-sm sm:text-base outline-none focus:ring-2 transition
             ${
               errorMessage

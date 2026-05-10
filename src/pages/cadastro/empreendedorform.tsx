@@ -23,6 +23,12 @@ function EmpreendedorForm() {
   const passwordHook = usePasswordValidation();
 
   const onSubmit = async (data: CreateUsuarioDto) => {
+    passwordHook.setTouched(true);
+
+    if (!passwordHook.isValid) {
+      alert("Senha inválida");
+      return;
+    }
     try {
       await api.post("/usuarios", {
         ...data,
@@ -39,14 +45,6 @@ function EmpreendedorForm() {
       );
     }
   };
-
-  function handleSubmit(): void {
-    passwordHook.setTouched(true);
-
-    if (!passwordHook.isValid) return;
-
-    navigate("/empreendedor");
-  }
 
   return (
     <>
@@ -148,23 +146,16 @@ function EmpreendedorForm() {
 
             
             <div className="form-group mb-6 sm:mb-[30px]">
-              <label htmlFor="senhaEmp" className="block text-sm sm:text-base font-medium mb-2 text-[#021926]">
-                Senha
-              </label>
-              <input
-                {...register("usuStrSenha")}
-                type="password"
+              <PasswordInput
                 id="senhaEmp"
-                placeholder="••••••••"
-                className="w-full border border-[#d3d3d3] rounded-lg p-2.5 sm:p-3 text-sm sm:text-base outline-none focus:ring-2 focus:ring-[#782e29] transition"
+                label="Senha"
+                hook={passwordHook}
+                register={register("usuStrSenha", {
+                  required: "Senha obrigatória",
+                })}
               />
-              
+    
             </div>
-            <PasswordInput
-            id="senhaEmp"
-            label="Senha"
-            hook={passwordHook}
-          />
             <button
               type="submit"
               disabled={isSubmitting}
@@ -183,7 +174,6 @@ function EmpreendedorForm() {
                 disabled:opacity-60
                 disabled:cursor-not-allowed
               "
-              onClick={handleSubmit}
             >
               {isSubmitting ? "Criando conta..." : "Criar Conta"}
             </button>
