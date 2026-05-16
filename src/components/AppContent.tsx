@@ -65,6 +65,14 @@ export default function AppContent() {
             <Route path="/cadastro/estudante" element={<EstudantesForm />} />
             <Route path="/cadastro/coordenador" element={<CoordenadorForm />} />
             <Route path="/projeto" element={<Projeto />} />
+
+            {/*
+              Definição de Rotas dinâmicas:
+                Em páginas dinâmicas que irão exibir dados relacionados sobre alguma coisa, você precisa de uma forma onde você consiga puxar o identificador ou algum dado
+                importante para identificar um objeto em especial. No React, você pode utilizar o esquema de roteamento dinâmico, onde parâmetros da URL marcados como
+                ":param" serão identificadas como rotas dinâmicas e permitir com que você possa puxar dados delas dentro do component
+            */}
+            <Route path="/projeto/:id" element={<Projeto />} />
             <Route path="/entrega" element={<Entrega />} />
             <Route path="/status" element={<Status />} />
             <Route path="/cadastrar_demanda" element={<CadastrarDemanda />} />
