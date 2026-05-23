@@ -1,7 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import Navbar from "../components/navbar/Navbar";
 import Footer from "../components/footer/Footer";
-import PrivateRoute from "../components/PrivateRoute";
 
 // Páginas públicas
 import Home from "../pages/home/Home";
@@ -35,6 +34,7 @@ import DashboardAdmin from "../pages/admin/DashboardAdmin";
 
 import useFocusMain from "../hooks/useFocusMain";
 import AccessibilityButton from "../components/AccessibilityButton";
+import PrivateRoute from "./PrivateRoute";
 
 export default function AppContent() {
   useFocusMain();

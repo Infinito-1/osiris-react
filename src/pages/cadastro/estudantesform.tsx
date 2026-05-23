@@ -46,11 +46,20 @@ function EstudantesForm() {
     }
 
     try {
-      await api.post("/usuarios", {
+      // 1. Cria primeiro o usuário (limpo, apenas com campos de usuário)
+      const userResponse = await api.post("/usuarios", {
         usuStrNome: data.usuStrNome,
         usuStrEmail: data.usuStrEmail,
         usuStrSenha: data.usuStrSenha,
         usuStrTipo: "Grupo",
+      });
+
+      // 2. Extrai o ID do usuário criado (ajuste conforme o que o seu backend retorna no JSON)
+      const userId = userResponse.data.dados?.id || userResponse.data.id;
+
+      // 3. Agora cria o grupo vinculando ao ID do usuário
+      await api.post("/grupos", {
+        usuIntId: userId, // Vínculo essencial
         gruStrNome: data.gruStrNome,
         gruStrDescricao: data.gruStrDescricao,
         gruChaRa: data.gruChaRa,
@@ -58,9 +67,10 @@ function EstudantesForm() {
         gruStrMembros: data.gruStrMembros,
         semIntId: Number(data.semIntId),
       });
+
       navigate("/dashboard_grupo");
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
+      console.error("Erro completo:", error.response?.data);
       const mensagem = error?.response?.data?.message;
       alert(
         Array.isArray(mensagem)

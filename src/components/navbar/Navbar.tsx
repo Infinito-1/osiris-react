@@ -3,7 +3,7 @@ import logo from "../../assets/img/login/logo.png";
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
 import ThemeToggle from "../ThemeToggle";
-import { useAuth } from "../../contexts/AuthContext";
+import { useAuth } from "../../hooks/useAuth";
 
 function Navbar() {
   const navigate = useNavigate();

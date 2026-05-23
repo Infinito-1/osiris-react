@@ -39,3 +39,17 @@ export async function candidatarGrupo(demIntId: number) {
 export async function desistirCandidatura(canIntId: number) {
   await api.delete(`/grupos/candidaturas/${canIntId}/desistir`);
 }
+
+
+export async function createGrupo(dto: {
+  gruStrNome: string;
+  gruStrDescricao: string;
+  gruChaRa: string;
+  gruIntTamanho: number;
+  gruStrMembros?: string;
+  usuIntId: number;
+  semIntId: number;
+}) {
+  const response = await api.post('/grupos', dto);
+  return response.data;
+}
