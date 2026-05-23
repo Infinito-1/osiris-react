@@ -2,10 +2,31 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ArrowIn from "../../assets/img/login/arrowin.png";
 import PersonPlus from "../../assets/img/login/PersonPlus.png";
+import { useAuth } from "../../hooks/useAuth";
 
 export default function Login() {
   const [activeTab, setActiveTab] = useState("login");
   const navigate = useNavigate();
+  const { handleLogin } = useAuth();
+
+  const [email, setEmail] = useState("");
+  const [senha, setSenha] = useState("");
+  const [erro, setErro] = useState("");
+  const [carregando, setCarregando] = useState(false);
+
+  async function onSubmitLogin(e: React.FormEvent) {
+    e.preventDefault();
+    setErro("");
+    setCarregando(true);
+    try {
+      await handleLogin(email, senha);
+      navigate("/dashboard_grupo"); // ajuste a rota conforme o tipo de usuário se necessário
+    } catch {
+      setErro("E-mail ou senha inválidos.");
+    } finally {
+      setCarregando(false);
+    }
+  }
 
   return (
     <section className="flex flex-col items-center justify-center min-h-screen py-6 sm:py-10 px-4 sm:px-6 bg-[#F1F7EE]">
@@ -52,31 +73,47 @@ export default function Login() {
             </h2>
           </div>
 
-          <div className="mb-5 sm:mb-6 text-left">
-            <label className="block mb-2 text-sm sm:text-base md:text-[1rem] text-[#021926] font-medium">
-              E-mail
-            </label>
-            <input
-              type="email"
-              className="w-full p-2.5 sm:p-3 border border-gray-300 rounded-lg text-sm sm:text-base md:text-[1rem] focus:outline-none focus:border-[#782e29] focus:ring-1 focus:ring-[#782e29] transition"
-              placeholder="seu.email@exemplo.com"
-            />
-          </div>
+          <form onSubmit={onSubmitLogin}>
+            <div className="mb-5 sm:mb-6 text-left">
+              <label className="block mb-2 text-sm sm:text-base md:text-[1rem] text-[#021926] font-medium">
+                E-mail
+              </label>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                className="w-full p-2.5 sm:p-3 border border-gray-300 rounded-lg text-sm sm:text-base md:text-[1rem] focus:outline-none focus:border-[#782e29] focus:ring-1 focus:ring-[#782e29] transition"
+                placeholder="seu.email@exemplo.com"
+              />
+            </div>
 
-          <div className="mb-6 sm:mb-8 text-left">
-            <label className="block mb-2 text-sm sm:text-base md:text-[1rem] text-[#021926] font-medium">
-              Senha
-            </label>
-            <input
-              type="password"
-              className="w-full p-2.5 sm:p-3 border border-gray-300 rounded-lg text-sm sm:text-base md:text-[1rem] focus:outline-none focus:border-[#782e29] focus:ring-1 focus:ring-[#782e29] transition"
-              placeholder="••••••••"
-            />
-          </div>
+            <div className="mb-6 sm:mb-8 text-left">
+              <label className="block mb-2 text-sm sm:text-base md:text-[1rem] text-[#021926] font-medium">
+                Senha
+              </label>
+              <input
+                type="password"
+                value={senha}
+                onChange={(e) => setSenha(e.target.value)}
+                required
+                className="w-full p-2.5 sm:p-3 border border-gray-300 rounded-lg text-sm sm:text-base md:text-[1rem] focus:outline-none focus:border-[#782e29] focus:ring-1 focus:ring-[#782e29] transition"
+                placeholder="••••••••"
+              />
+            </div>
 
-          <button className="w-full bg-[#782e29] text-white py-2.5 sm:py-3 text-sm sm:text-base md:text-[1.1rem] rounded-lg font-medium cursor-pointer transition hover:bg-[#5e231f] active:scale-95">
-            Entrar
-          </button>
+            {erro && (
+              <p className="text-red-600 text-sm mb-4 text-center">{erro}</p>
+            )}
+
+            <button
+              type="submit"
+              disabled={carregando}
+              className="w-full bg-[#782e29] text-white py-2.5 sm:py-3 text-sm sm:text-base md:text-[1.1rem] rounded-lg font-medium cursor-pointer transition hover:bg-[#5e231f] active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {carregando ? "Entrando..." : "Entrar"}
+            </button>
+          </form>
 
           <div className="text-center mt-4 sm:mt-5">
             <button

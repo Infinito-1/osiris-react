@@ -26,6 +26,8 @@ interface Semestre {
 function EstudantesForm() {
   const navigate = useNavigate();
   const [semestres, setSemestres] = useState<Semestre[]>([]);
+  const [sucesso, setSucesso] = useState(false); // <- estado da mensagem de sucesso
+
   const {
     register,
     handleSubmit,
@@ -46,7 +48,7 @@ function EstudantesForm() {
     }
 
     try {
-      // 1. Cria primeiro o usuário (limpo, apenas com campos de usuário)
+      // 1. Cria o usuário
       const userResponse = await api.post("/usuarios", {
         usuStrNome: data.usuStrNome,
         usuStrEmail: data.usuStrEmail,
@@ -54,12 +56,12 @@ function EstudantesForm() {
         usuStrTipo: "Grupo",
       });
 
-      // 2. Extrai o ID do usuário criado (ajuste conforme o que o seu backend retorna no JSON)
+      // 2. Extrai o ID do usuário criado
       const userId = userResponse.data.dados?.id || userResponse.data.id;
 
-      // 3. Agora cria o grupo vinculando ao ID do usuário
+      // 3. Cria o grupo vinculado ao usuário
       await api.post("/grupos", {
-        usuIntId: userId, // Vínculo essencial
+        usuIntId: userId,
         gruStrNome: data.gruStrNome,
         gruStrDescricao: data.gruStrDescricao,
         gruChaRa: data.gruChaRa,
@@ -68,7 +70,9 @@ function EstudantesForm() {
         semIntId: Number(data.semIntId),
       });
 
-      navigate("/dashboard_grupo");
+      // 4. Mostra mensagem de sucesso e redireciona para o login após 3 segundos
+      setSucesso(true);
+      setTimeout(() => navigate("/login"), 3000);
     } catch (error: any) {
       console.error("Erro completo:", error.response?.data);
       const mensagem = error?.response?.data?.message;
@@ -110,6 +114,18 @@ function EstudantesForm() {
         <p className="text-center text-sm sm:text-base md:text-[1rem] text-gray-600 mb-6 sm:mb-[45px] font-normal">
           Quero participar de projetos reais e ganhar experiência
         </p>
+
+        {/* Mensagem de sucesso — aparece após criar a conta */}
+        {sucesso && (
+          <div className="mb-6 p-4 bg-green-50 border border-green-300 rounded-lg text-center">
+            <p className="text-green-800 font-semibold text-base">
+              ✅ Conta criada com sucesso!
+            </p>
+            <p className="text-green-700 text-sm mt-1">
+              Você será redirecionado para a página de login em instantes...
+            </p>
+          </div>
+        )}
 
         <form onSubmit={handleSubmit(onSubmit)}>
           {/* ── Linha 1: Nome de usuário + E-mail ── */}
@@ -278,7 +294,7 @@ function EstudantesForm() {
 
           <button
             type="submit"
-            disabled={isSubmitting}
+            disabled={isSubmitting || sucesso}
             className="
               w-full
               text-white
