@@ -27,7 +27,7 @@ import CoordenadorConcluidas from "../pages/usuarios/CoordenadorConcluidas";
 import EmpreendedorConcluidas from "../pages/usuarios/EmpreendedorConcluidas";
 import EmpreendedorEmAndamento from "../pages/usuarios/EmpreendedorEmAndamento";
 import DashboardAdmin from "../pages/admin/DashboardAdmin";
-import useFocusMain from "../components/hooks/useFocusMain";
+import useFocusMain from "../hooks/useFocusMain";
 import AccessibilityButton from "../components/AccessibilityButton";
 
 export default function AppContent() {
