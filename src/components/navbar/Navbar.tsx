@@ -5,6 +5,16 @@ import { ChevronDownIcon } from '@heroicons/react/20/solid';
 import ThemeToggle from "../ThemeToggle";
 import { useAuth } from "../../hooks/useAuth";
 
+function getDashboardRota(tipo: string) {
+  switch (tipo) {
+    case 'Grupo':        return '/dashboard_grupo';
+    case 'Empreendedor': return '/empreendedor';
+    case 'Coordenador':  return '/coordenador';
+    case 'Admin':        return '/admin';
+    default:             return '/';
+  }
+}
+
 function Navbar() {
   const navigate = useNavigate();
   const { isAuthenticated, usuario, handleLogout } = useAuth();
@@ -14,12 +24,20 @@ function Navbar() {
     navigate('/');
   }
 
+  const dashboardRota = getDashboardRota(usuario?.tipo ?? '');
+
   // ── Botões direita — desktop ──────────────────────────────────────
   const authButtonsDesktop = isAuthenticated ? (
     <div className="flex items-center gap-[20px]">
       <span className="text-[#dad4c8] text-[1rem] font-medium truncate max-w-[160px]">
-        {usuario.nome || usuario.email}
+        {usuario?.nome || usuario?.email}
       </span>
+      <button
+        className="text-[1.1rem] rounded-[10px] px-[22px] py-[10px] font-semibold cursor-pointer border border-solid border-white bg-transparent text-white transition-opacity duration-300 hover:opacity-85"
+        onClick={() => navigate(dashboardRota)}
+      >
+        Meu Perfil
+      </button>
       <button
         className="text-[1.1rem] rounded-[10px] px-[22px] py-[10px] font-semibold cursor-pointer border border-solid border-white bg-white text-black transition-opacity duration-300 hover:opacity-85"
         onClick={logout}
@@ -37,7 +55,7 @@ function Navbar() {
       </button>
       <button
         className="text-[1.1rem] rounded-[10px] px-[22px] py-[10px] font-semibold cursor-pointer border border-solid border-white bg-white text-black transition-opacity duration-300 hover:opacity-85"
-        onClick={() => navigate("/login")}
+        onClick={() => navigate("/login?tab=register")}
       >
         Cadastrar
       </button>
@@ -49,8 +67,17 @@ function Navbar() {
     <div className="py-1">
       <MenuItem>
         <span className="block px-4 py-2 text-sm text-[#dad4c8]">
-          {usuario.nome || usuario.email}
+          {usuario?.nome || usuario?.email}
         </span>
+      </MenuItem>
+      <MenuItem>
+        <a
+          href="#"
+          className="block px-4 py-2 text-sm text-gray-300 hover:opacity-70"
+          onClick={() => navigate(dashboardRota)}
+        >
+          Meu Perfil
+        </a>
       </MenuItem>
       <MenuItem>
         <a
@@ -77,7 +104,7 @@ function Navbar() {
         <a
           href="#"
           className="block px-4 py-2 text-sm text-gray-300 data-focus:bg-white/5 data-focus:text-white"
-          onClick={() => navigate("/login")}
+          onClick={() => navigate("/login?tab=register")}
         >
           Cadastrar
         </a>

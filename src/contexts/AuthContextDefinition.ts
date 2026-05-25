@@ -5,7 +5,7 @@ interface AuthContextProps {
   usuario: UsuarioLogin | null;
   isLoading: boolean;
   isAuthenticated: boolean;
-  handleLogin(email: string, senha: string): Promise<void>;
+  handleLogin(email: string, senha: string): Promise<UsuarioLogin>;
   handleLogout(): void;
 }
 

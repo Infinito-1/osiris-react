@@ -5,12 +5,14 @@ import { api } from "../../api/axios";
 import { usePasswordValidation } from "../../hooks/usePasswordValidation";
 import { PasswordInput } from "../../components/PasswordInput";
 
-interface CreateUsuarioDto {
+
+interface CreateEmpreendedorFormDto {
   usuStrNome: string;
   usuStrEmail: string;
   usuStrSenha: string;
   usuStrTelefone?: string;
-  usuStrTipo: "Empreendedor" | "Coordenador" | "Grupo";
+  empStrEmpresa: string;
+  empChaCnpj?: string;
 }
 
 function EmpreendedorForm() {
@@ -19,10 +21,10 @@ function EmpreendedorForm() {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<CreateUsuarioDto>();
+  } = useForm<CreateEmpreendedorFormDto>();
   const passwordHook = usePasswordValidation();
 
-  const onSubmit = async (data: CreateUsuarioDto) => {
+  const onSubmit = async (data: CreateEmpreendedorFormDto) => {
     passwordHook.setTouched(true);
 
     if (!passwordHook.isValid) {
@@ -30,11 +32,23 @@ function EmpreendedorForm() {
       return;
     }
     try {
-      await api.post("/usuarios", {
-        ...data,
-        usuStrTipo: "Empreendedor",
-      });
-      navigate("/empreendedor");
+    const response = await api.post("/usuarios", {
+      usuStrNome: data.usuStrNome,
+      usuStrEmail: data.usuStrEmail,
+      usuStrSenha: data.usuStrSenha,
+      usuStrTelefone: data.usuStrTelefone,
+      usuStrTipo: "Empreendedor",
+    });
+
+    const usuarioId = response.data.dados.id; // ← captura o id aqui
+
+    await api.post("/empreendedores", {
+      usuIntId: usuarioId,
+      empStrEmpresa: data.empStrEmpresa,
+      empChaCnpj: data.empChaCnpj,
+    });
+
+    navigate("/login");
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       const mensagem = error?.response?.data?.message;
@@ -136,11 +150,30 @@ function EmpreendedorForm() {
                   Empresa / Negócio
                 </label>
                 <input
+                  {...register("empStrEmpresa")}
                   type="text"
                   id="empresaEmp"
                   placeholder="Nome da sua empresa"
                   className="w-full border border-[#d3d3d3] rounded-lg p-2.5 sm:p-3 text-sm sm:text-base outline-none focus:ring-2 focus:ring-[#782e29] transition"
                 />
+              </div>
+              <div className="form-group">
+                <label htmlFor="empChaCnpj" className="block text-sm sm:text-base font-medium mb-2 text-[#021926]">
+                  CNPJ
+                </label>
+                <input
+                  {...register("empChaCnpj", {
+                    minLength: { value: 14, message: "CNPJ deve ter 14 dígitos" },
+                    maxLength: { value: 14, message: "CNPJ deve ter 14 dígitos" },
+                  })}
+                  type="text"
+                  id="empChaCnpj"
+                  placeholder="00000000000000"
+                  className="w-full border border-[#d3d3d3] rounded-lg p-2.5 sm:p-3 text-sm sm:text-base outline-none focus:ring-2 focus:ring-[#782e29] transition"
+                />
+                {errors.empChaCnpj && (
+                  <span className="text-red-500 text-xs mt-1">{errors.empChaCnpj.message}</span>
+                )}
               </div>
             </div>
 

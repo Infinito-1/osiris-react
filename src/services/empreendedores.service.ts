@@ -18,7 +18,7 @@ export async function getPerfilEmpreendedor() {
 }
 
 export async function getDashboardEmpreendedor() {
-  const response = await api.get('/empreendedores/dashboard');
+  const response = await api.get('/empreendedores/dashboard/dados');
   return response.data; // Retorna o objeto genérico de dados do dashboard
 }
 

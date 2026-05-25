@@ -1,11 +1,14 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import ArrowIn from "../../assets/img/login/arrowin.png";
 import PersonPlus from "../../assets/img/login/PersonPlus.png";
 import { useAuth } from "../../hooks/useAuth";
 
 export default function Login() {
-  const [activeTab, setActiveTab] = useState("login");
+  const [searchParams] = useSearchParams();
+  const [activeTab, setActiveTab] = useState(
+    searchParams.get("tab") === "register" ? "register" : "login"
+  );
   const navigate = useNavigate();
   const { handleLogin } = useAuth();
 
@@ -19,8 +22,19 @@ export default function Login() {
     setErro("");
     setCarregando(true);
     try {
-      await handleLogin(email, senha);
-      navigate("/dashboard_grupo"); // ajuste a rota conforme o tipo de usuário se necessário
+      const dados= await handleLogin(email, senha);
+
+      if (dados.tipo === 'Grupo') {
+        navigate("/dashboard_grupo");
+      } else if (dados.tipo === 'Empreendedor') {
+        navigate("/empreendedor");
+      } else if (dados.tipo === 'Coordenador') {
+        navigate("/coordenador");
+      } else if (dados.tipo === 'Admin') {
+        navigate("/admin");
+      } else {
+        navigate("/");
+      }
     } catch {
       setErro("E-mail ou senha inválidos.");
     } finally {
@@ -153,12 +167,6 @@ export default function Login() {
             Estudante
           </button>
 
-          <button
-            onClick={() => navigate("/cadastro/coordenador")}
-            className="w-full py-3 sm:py-4 text-sm sm:text-base md:text-[1.05rem] font-medium rounded-lg text-white mt-3 sm:mt-4 cursor-pointer transition hover:bg-[#717271] active:scale-95 bg-[#4f534e]"
-          >
-            Coordenador
-          </button>
         </div>
       )}
     </section>

@@ -9,12 +9,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const usuarioSalvo = localStorage.getItem('@App:usuario');
-    if (usuarioSalvo) {
-      setUsuario(JSON.parse(usuarioSalvo));
-    }
-    setIsLoading(false);
-  }, []);
+  const usuarioSalvo = localStorage.getItem('@App:usuario');
+  const tokenSalvo = localStorage.getItem('@App:token');
+  if (usuarioSalvo) {
+    setUsuario(JSON.parse(usuarioSalvo));
+  }
+  if (tokenSalvo) {
+    api.defaults.headers.common['Authorization'] = `Bearer ${tokenSalvo}`; // ← isso precisa estar aqui
+  }
+  setIsLoading(false);
+}, []);
 
   async function handleLogin(email: string, senha: string) {
     setIsLoading(true);
@@ -23,8 +27,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       const { senha: _, ...dadosSemSenha } = dados; 
       const usuarioFinal = dadosSemSenha as UsuarioLogin;
       setUsuario(usuarioFinal);
+      api.defaults.headers.common['Authorization'] = `Bearer ${dados.token}`;
       localStorage.setItem('@App:usuario', JSON.stringify(usuarioFinal));
       localStorage.setItem('@App:token', dados.token);
+      return usuarioFinal;
     } finally {
       setIsLoading(false);
     }
