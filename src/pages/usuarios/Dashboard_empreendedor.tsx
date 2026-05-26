@@ -12,7 +12,6 @@ interface Demanda {
   aceitacao: boolean;
   semestreRecomendado: string | null;
   areaTecnica: string | null;
-  tipagem: string | null;
   tipos: string[];
   totalCandidaturas: number;
   grupos: string[];

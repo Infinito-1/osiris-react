@@ -23,7 +23,6 @@ interface Demanda {
   demBoolAtivo: boolean;
   demStrSemestreRecomendado: string | null;
   demStrAreaTecnica: string | null;
-  demStrTipagem: string | null;
   empreendedor?: {
     empStrEmpresa: string;
     usuario?: { usuStrNome: string; usuStrEmail: string };
@@ -51,7 +50,7 @@ const TabsNavegacao = ({ aba, setAba }: { aba: string; setAba: (a: string) => vo
         <button
           key={key}
           onClick={() => setAba(key)}
-          className={`flex-1 py-2 text-sm font-medium rounded transition-all ${
+          className={`flex-1 py-2 text-sm font-medium rounded transition-all cursor-pointer ${
             aba === key ? 'bg-white text-gray-900 shadow-sm' : 'text-white hover:bg-white/10'
           }`}
         >
@@ -73,7 +72,11 @@ const CardDemanda = ({ demanda, onAprovar, onClassificar }: {
     <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm mb-4">
       <div className="flex justify-between items-start mb-2">
         <h3 className="text-xl font-bold text-gray-900">{demanda.demStrNome}</h3>
-        <span className="border border-gray-300 text-gray-600 text-[10px] px-3 py-1 rounded-full font-medium uppercase tracking-wide bg-white">
+        <span className={`text-[10px] px-3 py-1 rounded-full font-medium uppercase tracking-wide ${
+          demanda.demBoolAceitacao
+            ? 'bg-green-100 text-green-800'
+            : 'border border-gray-300 text-yellow-600 bg-yellow-100'
+        }`}>
           {demanda.demBoolAceitacao ? 'Aprovada' : 'Pendente'}
         </span>
       </div>
@@ -96,7 +99,6 @@ const CardDemanda = ({ demanda, onAprovar, onClassificar }: {
       </div>
 
       <div className="flex items-center gap-3 mb-4 flex-wrap">
-        {demanda.demStrTipagem && <Tag text={demanda.demStrTipagem} />}
         {demanda.demStrSemestreRecomendado && <Tag text={`${demanda.demStrSemestreRecomendado}º Sem`} />}
         {demanda.demStrAreaTecnica && <Tag text={demanda.demStrAreaTecnica} />}
       </div>
@@ -104,7 +106,7 @@ const CardDemanda = ({ demanda, onAprovar, onClassificar }: {
       <div className="flex gap-3">
         {!demanda.demStrSemestreRecomendado && (
           <button
-            className="flex-1 bg-[#782e29] hover:bg-[#5e231f] active:scale-95 text-white py-2.5 rounded-md font-medium text-sm transition-colors shadow-sm"
+            className="flex-1 bg-[#782e29] hover:bg-[#5e231f] active:scale-95 cursor-pointer text-white py-2.5 rounded-md font-medium text-sm transition-colors shadow-sm"
             onClick={() => navigate(`/classificar_demanda?id=${demanda.demIntId}`)}
           >
             Classificar
@@ -112,7 +114,7 @@ const CardDemanda = ({ demanda, onAprovar, onClassificar }: {
         )}
         {demanda.demStrSemestreRecomendado && !demanda.demBoolAceitacao && (
           <button
-            className="flex-1 bg-[#40531D] hover:bg-[#344418] active:scale-95 text-white py-2.5 rounded-md font-medium text-sm transition-colors shadow-sm"
+            className="flex-1 bg-[#40531D] hover:bg-[#344418] active:scale-95 cursor-pointer text-white py-2.5 rounded-md font-medium text-sm transition-colors shadow-sm"
             onClick={() => onAprovar(demanda.demIntId)}
           >
             Aprovar
@@ -225,7 +227,7 @@ export default function DashboardCoordenador() {
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
           <div className="lg:col-span-2">
-            <TabsNavegacao aba={aba} setAba={setAba} />
+            <TabsNavegacao aba={aba} setAba={setAba}/>
 
             <div className="mt-6">
               {demandasFiltradas.length === 0 ? (

@@ -21,7 +21,6 @@ export async function getDemandasPendentes() {
 export async function classificarDemanda(id: number, dto: {
   semestre: string;
   areaTecnica: string;
-  tipagem: string;
 }) {
   const response = await api.put(`/coordenadores/demanda/${id}/classificar`, dto);
   return response.data;

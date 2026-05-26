@@ -23,15 +23,13 @@ import Status from "../pages/projeto/Status";
 import CadastrarDemanda from "../pages/demanda/Cadastrar_demanda";
 import ClassificarDemanda from "../pages/demanda/Classificar_demanda";
 import DashboardAluno from "../pages/usuarios/Aluno";
-import DashboardCoordenador from "../pages/usuarios/Coordenador";
-import CoordenadorEmAndamento from "../pages/usuarios/CoordenadorEmAndamento";
-import CoordenadorConcluidas from "../pages/usuarios/CoordenadorConcluidas";
 import DashboardAdmin from "../pages/admin/DashboardAdmin";
 
 import useFocusMain from "../hooks/useFocusMain";
 import AccessibilityButton from "../components/AccessibilityButton";
 import PrivateRoute from "./PrivateRoute";
 import DashboardEmpreendedor from "../pages/usuarios/Dashboard_empreendedor";
+import DashboardCoordenador from "../pages/usuarios/Dashboard_coordenador";
 
 export default function AppContent() {
   useFocusMain();
@@ -85,8 +83,6 @@ export default function AppContent() {
             <Route path="/aluno" element={<PrivateRoute roles={['Grupo']}><DashboardAluno /></PrivateRoute>} />
             <Route path="/coordenador" element={<PrivateRoute roles={['Coordenador', 'Admin']}><DashboardCoordenador /></PrivateRoute>} />
             <Route path="/empreendedor" element={<PrivateRoute roles={['Empreendedor', 'Admin']}><DashboardEmpreendedor /></PrivateRoute>} />
-            <Route path="/CoordenadorEmAndamento" element={<PrivateRoute roles={['Coordenador', 'Admin']}><CoordenadorEmAndamento /></PrivateRoute>} />
-            <Route path="/CoordenadorConcluidas" element={<PrivateRoute roles={['Coordenador', 'Admin']}><CoordenadorConcluidas /></PrivateRoute>} />
             <Route path="/admin" element={<PrivateRoute roles={['Admin']}><DashboardAdmin /></PrivateRoute>} />
           </Routes>
         </main>
