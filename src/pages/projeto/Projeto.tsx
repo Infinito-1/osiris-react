@@ -1,139 +1,211 @@
-import React from "react";
-import { useParams } from "react-router-dom";
-import { useGetDemandById } from "../../hooks/demands/useGetDemandById";
+import React, { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { getProjetoById, updateProjeto } from "../../services/projeto.service";
+import { useAuth } from "../../hooks/useAuth";
 
-// Componente para um campo de informação
 interface InfoFieldProps {
   label: string;
-  value: string;
+  value: string | null | undefined;
 }
 
-const InfoField: React.FC<InfoFieldProps> = ({ label, value }) => {
-  return (
-    <div className="flex justify-between items-center pb-2 border-b border-gray-200">
-      <p className="text-base font-medium text-gray-800">{label}</p>
-      <p className="text-base text-gray-600">{value}</p>
-    </div>
-  );
-};
+const InfoField: React.FC<InfoFieldProps> = ({ label, value }) => (
+  <div className="flex justify-between items-center pb-2 border-b border-gray-200">
+    <p className="text-base font-medium text-gray-800">{label}</p>
+    <p className="text-base text-gray-600">{value ?? '—'}</p>
+  </div>
+);
 
-// interface Projeto {
-//   titulo: string;
-//   tipo: string;
-//   descricao: string;
-//   complexidade: string;
-//   semestre: string;
-//   tecnologiasRecomendadas: string[];
-//   empresa: {
-//     nome: string;
-//     empreendedor: string;
-//     email: string;
-//   };
-// }
+interface EditarProjetoDto {
+  proStrDescricao: string;
+  proDateInicio: string;
+}
 
 interface pageParams extends Record<string, string> {
   id: string;
 }
 
-// Componente Principal da Página de Projeto
 const Projeto: React.FC = () => {
-  //Para puxar os dados inseridos na rota dinâmica, basta usar a hook useParams() para puxar os dados desejados. Neste caso, nós precisamos do id do projeto para
-  // que seja possível colocá-la na hook da API
-  const params = useParams<pageParams>();
+  const { id } = useParams<pageParams>();
+  const navigate = useNavigate();
+  const { isAuthenticated, usuario } = useAuth();
 
-  const [projeto] = useGetDemandById({ id: Number(params.id) });
+  const [projeto, setProjeto] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+  const [erro, setErro] = useState('');
+  const [editando, setEditando] = useState(false);
 
-  // Um exemplo básico de como você pode requisitar a API de maneira "crua" com a API do fetch do Javascript e realizar sua manipulação de maneira granulada.
-  // Você pode converter isso em uma hook e utilizar ao redor do projeto de maneira prática também.
-  // Percebi que a API não retornou alguns dados que aparentemente são obrigatórios colocá-los aqui e em outras páginas, então eu coloquei placeholders entre o demanda.mapper e em mais algum lugar possivelmente
-  // useEffect(() => {
-  //   fetch(`http://localhost:4000/demandas/${params.id}`)
-  //     .then((res) => {
-  //       if (res.ok) return res.json();
-  //     })
-  //     .then((data) => {
-  //       const newDemanda: Projeto = {
-  //         titulo: data.demStrNome,
-  //         tipo: data.tipo[0].tipStrNome,
-  //         descricao: data.demStrDescricao,
-  //         complexidade: "Complexidade aqui",
-  //         semestre: data.semestre.semStrDescricao,
-  //         tecnologiasRecomendadas: [
-  //           "React",
-  //           "Javascript",
-  //           "HTML",
-  //           "COLOQUE DADOS AQUI",
-  //         ],
-  //         empresa: {
-  //           nome: data.empreendedor.empStrEmpresa,
-  //           empreendedor: "EMPREENDEDOR AQUI",
-  //           email: "EMAIL EMPREENDEDOR AQUI",
-  //         },
-  //       };
+  const { register, handleSubmit, reset, formState: { errors, isSubmitting } } = useForm<EditarProjetoDto>();
 
-  //       setProjeto(newDemanda);
-  //     });
-  // }, []);
+  useEffect(() => {
+    if (!id) return;
+    getProjetoById(Number(id))
+      .then(data => {
+        setProjeto(data);
+        reset({
+          proStrDescricao: data?.descricao ?? '',
+          proDateInicio: data?.dataInicio
+            ? new Date(data?.dataInicio).toISOString().split('T')[0]
+            : '',
+        });
+      })
+      .catch(() => setErro('Projeto não encontrado.'))
+      .finally(() => setLoading(false));
+  }, [id]);
+
+  // verifica se o grupo logado é o dono do projeto
+  const ehDono =
+    isAuthenticated &&
+    usuario?.tipo === 'Grupo' &&
+    projeto?.candidatura?.grupo?.nome === usuario?.nome;
+
+  const mostrarBotaoInteresse =
+    !isAuthenticated || usuario?.tipo === 'Grupo';
+
+  function handleManifestarInteresse() {
+    if (!isAuthenticated) {
+      navigate('/login');
+      return;
+    }
+    navigate(`/candidatura/${projeto?.candidatura?.demanda?.id}`);
+  }
+
+  const onSubmitEdicao = async (data: EditarProjetoDto) => {
+    try {
+      const atualizado = await updateProjeto(Number(id), {
+        proStrDescricao: data.proStrDescricao,
+        proDateInicio: data.proDateInicio,
+      });
+      setProjeto(atualizado);
+      setEditando(false);
+    } catch (error: any) {
+      const mensagem = error?.response?.data?.message;
+      alert(
+        Array.isArray(mensagem)
+          ? mensagem.join('\n')
+          : mensagem ?? 'Erro ao atualizar projeto.'
+      );
+    }
+  };
+
+  if (loading) return (
+    <div className="flex items-center justify-center w-full min-h-screen bg-[#F1F7EE]">
+      <p className="text-gray-500">Carregando projeto...</p>
+    </div>
+  );
+
+  if (erro || !projeto) return (
+    <div className="flex items-center justify-center w-full min-h-screen bg-[#F1F7EE]">
+      <p className="text-red-600">{erro || 'Erro ao carregar projeto.'}</p>
+    </div>
+  );
+
+  const demanda = projeto.candidatura?.demanda;
+  const grupo = projeto.candidatura?.grupo;
 
   return (
-    <div className="flex flex-col items-center w-full min-h-screen bg-[#F1F7EE] py-10 ">
+    <div className="flex flex-col items-center w-full min-h-screen bg-[#F1F7EE] py-10">
       <header className="w-full py-8 text-center mb-10">
-        <h1 className="text-3xl md:text-4xl font-bold">
-          {projeto?.demanda.titulo}
-        </h1>
-        <p className="text-lg mt-1">
-          {projeto?.empreendedor.empresa || "EMPREENDEDOR AQUI"} /{" "}
-          {projeto?.tipo[0].nome}
+        <h1 className="text-3xl md:text-4xl font-bold">{demanda?.nome ?? '—'}</h1>
+        <p className="text-lg mt-1 text-gray-600">
+          {grupo?.nome ?? '—'} / {grupo?.lider ?? '—'}
         </p>
       </header>
 
       <div className="w-11/12 max-w-4xl bg-white border border-gray-300 rounded-lg p-8 shadow-xl">
-        {/* Seção de Descrição do Projeto */}
+
+        {/* Descrição do Projeto */}
         <section className="mb-8">
-          <h2 className="text-2xl font-semibold text-gray-800 mb-4">
-            Descrição do Projeto
-          </h2>
-          <p className="text-base text-gray-600 mb-4 leading-relaxed">
-            {projeto?.demanda.descricao}
-          </p>
-          <p className="text-base text-gray-600">
-            <span className="font-medium text-gray-800">Complexidade:</span>{" "}
-            {projeto?.demanda.complexidade || "COMPLEXIDADE AQUI"}
-          </p>
+          <div className="flex justify-between items-center mb-4">
+            <h2 className="text-2xl font-semibold text-gray-800">Descrição do Projeto</h2>
+            {ehDono && !editando && (
+              <button
+                onClick={() => setEditando(true)}
+                className="text-sm px-4 py-1.5 border border-[#782E29] text-[#782E29] rounded-md hover:bg-red-50 transition cursor-pointer"
+              >
+                Editar
+              </button>
+            )}
+          </div>
+
+          {editando ? (
+            <form onSubmit={handleSubmit(onSubmitEdicao)} className="space-y-4">
+              <div className="flex flex-col space-y-1">
+                <label className="text-sm font-medium text-gray-700">Descrição</label>
+                <textarea
+                  {...register('proStrDescricao', { required: 'Descrição obrigatória' })}
+                  rows={4}
+                  className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#782E29] resize-none"
+                />
+                {errors.proStrDescricao && (
+                  <span className="text-red-500 text-xs">{errors.proStrDescricao.message}</span>
+                )}
+              </div>
+
+              <div className="flex flex-col space-y-1">
+                <label className="text-sm font-medium text-gray-700">Data de início</label>
+                <input
+                  {...register('proDateInicio', { required: 'Data obrigatória' })}
+                  type="date"
+                  className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#782E29]"
+                />
+                {errors.proDateInicio && (
+                  <span className="text-red-500 text-xs">{errors.proDateInicio.message}</span>
+                )}
+              </div>
+
+              <div className="flex gap-3">
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="flex-1 bg-[#782E29] text-white py-2 rounded-md font-medium hover:bg-[#6d2823] transition cursor-pointer disabled:opacity-50"
+                >
+                  {isSubmitting ? 'Salvando...' : 'Salvar'}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setEditando(false)}
+                  className="flex-1 bg-gray-200 text-gray-800 py-2 rounded-md font-medium hover:bg-gray-300 transition cursor-pointer"
+                >
+                  Cancelar
+                </button>
+              </div>
+            </form>
+          ) : (
+            <p className="text-base text-gray-600 leading-relaxed">{projeto.descricao}</p>
+          )}
         </section>
 
-        {/* Seção Sobre o Empreendedor */}
+        {/* Detalhes */}
         <section className="mb-8">
-          <h2 className="text-2xl font-semibold text-gray-800 mb-4">
-            Sobre o Empreendedor
-          </h2>
+          <h2 className="text-2xl font-semibold text-gray-800 mb-4">Detalhes</h2>
           <div className="space-y-4">
             <InfoField
-              label="Nome:"
-              value={projeto?.empreendedor.empresa || "EMPREENDEDOR AQUI"}
+              label="Data de início:"
+              value={projeto.dataInicio
+                ? new Date(projeto.dataInicio).toLocaleDateString('pt-BR')
+                : null}
             />
-            <InfoField label="Empresa:" value={projeto?.empreendedor.empresa} />
-            <InfoField label="Email:" value={projeto?.empreendedor.email} />
+            <InfoField label="Grupo:" value={grupo?.nome} />
+            <InfoField label="Líder:" value={grupo?.lider} />
             <InfoField
-              label="Semestre recomendado:"
-              value={`A partir do ${projeto?.demanda.semestreRecomendado}º`}
-            />
-            <InfoField label="Complexidade:" value={projeto?.complexidade} />
-            <InfoField
-              label="Tecnologias recomendadas:"
-              value={projeto?.demanda.tecnologiasRecomendadas.map((tec) => {
-                return `${tec}, `;
-              })}
+              label="Status:"
+              value={projeto.ativo ? 'Em andamento' : 'Encerrado'}
             />
           </div>
         </section>
 
-        {/* Seção de Botões */}
+        {/* Botões */}
         <section className="flex flex-col md:flex-row md:space-x-4 space-y-3 md:space-y-0">
-          <button className="flex-1 bg-[#782E29] text-white py-3 px-6 rounded-md text-lg font-medium transition-colors duration-200 hover:bg-[#6d2823] shadow-md">
-            Manifestar Interesse
-          </button>
-          <button className="flex-1 bg-[#5F747F] text-white py-3 px-6 rounded-md text-lg font-medium transition-colors duration-200 hover:bg-[#53656e] shadow-md">
+          {mostrarBotaoInteresse && !ehDono && (
+            <button
+              onClick={handleManifestarInteresse}
+              className="flex-1 bg-[#782E29] text-white py-3 px-6 rounded-md text-lg font-medium transition hover:bg-[#6d2823] shadow-md cursor-pointer"
+            >
+              Manifestar Interesse
+            </button>
+          )}
+          <button className="flex-1 bg-[#5F747F] text-white py-3 px-6 rounded-md text-lg font-medium transition hover:bg-[#53656e] shadow-md cursor-pointer">
             Entrar em Contato
           </button>
         </section>

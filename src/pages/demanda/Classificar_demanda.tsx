@@ -1,129 +1,145 @@
+import { useEffect, useState } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
+import { getDemandaById } from '../../services/demanda.service';
+import { classificarDemanda, aprovarDemanda } from '../../services/coordenador.service';
+import { api } from '../../api/axios';
 
-// Componente para um campo de formulário com label e input/textarea
-interface FormFieldProps {
-  label: string;
-  id: string;
-  type: "text" | "textarea";
-  placeholder?: string;
-  required?: boolean;
-  readOnly?: boolean;
+interface ClassificarDemandaFormDto {
+  semestre: string;
+  areaTecnica: string;
 }
 
-const FormField: React.FC<FormFieldProps> = ({
-  label,
-  id,
-  type,
-  placeholder,
-  required,
-  readOnly = false,
-}) => {
-  const inputClasses =
-    "w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#782E29]";
+export default function ClassificarDemanda() {
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const demandaId = Number(searchParams.get('id'));
 
-  const renderInput = () => {
-    if (type === "textarea") {
-      return (
-        <textarea
-          id={id}
-          name={id}
-          placeholder={placeholder}
-          required={required}
-          rows={4}
-          readOnly={readOnly}
-          className={`${inputClasses} resize-none ${readOnly ? "bg-gray-50 cursor-default" : ""}`}
-        />
+  const [descricao, setDescricao] = useState('');
+  const [nomeDemanda, setNomeDemanda] = useState('');
+  const [loading, setLoading] = useState(true);
+
+  const [semestres, setSemestres] = useState<{ semIntId: number; semStrDescricao: string }[]>([]);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<ClassificarDemandaFormDto>();
+
+  useEffect(() => {
+    if (!demandaId) return;
+    getDemandaById(demandaId)
+      .then(d => {
+        setDescricao(d?.descricao ?? '');
+        setNomeDemanda(d?.nome ?? '');
+      })
+      .finally(() => setLoading(false));
+  }, [demandaId]);
+
+  useEffect(() => {
+    api.get('/semestres').then(res => setSemestres(res.data));
+  }, []);
+
+  const onSubmit = async (data: ClassificarDemandaFormDto) => {
+    try {
+      await classificarDemanda(demandaId, {
+        semestre: data.semestre,
+        areaTecnica: data.areaTecnica,
+      });
+      await aprovarDemanda(demandaId);
+      navigate('/coordenador');
+    } catch (error: any) {
+      const mensagem = error?.response?.data?.message;
+      alert(
+        Array.isArray(mensagem)
+          ? mensagem.join('\n')
+          : mensagem ?? 'Erro ao classificar demanda.'
       );
     }
-    return (
-      <input
-        id={id}
-        type="text"
-        name={id}
-        placeholder={placeholder}
-        required={required}
-        readOnly={readOnly}
-        className={`${inputClasses} ${readOnly ? "bg-gray-50 cursor-default" : ""}`}
-      />
-    );
   };
 
-  return (
-    <div className="flex flex-col space-y-1">
-      <label htmlFor={id} className="text-sm font-medium text-gray-700">
-        {label}
-      </label>
-      {renderInput()}
+  if (loading) return (
+    <div className="flex items-center justify-center w-full min-h-screen bg-[#F1F7EE]">
+      <p className="text-gray-500">Carregando demanda...</p>
     </div>
   );
-};
 
-// Componente Principal da Página de Classificação de Demanda
-const ClassificarDemanda: React.FC = () => {
   return (
     <div className="flex justify-center w-full min-h-screen bg-[#F1F7EE] py-10">
       <div className="w-11/12 max-w-xl bg-white border border-gray-300 rounded-lg p-8 shadow-xl">
-        <h1 className="text-3xl font-bold text-gray-800 text-center mb-8">
+        <h1 className="text-3xl font-bold text-gray-800 text-center mb-2">
           Classificação da Demanda
         </h1>
+        {nomeDemanda && (
+          <p className="text-center text-gray-500 text-sm mb-8">{nomeDemanda}</p>
+        )}
 
-        <form className="space-y-6">
-          {/* Descrição sobre a demanda (ReadOnly) */}
-          <FormField
-            label="Descrição sobre a demanda"
-            id="descricaoDemanda"
-            type="textarea"
-            placeholder="Desenvolvimento de sistema web para gestão completa de clínica veterinária, incluindo cadastro de pets, agendamento de consultas, prontuário eletrônico e controle financeiro. Necessário experiência com banco de dados."
-            readOnly
-          />
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+          {/* Descrição — readonly */}
+          <div className="flex flex-col space-y-1">
+            <label className="text-sm font-medium text-gray-700">
+              Descrição da demanda
+            </label>
+            <textarea
+              value={descricao}
+              readOnly
+              rows={4}
+              className="w-full p-2 border border-gray-300 rounded-md bg-gray-50 cursor-default resize-none focus:outline-none"
+            />
+          </div>
 
-          {/* Indicação de Semestre */}
-          <FormField
-            label="Indicação de Semestre"
-            id="semestre"
-            type="text"
-            placeholder="1° semestre | 2° semestre | 3° semestre......"
-            required
-          />
+          <div className="flex flex-col space-y-1">
+            <label htmlFor="semestre" className="text-sm font-medium text-gray-700">
+              Semestre mínimo recomendado
+            </label>
+            <select
+              {...register('semestre', { required: 'Semestre obrigatório' })}
+              id="semestre"
+              className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#782E29] bg-white cursor-pointer"
+            >
+              <option value="">Selecione o semestre mínimo</option>
+              {semestres.map(s => (
+                <option key={s.semIntId} value={s.semStrDescricao}>
+                  {s.semStrDescricao}º semestre
+                </option>
+              ))}
+            </select>
+            {errors.semestre && (
+              <span className="text-red-500 text-xs">{errors.semestre.message}</span>
+            )}
+          </div>
 
-          {/* Descrição breve sobre quais os requisitos exigidos para esse projeto */}
-          <FormField
-            label="Descrição breve sobre quais os requisitos exigidos para esse projeto"
-            id="requisitos"
-            type="text"
-            required
-          />
+          {/* Área técnica / requisitos */}
+          <div className="flex flex-col space-y-1">
+            <label htmlFor="areaTecnica" className="text-sm font-medium text-gray-700">
+              Requisitos técnicos exigidos
+            </label>
+            <input
+              {...register('areaTecnica', { required: 'Área técnica obrigatória' })}
+              id="areaTecnica"
+              type="text"
+              placeholder="Ex: React, Node.js, banco de dados relacional"
+              className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#782E29]"
+            />
+            {errors.areaTecnica && (
+              <span className="text-red-500 text-xs">{errors.areaTecnica.message}</span>
+            )}
+          </div>
 
-          {/* Tipo */}
-          <FormField
-            label="Tipo:"
-            id="tipo"
-            type="text"
-            placeholder="Site | Mobile | Outro:"
-            required
-          />
+          
 
-          {/* Grau de dificuldade */}
-          <FormField
-            label="Grau de dificuldade"
-            id="dificuldade"
-            type="text"
-            placeholder="Básico | Intermediário | Dificil"
-            required
-          />
-
-          {/* Botão de Publicar */}
           <div className="pt-4">
             <button
               type="submit"
-              className="w-full bg-[#782E29] text-white py-3 rounded-md text-lg font-medium transition-colors duration-200 hover:bg-[#6d2823] shadow-md"
+              disabled={isSubmitting}
+              className="w-full bg-[#782E29] text-white py-3 rounded-md text-lg font-medium transition-colors duration-200 hover:bg-[#6d2823] shadow-md cursor-pointer active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Publicar
+              {isSubmitting ? 'Publicando...' : 'Classificar e Publicar'}
             </button>
           </div>
         </form>
       </div>
     </div>
   );
-};
-
-export default ClassificarDemanda;
+}

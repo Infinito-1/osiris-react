@@ -2,124 +2,117 @@ import React, { useState, useEffect } from 'react';
 import Filtro from "../../assets/img/icones/filtro.svg";
 import Lupa from "../../assets/img/icones/lupa.svg";
 
-// Definição da interface para o estado dos filtros
 interface Filtros {
-    tipos: string[]; // Tipos de projeto selecionados (checkboxes)
-    area: string; // Área de negócio selecionada (select)
-    complexidade: string; // Complexidade selecionada (radio)
+  tipos: string[];
+  area: string;
+  semestre: string;
 }
 
-// Definição da interface para as props do componente
 interface FiltroDemandasProps {
-    onFiltroChange: (filtros: Filtros) => void;
-    currentFiltros: Filtros;
+  onFiltroChange: (filtros: Filtros) => void;
+  currentFiltros: Filtros;
 }
 
 const TIPOS_PROJETO = ['Sistema Web', 'Aplicativo Mobile', 'Landing Page', 'E-commerce'];
-const COMPLEXIDADE_NIVEIS = ['Todas', 'Básica', 'Intermediária', 'Avançada'];
+const SEMESTRES = ['Todos', '1', '2', '3', '4', '5', '6'];
 
 const FiltroDemandas: React.FC<FiltroDemandasProps> = ({ onFiltroChange, currentFiltros }) => {
-    const [filtrosInternos, setFiltrosInternos] = useState<Filtros>(currentFiltros);
+  const [filtrosInternos, setFiltrosInternos] = useState<Filtros>(currentFiltros);
 
-    // Sincroniza o estado interno com o estado externo (props)
-    useEffect(() => {
-        setFiltrosInternos(currentFiltros);
-    }, [currentFiltros]);
+  useEffect(() => {
+    setFiltrosInternos(currentFiltros);
+  }, [currentFiltros]);
 
-    const handleTipoChange = (tipo: string, isChecked: boolean) => {
-        setFiltrosInternos(prevFiltros => {
-            const novosTipos = isChecked
-                ? [...prevFiltros.tipos, tipo]
-                : prevFiltros.tipos.filter(t => t !== tipo);
-            return { ...prevFiltros, tipos: novosTipos };
-        });
-    };
+  const handleTipoChange = (tipo: string, isChecked: boolean) => {
+    setFiltrosInternos(prev => ({
+      ...prev,
+      tipos: isChecked ? [...prev.tipos, tipo] : prev.tipos.filter(t => t !== tipo),
+    }));
+  };
 
-    const handleAreaChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        setFiltrosInternos(prevFiltros => ({
-            ...prevFiltros,
-            area: event.target.value,
-        }));
-    };
+  const handleAreaChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setFiltrosInternos(prev => ({ ...prev, area: event.target.value }));
+  };
 
-    const handleComplexidadeChange = (level: string) => {
-        setFiltrosInternos(prevFiltros => ({
-            ...prevFiltros,
-            complexidade: level,
-        }));
-    };
+  const handleSemestreChange = (semestre: string) => {
+    setFiltrosInternos(prev => ({ ...prev, semestre }));
+  };
 
-    const aplicarFiltros = () => {
-        onFiltroChange(filtrosInternos);
-    };
+  const aplicarFiltros = () => {
+    onFiltroChange(filtrosInternos);
+  };
 
-    return (
-        <div className="bg-white border border-gray-300 rounded-lg p-6 shadow-md h-150">
-          <div className="flex gap-1">
-            <img className="size-6" src={Filtro}/>
-            <h3 className="text-xl font-semibold text-gray-800 mb-2">Filtros</h3>
-          </div>
+  return (
+    <div className="bg-white border border-gray-300 rounded-lg p-6 shadow-md">
+      <div className="flex gap-1 mb-4">
+        <img className="size-6" src={Filtro} alt="Filtros" />
+        <h3 className="text-xl font-semibold text-gray-800">Filtros</h3>
+      </div>
 
-            {/* Tipo de Projeto */}
-            <div className="mb-6">
-                <h4 className="font-medium text-gray-800 mb-2">Formato</h4>
-                <div className="space-y-2">
-                    {TIPOS_PROJETO.map((tipo, index) => (
-                        <div key={index} className="flex items-center">
-                            <input type="checkbox" id={`tipo-${index}`}
-                            className="appearance-none h-4 w-4 border-2 border-[#782E29] rounded focus:ring-[#782E29]
-                            transition-all checked:bg-[#782E29] "
-                            checked={filtrosInternos.tipos.includes(tipo)}
-                            onChange={(e) => handleTipoChange(tipo, e.target.checked)}
-                            />
-                            <label htmlFor={`tipo-${index}`} className="ml-2 text-gray-700">{tipo}</label>
-                        </div>
-                    ))}
-                </div>
+      {/* Tipo de Projeto */}
+      <div className="mb-6">
+        <h4 className="font-medium text-gray-800 mb-2">Formato</h4>
+        <div className="space-y-2">
+          {TIPOS_PROJETO.map((tipo, index) => (
+            <div key={index} className="flex items-center">
+              <input
+                type="checkbox"
+                id={`tipo-${index}`}
+                className="appearance-none h-4 w-4 border-2 border-[#782E29] rounded focus:ring-[#782E29] transition-all checked:bg-[#782E29] cursor-pointer"
+                checked={filtrosInternos.tipos.includes(tipo)}
+                onChange={(e) => handleTipoChange(tipo, e.target.checked)}
+              />
+              <label htmlFor={`tipo-${index}`} className="ml-2 text-gray-700 cursor-pointer">{tipo}</label>
             </div>
-
-            {/* Área de Negócio */}
-            <div className="mb-6">
-                <h4 className="font-medium text-gray-800 mb-2">Área de Negócio</h4>
-                <select 
-                    id= "area_selecionada"
-                    name= "area_selecionada"
-                    className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#782E29]"
-                    value={filtrosInternos.area}
-                    onChange={handleAreaChange}
-                >
-                    <option>Todas as áreas</option>
-                    {/* Adicione outras opções aqui */}
-                </select>
-            </div>
-
-            {/* Complexidade */}
-            <div className="mb-6">
-                <h4 className="font-medium text-gray-800 mb-2">Complexidade</h4>
-                <div className="space-y-2">
-                    {COMPLEXIDADE_NIVEIS.map((level, index) => (
-                        <div key={index} className="flex items-center">
-                            <input type="radio" id={`level-${index}`} name="complexidade"
-                            className="appearance-none rounded-full h-4 w-4 border-2 border-[#782E29] focus:ring-[#782E29]
-                            transition-all checked:bg-[#782E29] "
-                            checked={filtrosInternos.complexidade === level}
-                            onChange={() => handleComplexidadeChange(level)}
-                            />
-                            <label htmlFor={`level-${index}`} className="ml-2 text-gray-700">{level}</label>
-                        </div>
-                    ))}
-                </div>
-            </div>
-
-            <button
-                className="w-full flex gap-7 justify-center items-center bg-[#782E29] text-white py-2 px-4 rounded-md text-base font-medium transition-colors duration-200 hover:bg-[#6d2823] shadow-md cursor-pointer"
-                onClick={aplicarFiltros}
-            >
-                <img src={Lupa}/>
-                Aplicar Filtros
-            </button>
+          ))}
         </div>
-    );
+      </div>
+
+      {/* Área de Negócio */}
+      <div className="mb-6">
+        <h4 className="font-medium text-gray-800 mb-2">Área de Negócio</h4>
+        <select
+          id="area_selecionada"
+          name="area_selecionada"
+          className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#782E29]"
+          value={filtrosInternos.area}
+          onChange={handleAreaChange}
+        >
+          <option>Todas as áreas</option>
+        </select>
+      </div>
+
+      {/* Semestre mínimo recomendado */}
+      <div className="mb-6">
+        <h4 className="font-medium text-gray-800 mb-2">Semestre mínimo recomendado</h4>
+        <div className="space-y-2">
+          {SEMESTRES.map((s, index) => (
+            <div key={index} className="flex items-center">
+              <input
+                type="radio"
+                id={`semestre-${index}`}
+                name="semestre"
+                className="appearance-none rounded-full h-4 w-4 border-2 border-[#782E29] focus:ring-[#782E29] transition-all checked:bg-[#782E29] cursor-pointer"
+                checked={filtrosInternos.semestre === s}
+                onChange={() => handleSemestreChange(s)}
+              />
+              <label htmlFor={`semestre-${index}`} className="ml-2 text-gray-700 cursor-pointer">
+                {s === 'Todos' ? 'Todos' : `${s}º semestre`}
+              </label>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <button
+        className="w-full flex gap-7 justify-center items-center bg-[#782E29] text-white py-2 px-4 rounded-md text-base font-medium transition-colors duration-200 hover:bg-[#6d2823] shadow-md cursor-pointer"
+        onClick={aplicarFiltros}
+      >
+        <img src={Lupa} alt="Buscar" />
+        Aplicar Filtros
+      </button>
+    </div>
+  );
 };
 
 export default FiltroDemandas;

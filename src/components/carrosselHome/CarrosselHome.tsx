@@ -63,10 +63,10 @@ const cardsData: CardData[] = [
       "Acompanhe o desenvolvimento do projeto",
       "Dê orientações gerais",
     ],
-    buttonText: "Cadastrar como Coodenador",
+    buttonText: "Sou Coodenador",
     bgEllipse: EllipseBook,
     image: Book,
-    link: "/cadastro/coordenador",
+    link: "/login",
     buttonColor: "#4f534e",
   }
 ];
