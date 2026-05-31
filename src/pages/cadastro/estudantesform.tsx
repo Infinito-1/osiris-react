@@ -42,11 +42,6 @@ function EstudantesForm() {
   const onSubmit = async (data: CreateGrupoFormDto) => {
     passwordHook.setTouched(true);
 
-    if (!passwordHook.isValid) {
-      alert("Senha inválida");
-      return;
-    }
-
     try {
       // 1. Cria o usuário
       const userResponse = await api.post("/usuarios", {
@@ -288,6 +283,7 @@ function EstudantesForm() {
               hook={passwordHook}
               register={register("usuStrSenha", {
                 required: "Senha obrigatória",
+                validate: () => passwordHook.isValid || "A senha não atende todos os requisitos.",
               })}
             />
           </div>

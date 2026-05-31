@@ -31,6 +31,7 @@ import PrivateRoute from "./PrivateRoute";
 import DashboardEmpreendedor from "../pages/usuarios/Dashboard_empreendedor";
 import DashboardCoordenador from "../pages/usuarios/Dashboard_coordenador";
 import DetalhesDemanda from "../pages/demanda/DetalhesDemanda";
+import Candidatura from "../pages/demanda/Candidatura";
 
 export default function AppContent() {
   useFocusMain();
@@ -70,6 +71,7 @@ export default function AppContent() {
 
             {/* ── Rotas protegidas — Grupo ── */}
             <Route path="/dashboard_grupo" element={<PrivateRoute roles={['Grupo', 'Admin']}><Dashboard /></PrivateRoute>} />
+            <Route path="/candidatura/:id" element={<PrivateRoute roles={['Grupo']}><Candidatura /> </PrivateRoute>} />
 
             {/* ── Rotas protegidas — Projeto ── */}
             <Route path="/projeto" element={<PrivateRoute><Projeto /></PrivateRoute>} />

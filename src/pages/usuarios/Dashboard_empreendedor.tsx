@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getDashboardEmpreendedor } from "../../services/empreendedores.service";
+import { desativarDemanda } from "../../services/demanda.service";
 
 // ── Tipos ─────────────────────────────────────────────────────────────────────
 
@@ -61,9 +62,9 @@ const TrashIcon = () => (
 
 const StatusBadge = ({ aba }: { aba: Aba }) => {
   const map = {
-    pendentes:    { label: "Em Análise",  cls: "border border-gray-300 text-gray-600 bg-white" },
-    emAndamento:  { label: "Em Andamento", cls: "bg-[#550B0B] text-white" },
-    concluidas:   { label: "Concluído",   cls: "bg-[#40531D] text-white" },
+    pendentes:   { label: "Em Análise",   cls: "border border-gray-300 text-gray-600 bg-white" },
+    emAndamento: { label: "Em Andamento", cls: "bg-[#550B0B] text-white" },
+    concluidas:  { label: "Concluído",    cls: "bg-[#40531D] text-white" },
   };
   const { label, cls } = map[aba];
   return (
@@ -79,7 +80,17 @@ const Tag = ({ text }: { text: string }) => (
   </span>
 );
 
-const CardDemanda = ({ demanda, aba }: { demanda: Demanda; aba: Aba }) => (
+const CardDemanda = ({
+  demanda,
+  aba,
+  onEditar,
+  onDesativar,
+}: {
+  demanda: Demanda;
+  aba: Aba;
+  onEditar: (id: number) => void;
+  onDesativar: (id: number) => void;
+}) => (
   <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm mb-4">
     <div className="flex justify-between items-start mb-2">
       <h3 className="text-xl font-bold text-gray-900">{demanda.nome}</h3>
@@ -91,7 +102,7 @@ const CardDemanda = ({ demanda, aba }: { demanda: Demanda; aba: Aba }) => (
     {demanda.tipos.length > 0 && (
       <div className="flex flex-wrap gap-2 mb-4">
         {demanda.tipos.map((t, i) => <Tag key={i} text={t} />)}
-        {demanda.semestreRecomendado && <Tag text={demanda.semestreRecomendado} />}
+        {demanda.semestreRecomendado && <Tag text={`${demanda.semestreRecomendado}º sem`} />}
         {demanda.areaTecnica && <Tag text={demanda.areaTecnica} />}
       </div>
     )}
@@ -115,16 +126,22 @@ const CardDemanda = ({ demanda, aba }: { demanda: Demanda; aba: Aba }) => (
 
       <div className="flex gap-3 w-full sm:w-auto">
         {aba === "concluidas" ? (
-          <button className="w-full sm:w-auto bg-white border border-gray-400 text-gray-900 py-2 px-4 rounded-md font-bold text-sm hover:bg-gray-50 transition shadow-sm">
+          <button className="w-full sm:w-auto bg-white border border-gray-400 text-gray-900 py-2 px-4 rounded-md font-bold text-sm hover:bg-gray-50 transition shadow-sm cursor-pointer">
             Ver Projeto Final
           </button>
         ) : (
           <>
-            <button className="flex items-center justify-center gap-2 px-4 py-1.5 border border-gray-300 rounded text-gray-700 text-sm font-medium hover:bg-gray-50 transition w-full sm:w-auto">
+            <button
+              onClick={() => onEditar(demanda.id)}
+              className="flex items-center justify-center gap-2 px-4 py-1.5 border border-gray-300 rounded text-gray-700 text-sm font-medium hover:bg-gray-50 transition w-full sm:w-auto cursor-pointer"
+            >
               <EditIcon /> Editar
             </button>
-            <button className="flex items-center justify-center gap-2 px-4 py-1.5 border border-[#B91C1C] text-[#B91C1C] rounded text-sm font-medium hover:bg-red-50 transition w-full sm:w-auto">
-              <TrashIcon /> Excluir
+            <button
+              onClick={() => onDesativar(demanda.id)}
+              className="flex items-center justify-center gap-2 px-4 py-1.5 border border-[#B91C1C] text-[#B91C1C] rounded text-sm font-medium hover:bg-red-50 transition w-full sm:w-auto cursor-pointer"
+            >
+              <TrashIcon /> Desativar
             </button>
           </>
         )}
@@ -146,10 +163,8 @@ const TabsNavegacao = ({ aba, setAba }: { aba: Aba; setAba: (a: Aba) => void }) 
         <button
           key={key}
           onClick={() => setAba(key)}
-          className={`flex-1 py-2 text-sm font-medium rounded transition-all ${
-            aba === key
-              ? "bg-white text-gray-900 shadow-sm"
-              : "text-white hover:bg-white/10"
+          className={`flex-1 py-2 text-sm font-medium rounded transition-all cursor-pointer ${
+            aba === key ? "bg-white text-gray-900 shadow-sm" : "text-white hover:bg-white/10"
           }`}
         >
           {label}
@@ -162,7 +177,6 @@ const TabsNavegacao = ({ aba, setAba }: { aba: Aba; setAba: (a: Aba) => void }) 
 const MinhasInformacoes = ({ dados }: { dados: DashboardDados }) => (
   <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
     <h3 className="text-lg font-bold text-gray-900 mb-4">Minhas Informações</h3>
-
     <div className="space-y-4 text-sm mb-4">
       <div>
         <p className="text-gray-500 text-xs uppercase font-semibold mb-0.5">Nome</p>
@@ -181,8 +195,7 @@ const MinhasInformacoes = ({ dados }: { dados: DashboardDados }) => (
         <p className="font-medium text-gray-900">{dados.cnpj}</p>
       </div>
     </div>
-
-    <button className="w-full mt-2 border border-gray-300 text-gray-600 py-1.5 rounded text-xs font-medium hover:bg-gray-50 flex items-center justify-center gap-2">
+    <button className="w-full mt-2 border border-gray-300 text-gray-600 py-1.5 rounded text-xs font-medium hover:bg-gray-50 flex items-center justify-center gap-2 cursor-pointer">
       <EditIcon /> Editar
     </button>
   </div>
@@ -191,7 +204,6 @@ const MinhasInformacoes = ({ dados }: { dados: DashboardDados }) => (
 const Estatisticas = ({ metricas }: { metricas: Metricas }) => (
   <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm space-y-3">
     <h3 className="text-lg font-bold text-gray-900 mb-2">Estatísticas</h3>
-
     <div className="w-full py-2 bg-[#BC9595] text-gray-900 rounded flex justify-between px-4 font-medium text-sm">
       <span>Demandas Abertas</span>
       <span>{metricas.demandasEmAnalisePeloCoordenador}</span>
@@ -230,21 +242,43 @@ export default function DashboardEmpreendedor() {
     carregar();
   }, []);
 
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center w-full min-h-screen bg-[#F1F7EE]">
-        <p className="text-gray-500">Carregando dashboard...</p>
-      </div>
-    );
+  function handleEditar(id: number) {
+    navigate(`/cadastrar_demanda?id=${id}`);
   }
 
-  if (erro || !dados) {
-    return (
-      <div className="flex items-center justify-center w-full min-h-screen bg-[#F1F7EE]">
-        <p className="text-red-600">{erro || "Erro ao carregar dados."}</p>
-      </div>
-    );
+  async function handleDesativar(id: number) {
+    if (!confirm("Deseja desativar esta demanda?")) return;
+    try {
+      await desativarDemanda(id);
+      // remove da lista localmente sem recarregar
+      setDados(prev => {
+        if (!prev) return prev;
+        const filtrar = (lista: Demanda[]) => lista.filter(d => d.id !== id);
+        return {
+          ...prev,
+          demandas: {
+            pendentes: filtrar(prev.demandas.pendentes),
+            emAndamento: filtrar(prev.demandas.emAndamento),
+            concluidas: filtrar(prev.demandas.concluidas),
+          },
+        };
+      });
+    } catch {
+      alert("Erro ao desativar demanda.");
+    }
   }
+
+  if (loading) return (
+    <div className="flex items-center justify-center w-full min-h-screen bg-[#F1F7EE]">
+      <p className="text-gray-500">Carregando dashboard...</p>
+    </div>
+  );
+
+  if (erro || !dados) return (
+    <div className="flex items-center justify-center w-full min-h-screen bg-[#F1F7EE]">
+      <p className="text-red-600">{erro || "Erro ao carregar dados."}</p>
+    </div>
+  );
 
   const demandasDaAba = dados.demandas[aba];
 
@@ -259,10 +293,8 @@ export default function DashboardEmpreendedor() {
         </header>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
-          {/* Coluna esquerda */}
           <div className="lg:col-span-2">
             <TabsNavegacao aba={aba} setAba={setAba} />
-
             <div className="mt-6">
               {demandasDaAba.length === 0 ? (
                 <div className="bg-white border border-gray-200 rounded-lg p-8 text-center text-gray-500 shadow-sm">
@@ -270,21 +302,25 @@ export default function DashboardEmpreendedor() {
                 </div>
               ) : (
                 demandasDaAba.map((d) => (
-                  <CardDemanda key={d.id} demanda={d} aba={aba} />
+                  <CardDemanda
+                    key={d.id}
+                    demanda={d}
+                    aba={aba}
+                    onEditar={handleEditar}
+                    onDesativar={handleDesativar}
+                  />
                 ))
               )}
             </div>
           </div>
 
-          {/* Coluna direita */}
           <div className="space-y-6">
             <button
               onClick={() => navigate("/cadastrar_demanda")}
-              className="w-full bg-[#782e29] hover:bg-[#5e231f] active:scale-95 text-white py-3 px-4 rounded-md shadow font-medium transition text-center"
+              className="w-full bg-[#782e29] hover:bg-[#5e231f] active:scale-95 text-white py-3 px-4 rounded-md shadow font-medium transition text-center cursor-pointer"
             >
               Nova Demanda
             </button>
-
             <MinhasInformacoes dados={dados} />
             <Estatisticas metricas={dados.metricas} />
           </div>
