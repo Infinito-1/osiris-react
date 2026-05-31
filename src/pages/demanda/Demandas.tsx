@@ -3,7 +3,7 @@ import CardDemanda from "./CardDemanda";
 import foguete from "../../assets/img/icones/foguete.svg";
 import pessoas from "../../assets/img/icones/pessoas.svg";
 import FiltroDemandas from "../../components/filtro/filtroDemandas";
-import { getGaleriaDemandaOrdenada } from "../../services/demanda.service";
+import { getGaleriaDemandaOrdenada, getGaleriaDemandas } from "../../services/demanda.service";
 
 interface Filtros {
   tipos: string[];
@@ -29,6 +29,7 @@ const GaleriaDemanda: React.FC = () => {
           id: d.id,
           titulo: d.nome,
           empreendedor: d.empreendedor?.empresa ?? '—',
+          empId: d.empreendedor?.id,
           tipo: d.tipos?.[0] ?? '',
           descricao: d.descricao,
           semestreRecomendado: d.semestreRecomendado,
@@ -55,6 +56,7 @@ const GaleriaDemanda: React.FC = () => {
           id: d.id,
           titulo: d.nome,
           empreendedor: d.empreendedor?.empresa ?? '—',
+          empId: d.empreendedor?.id,
           tipo: d.tipos?.[0] ?? '',
           semestreRecomendado: d.semestreRecomendado,
           descricao: d.descricao,

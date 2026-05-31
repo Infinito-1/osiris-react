@@ -12,6 +12,7 @@ export function mapDemanda(d: any) {
     dataCriacao: d.demDataCriacao,
     semestreRecomendado: d.demStrSemestreRecomendado ?? null,
     areaTecnica: d.demStrAreaTecnica ?? null,
+    exibirContato: d.demBoolExibirContato ?? false,
     semestre: d.semestre?.semStrDescricao ?? null,
     tipos: d.tipo ? d.tipo.map((t: any) => t.tipStrNome) : [],
     empreendedor: d.empreendedor ? {

@@ -30,6 +30,7 @@ import AccessibilityButton from "../components/AccessibilityButton";
 import PrivateRoute from "./PrivateRoute";
 import DashboardEmpreendedor from "../pages/usuarios/Dashboard_empreendedor";
 import DashboardCoordenador from "../pages/usuarios/Dashboard_coordenador";
+import DetalhesDemanda from "../pages/demanda/DetalhesDemanda";
 
 export default function AppContent() {
   useFocusMain();
@@ -58,6 +59,7 @@ export default function AppContent() {
             <Route path="/perfil_grupo/:id" element={<SobreGrupo />} />
             <Route path="/perfil_grupo" element={<SobreGrupo />} />
             <Route path="/demandas" element={<GaleriaDemanda />} />
+            <Route path="/demandas/:id" element={<DetalhesDemanda />} />
             <Route path="/login" element={<Login />} />
             <Route path="/esqueceu-senha" element={<EsqueceuSenha />} />
             <Route path="/codigo-senha" element={<CodigoSenha />} />

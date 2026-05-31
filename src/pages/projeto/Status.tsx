@@ -1,76 +1,87 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { getGrupoDashboard } from '../../services/grupos.service';
 
-// Componente para um campo de formulário com label e input
-interface StatusFieldProps {
-    label: string;
-    id: string;
-    placeholder: string;
-    colSpan?: 'full' | 'half';
-}
-
-const StatusField: React.FC<StatusFieldProps> = ({ label, id, placeholder, colSpan = 'full' }) => {
-    const inputClasses = "w-full p-2 border border-gray-300 rounded-md bg-white focus:outline-none focus:ring-0 cursor-default";
-    const containerClasses = colSpan === 'half' ? 'col-span-1' : 'col-span-2';
-
-    return (
-        <div className={`flex flex-col space-y-1 ${containerClasses}`}>
-            <label htmlFor={id} className="text-sm font-medium text-gray-700">{label}</label>
-            <input
-                id={id}
-                type="text"
-                name={id}
-                placeholder={placeholder}
-                readOnly // Campos de status geralmente são apenas para visualização
-                className={inputClasses}
-            />
-        </div>
-    );
-};
-
-// Componente Principal da Página de Status
 const Status: React.FC = () => {
-    return (
-        <div className="flex justify-center w-full h-160 bg-[#F1F7EE] py-20">
-            <div className="w-11/12 max-w-2xl bg-white border border-gray-300 rounded-lg p-8 shadow-xl">
-                <h1 className="text-3xl font-bold text-gray-800 text-center mb-8">
-                    Status do Projeto
-                </h1>
+  const [dados, setDados] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
 
-                <form className="space-y-6">
-                    {/* Nome do Projeto */}
-                    <StatusField
-                        label="Nome do projeto"
-                        id="nomeProjeto"
-                        placeholder="Site E-commerce de amigurumi"
-                    />
+  useEffect(() => {
+    getGrupoDashboard()
+      .then(setDados)
+      .catch(() => setDados(null))
+      .finally(() => setLoading(false));
+  }, []);
 
-                    {/* Grupo */}
-                    <StatusField
-                        label="Grupo"
-                        id="grupo"
-                        placeholder="Os fulaninhos"
-                    />
+  const projeto = dados?.projetoAtual;
 
-                    {/* Aceite da coordenação*/}
-                    <div className="grid grid-cols-2 gap-4">
-                        <StatusField
-                            label="Aceite da coordenação"
-                            id="aceiteCoordenacao"
-                            placeholder="Reprovado"
-                            colSpan="half"
-                        />
-                    </div>
+  return (
+    <div className="flex justify-center w-full min-h-screen bg-[#F1F7EE] py-20">
+      <div className="w-11/12 max-w-2xl bg-white border border-gray-300 rounded-lg p-8 shadow-xl h-fit">
+        <h1 className="text-3xl font-bold text-gray-800 text-center mb-8">
+          Status do Projeto
+        </h1>
 
-                    {/* Data de entrega final para o empreendedor */}
-                    <StatusField
-                        label="Data de entrega final para o empreendedor"
-                        id="dataEntrega"
-                        placeholder="Dia | Mês | Ano"
-                    />
-                </form>
+        {loading ? (
+          <p className="text-center text-gray-500">Carregando...</p>
+        ) : (
+          <div className="space-y-6">
+            <div className="flex flex-col space-y-1">
+              <label className="text-sm font-medium text-gray-700">Nome do projeto</label>
+              <input
+                type="text"
+                value={projeto?.demanda ?? '—'}
+                readOnly
+                className="w-full p-2 border border-gray-300 rounded-md bg-white focus:outline-none cursor-default"
+              />
             </div>
-        </div>
-    );
+
+            <div className="flex flex-col space-y-1">
+              <label className="text-sm font-medium text-gray-700">Grupo</label>
+              <input
+                type="text"
+                value={dados?.grupo ?? '—'}
+                readOnly
+                className="w-full p-2 border border-gray-300 rounded-md bg-white focus:outline-none cursor-default"
+              />
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              <div className="flex flex-col space-y-1">
+                <label className="text-sm font-medium text-gray-700">Status atual</label>
+                <input
+                  type="text"
+                  value={projeto?.status ?? '—'}
+                  readOnly
+                  className="w-full p-2 border border-gray-300 rounded-md bg-white focus:outline-none cursor-default"
+                />
+              </div>
+              <div className="flex flex-col space-y-1">
+                <label className="text-sm font-medium text-gray-700">Empreendedor</label>
+                <input
+                  type="text"
+                  value={projeto?.empreendedor ?? '—'}
+                  readOnly
+                  className="w-full p-2 border border-gray-300 rounded-md bg-white focus:outline-none cursor-default"
+                />
+              </div>
+            </div>
+
+            <div className="flex flex-col space-y-1">
+              <label className="text-sm font-medium text-gray-700">Data de início</label>
+              <input
+                type="text"
+                value={projeto?.dataInicio
+                  ? new Date(projeto.dataInicio).toLocaleDateString('pt-BR')
+                  : '—'}
+                readOnly
+                className="w-full p-2 border border-gray-300 rounded-md bg-white focus:outline-none cursor-default"
+              />
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
 };
 
 export default Status;
