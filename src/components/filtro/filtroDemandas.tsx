@@ -4,7 +4,6 @@ import Lupa from "../../assets/img/icones/lupa.svg";
 
 interface Filtros {
   tipos: string[];
-  area: string;
   semestre: string;
 }
 
@@ -28,10 +27,6 @@ const FiltroDemandas: React.FC<FiltroDemandasProps> = ({ onFiltroChange, current
       ...prev,
       tipos: isChecked ? [...prev.tipos, tipo] : prev.tipos.filter(t => t !== tipo),
     }));
-  };
-
-  const handleAreaChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setFiltrosInternos(prev => ({ ...prev, area: event.target.value }));
   };
 
   const handleSemestreChange = (semestre: string) => {
@@ -66,20 +61,6 @@ const FiltroDemandas: React.FC<FiltroDemandasProps> = ({ onFiltroChange, current
             </div>
           ))}
         </div>
-      </div>
-
-      {/* Área de Negócio */}
-      <div className="mb-6">
-        <h4 className="font-medium text-gray-800 mb-2">Área de Negócio</h4>
-        <select
-          id="area_selecionada"
-          name="area_selecionada"
-          className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#782E29]"
-          value={filtrosInternos.area}
-          onChange={handleAreaChange}
-        >
-          <option>Todas as áreas</option>
-        </select>
       </div>
 
       {/* Semestre mínimo recomendado */}

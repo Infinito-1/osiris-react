@@ -77,7 +77,7 @@ function Home() {
     return demandas.filter(demanda => {
       const tipoMatch = filtros.tipos.length === 0 || filtros.tipos.includes(demanda.tipo);
       const semestreMatch = filtros.semestre === "Todos" ||
-        demanda.semestreRecomendado === filtros.semestre;
+        Number(demanda.semestreRecomendado) >= Number(filtros.semestre);
       return tipoMatch && semestreMatch;
     });
   }, [demandas, filtros]);

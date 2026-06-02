@@ -16,6 +16,7 @@ interface Grupo {
   membros: string;
   portfolio: string;
   semestre: string | null;
+  email?: string;
 }
 
 const PortfolioItem: React.FC<{ texto: string }> = ({ texto }) => (
@@ -37,6 +38,16 @@ const SobreGrupo: React.FC = () => {
   const [grupo, setGrupo] = useState<Grupo | null>(null);
   const [loading, setLoading] = useState(true);
   const [erro, setErro] = useState('');
+  const [modalAberto, setModalAberto] = useState(false);
+  const [copiado, setCopiado] = useState(false);
+
+  function handleCopiar() {
+    if (!grupo?.email) return;
+    navigator.clipboard.writeText(grupo.email).then(() => {
+      setCopiado(true);
+      setTimeout(() => setCopiado(false), 2000);
+    });
+  }
 
   useEffect(() => {
     async function carregar() {
@@ -117,14 +128,50 @@ const SobreGrupo: React.FC = () => {
             </div>
 
             <div className="flex flex-col space-y-3 mt-8">
-              <button className="bg-[#782E29] text-white py-3 px-5 rounded-md text-lg font-medium hover:bg-[#6d2823] transition-colors">
-                Solicitar Entrada
-              </button>
-              <button className="bg-[#5F747F] text-white py-3 px-5 rounded-md text-lg font-medium hover:bg-[#53656e] transition-colors">
-                Enviar Mensagem
+              <button
+                className="bg-[#782E29] text-white py-2 px-4 rounded-md text-base font-medium transition-colors duration-200 hover:bg-[#6d2823] cursor-pointer active:scale-95"
+                onClick={() => setModalAberto(true)}
+              >
+                Entrar em Contato
               </button>
             </div>
           </div>
+
+          {/* Modal de contato */}
+          {modalAberto && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4">
+            <div className="bg-white rounded-xl shadow-2xl w-full max-w-md p-8">
+              <h2 className="text-xl font-bold text-gray-800 mb-1">Entrar em Contato</h2>
+              <p className="text-gray-500 text-sm mb-6">
+                Entre em contato com o grupo <strong>{grupo.nome}</strong> pelo e-mail abaixo:
+              </p>
+
+              <div className="flex gap-2 mb-6">
+                <input
+                  type="text"
+                  readOnly
+                  value={grupo.email ?? 'E-mail não disponível'}
+                  className="flex-1 p-2.5 border border-gray-300 rounded-md bg-gray-50 text-gray-800 text-sm focus:outline-none cursor-text select-all"
+                  onClick={e => (e.target as HTMLInputElement).select()}
+                />
+                <button
+                  onClick={handleCopiar}
+                  disabled={!grupo.email}
+                  className="px-4 py-2 bg-[#782E29] text-white rounded-md text-sm font-medium hover:bg-[#53656e] transition cursor-pointer active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {copiado ? 'Copiado!' : 'Copiar'}
+                </button>
+              </div>
+
+              <button
+                onClick={() => { setModalAberto(false); setCopiado(false); }}
+                className="w-full bg-[#5F747F] text-white py-2.5 rounded-md font-medium hover:bg-gray-300 transition cursor-pointer"
+              >
+                Fechar
+              </button>
+            </div>
+          </div>
+        )}
 
           <div className="lg:col-span-1 bg-white border border-gray-300 rounded-lg p-6 shadow-md">
             <div className="flex items-center space-x-2 mb-4">

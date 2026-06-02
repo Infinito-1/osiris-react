@@ -31,7 +31,7 @@ import PrivateRoute from "./PrivateRoute";
 import DashboardEmpreendedor from "../pages/usuarios/Dashboard_empreendedor";
 import DashboardCoordenador from "../pages/usuarios/Dashboard_coordenador";
 import DetalhesDemanda from "../pages/demanda/DetalhesDemanda";
-import Candidatura from "../pages/demanda/Candidatura";
+import EmpreendedorEditarForm from "../pages/cadastro/empreendedoreditarform";
 
 export default function AppContent() {
   useFocusMain();
@@ -67,11 +67,10 @@ export default function AppContent() {
             <Route path="/redefinir-senha" element={<RedefinirSenha />} />
             <Route path="/cadastro/empreendedor" element={<EmpreendedorForm />} />
             <Route path="/cadastro/estudante" element={<EstudantesForm />} />
-            <Route path="/cadastro/coordenador" element={<CoordenadorForm />} />
+            {/* <Route path="/cadastro/coordenador" element={<CoordenadorForm />} /> */}
 
             {/* ── Rotas protegidas — Grupo ── */}
             <Route path="/dashboard_grupo" element={<PrivateRoute roles={['Grupo', 'Admin']}><Dashboard /></PrivateRoute>} />
-            <Route path="/candidatura/:id" element={<PrivateRoute roles={['Grupo']}><Candidatura /> </PrivateRoute>} />
 
             {/* ── Rotas protegidas — Projeto ── */}
             <Route path="/projeto" element={<PrivateRoute><Projeto /></PrivateRoute>} />
@@ -87,6 +86,8 @@ export default function AppContent() {
             <Route path="/aluno" element={<PrivateRoute roles={['Grupo']}><DashboardAluno /></PrivateRoute>} />
             <Route path="/coordenador" element={<PrivateRoute roles={['Coordenador', 'Admin']}><DashboardCoordenador /></PrivateRoute>} />
             <Route path="/empreendedor" element={<PrivateRoute roles={['Empreendedor', 'Admin']}><DashboardEmpreendedor /></PrivateRoute>} />
+            <Route path="/empreendedor/editar" element={<PrivateRoute roles={['Empreendedor']}><EmpreendedorEditarForm /></PrivateRoute>} />
+            <Route path="/coordenador/editar" element={<PrivateRoute roles={['Coordenador']}><CoordenadorForm /></PrivateRoute>} />
             <Route path="/admin" element={<PrivateRoute roles={['Admin']}><DashboardAdmin /></PrivateRoute>} />
           </Routes>
         </main>

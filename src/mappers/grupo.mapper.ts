@@ -12,6 +12,7 @@ export function mapGrupo(g: any) {
     portfolio: g.gruStrPortfolio,
     ativo: g.gruBoolAtivo,
     semestre: g.semestre?.semStrDescricao ?? null,
+    email: g.usuario?.usuStrEmail ?? null,
     usuario: g.usuario ? {
       id: g.usuario.usuIntId,
       nome: g.usuario.usuStrNome,

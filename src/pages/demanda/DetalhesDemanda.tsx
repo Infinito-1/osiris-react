@@ -5,6 +5,8 @@ import { getDemandaById, desativarDemanda } from "../../services/demanda.service
 import { api } from "../../api/axios";
 import { useAuth } from "../../hooks/useAuth";
 import { getPerfilEmpreendedor } from "../../services/empreendedores.service";
+import { getGrupoPerfil } from "../../services/grupos.service";
+import { criarCandidatura } from "../../services/candidatura.service";
 
 interface InfoFieldProps {
   label: string;
@@ -40,7 +42,14 @@ const DetalhesDemanda: React.FC = () => {
   const [erro, setErro] = useState("");
   const [editando, setEditando] = useState(false);
   const [empIntId, setEmpIntId] = useState<number | null>(null);
+  const [gruIntIdLogado, setGruIntIdLogado] = useState<number | null>(null);
 
+  const [modalAberto, setModalAberto] = useState(false);
+  const [etapa, setEtapa] = useState<'confirmar' | 'sucesso'>('confirmar');
+  const [enviando, setEnviando] = useState(false);
+  const [erroCandidatura, setErroCandidatura] = useState('');
+  const [canIntId, setCanIntId] = useState<number | null>(null);
+  
   const {
     register,
     handleSubmit,
@@ -73,6 +82,10 @@ const DetalhesDemanda: React.FC = () => {
         .then((p) => setEmpIntId(p?.id ?? null))
         .catch(() => setEmpIntId(null));
     }
+     if (isAuthenticated && usuario?.tipo === 'Grupo') {
+        // Supondo que você tenha uma função para buscar o ID do grupo logado
+          getGrupoPerfil().then(g => setGruIntIdLogado(g?.id ?? null));
+        }
   }, [isAuthenticated, usuario]);
 
   const ehDono =
@@ -131,10 +144,31 @@ const DetalhesDemanda: React.FC = () => {
 
   function handleManifestarInteresse() {
     if (!isAuthenticated) {
-      navigate("/login");
+      navigate('/login');
       return;
     }
-    navigate(`/candidatura/${id}`);
+    setEtapa('confirmar');
+    setErroCandidatura('');
+    setModalAberto(true);
+  }
+
+  async function handleConfirmarCandidatura() {
+    setEnviando(true);
+    setErroCandidatura('');
+    try {
+      const candidatura = await criarCandidatura(demanda?.id, gruIntIdLogado!);
+      setCanIntId(candidatura?.id);
+      setEtapa('sucesso');
+    } catch (error: any) {
+      const mensagem = error?.response?.data?.message;
+      setErroCandidatura(
+        Array.isArray(mensagem)
+          ? mensagem.join('\n')
+          : mensagem ?? 'Erro ao enviar candidatura.'
+      );
+    } finally {
+      setEnviando(false);
+    }
   }
 
   if (loading)
@@ -317,6 +351,76 @@ const DetalhesDemanda: React.FC = () => {
             )}
           </section>
         )}
+
+        {/* Modal */}
+        {modalAberto && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4">
+            <div className="bg-white rounded-xl shadow-2xl w-full max-w-md p-8">
+
+              {etapa === 'confirmar' && (
+                <>
+                  <h2 className="text-2xl font-bold text-gray-800 mb-2">Manifestar Interesse</h2>
+                  <p className="text-gray-600 text-sm mb-1">Você está se candidatando para:</p>
+                  <p className="font-semibold text-gray-800 mb-6">{demanda.nome}</p>
+
+                  {erroCandidatura && (
+                    <div className="bg-red-50 border border-red-200 text-red-700 rounded-md p-3 mb-4 text-sm">
+                      {erroCandidatura}
+                    </div>
+                  )}
+
+                  <div className="flex gap-3">
+                    <button
+                      onClick={handleConfirmarCandidatura}
+                      disabled={enviando}
+                      className="flex-1 bg-[#782E29] text-white py-3 rounded-md font-medium hover:bg-[#6d2823] transition cursor-pointer active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      {enviando ? 'Enviando...' : 'Confirmar'}
+                    </button>
+                    <button
+                      onClick={() => setModalAberto(false)}
+                      className="flex-1 bg-[#5F747F] text-white py-3 rounded-md font-medium hover:bg-gray-300 transition cursor-pointer"
+                    >
+                      Cancelar
+                    </button>
+                  </div>
+                </>
+              )}
+
+              {etapa === 'sucesso' && (
+                <>
+                  <div className="text-green-600 text-5xl text-center mb-4">✓</div>
+                  <h2 className="text-2xl font-bold text-gray-800 text-center mb-2">Candidatura enviada!</h2>
+                  <p className="text-gray-600 text-sm text-center mb-6">
+                    Sua candidatura para <strong>{demanda.nome}</strong> foi registrada. Deseja cadastrar o projeto agora?
+                  </p>
+
+                  <div className="flex flex-col gap-3">
+                    <button
+                      onClick={() => {
+                        setModalAberto(false);
+                        navigate(`/entrega${canIntId ? `?canIntId=${canIntId}` : ''}`);
+                      }}
+                      className="w-full bg-[#782E29] text-white py-3 rounded-md font-medium hover:bg-[#495a63] transition cursor-pointer"
+                    >
+                      Cadastrar projeto agora
+                    </button>
+                    <button
+                      onClick={() => {
+                        setModalAberto(false);
+                        navigate('/dashboard_grupo');
+                      }}
+                      className="w-full bg-[#546873] text-white py-3 rounded-md font-medium hover:bg-gray-300 transition cursor-pointer"
+                    >
+                      Fazer depois
+                    </button>
+                  </div>
+                </>
+              )}
+
+          </div>
+        </div>
+      )}
       </div>
     </div>
   );

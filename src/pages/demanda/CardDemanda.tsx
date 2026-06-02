@@ -167,7 +167,7 @@ const CardDemanda: React.FC<CardDemandaProps> = ({
             </button>
           )}
           <Link to={`/demandas/${id}`} className="w-full">
-            <button className="cursor-pointer w-full bg-gray-200 text-gray-800 py-2 px-4 rounded-md text-base font-medium transition hover:bg-gray-300 shadow-md">
+            <button className="cursor-pointer w-full bg-[#5F747F] text-white py-2 px-4 rounded-md text-base font-medium transition hover:bg-gray-300 shadow-md">
               Ver Detalhes
             </button>
           </Link>
@@ -201,7 +201,7 @@ const CardDemanda: React.FC<CardDemandaProps> = ({
                   </button>
                   <button
                     onClick={() => setModalAberto(false)}
-                    className="flex-1 bg-gray-200 text-gray-800 py-3 rounded-md font-medium hover:bg-gray-300 transition cursor-pointer"
+                    className="flex-1 bg-[#5F747F] text-white py-3 rounded-md font-medium hover:bg-gray-300 transition cursor-pointer"
                   >
                     Cancelar
                   </button>
@@ -223,7 +223,7 @@ const CardDemanda: React.FC<CardDemandaProps> = ({
                       setModalAberto(false);
                       navigate(`/entrega${canIntId ? `?canIntId=${canIntId}` : ''}`);
                     }}
-                    className="w-full bg-[#546873] text-white py-3 rounded-md font-medium hover:bg-[#495a63] transition cursor-pointer"
+                    className="w-full bg-[#782E29] text-white py-3 rounded-md font-medium hover:bg-[#495a63] transition cursor-pointer"
                   >
                     Cadastrar projeto agora
                   </button>
@@ -232,7 +232,7 @@ const CardDemanda: React.FC<CardDemandaProps> = ({
                       setModalAberto(false);
                       navigate('/dashboard_grupo');
                     }}
-                    className="w-full bg-gray-200 text-gray-800 py-3 rounded-md font-medium hover:bg-gray-300 transition cursor-pointer"
+                    className="w-full bg-[#546873] text-white py-3 rounded-md font-medium hover:bg-gray-300 transition cursor-pointer"
                   >
                     Fazer depois
                   </button>

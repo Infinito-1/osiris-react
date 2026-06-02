@@ -31,6 +31,11 @@ export async function aprovarDemanda(id: number) {
   return response.data;
 }
 
+export async function rejeitarDemanda(id: number, motivo?: string) {
+  const response = await api.put(`/coordenadores/demanda/${id}/rejeitar`, { motivo });
+  return response.data;
+}
+
 export async function gerenciarCandidatura(dto: {
   candidaturaId: number;
   status: 'Aceita' | 'Recusada';
