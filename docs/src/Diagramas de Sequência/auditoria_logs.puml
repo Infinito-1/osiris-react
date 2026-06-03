@@ -1,0 +1,23 @@
+@startuml
+title UC-22: Visualização de Logs de Auditoria
+actor "Administrador" as A
+participant "PainelAdmin" as UI
+participant "AuditoriaService" as Srv
+participant "LogRepository" as DB
+
+A -> UI : filtrarLogs(dataInicio, dataFim, acao)
+activate UI
+UI -> Srv : buscarHistorico(filtros)
+activate Srv
+
+Srv -> DB : queryLogs(filtros)
+activate DB
+DB --> Srv : listaLogs(timestamp, ip, usuario, acao)
+deactivate DB
+
+Srv --> UI : exibirRelatorioLogs()
+UI --> A : mostraTabelaAuditoria()
+
+deactivate Srv
+deactivate UI
+@enduml

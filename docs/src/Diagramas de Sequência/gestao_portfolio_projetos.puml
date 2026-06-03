@@ -1,0 +1,27 @@
+@startuml
+title UC-08/09: Cadastro de Repositórios e Deploy
+actor "Líder do Grupo" as L
+participant "PainelProjeto" as UI
+participant "ProjetoService" as Srv
+participant "ProjetoRepository" as DB
+
+L -> UI : informarLinks(urlGithub, urlDeploy)
+activate UI
+UI -> Srv : validarURLs(urlGithub, urlDeploy)
+activate Srv
+
+alt URLs no formato correto
+    Srv -> DB : atualizarLinksProjeto(idProjeto, urlGithub, urlDeploy)
+    activate DB
+    DB --> Srv : sucesso
+    deactivate DB
+    Srv --> UI : linksRegistrados()
+    UI --> L : mensagem"Portfólio atualizado"
+else Formato Inválido
+    Srv --> UI : erroSintaxeURL()
+    UI --> L : alerta"Insira uma URL válida"
+end
+
+deactivate Srv
+deactivate UI
+@enduml

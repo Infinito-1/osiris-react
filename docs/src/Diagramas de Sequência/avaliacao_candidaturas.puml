@@ -1,0 +1,44 @@
+@startuml
+title UC-05: Avaliação de Candidaturas
+actor "Coordenador" as C
+participant "PainelCandidaturas" as UI
+participant "CandidaturaService" as Srv
+participant "CandidaturaRepository" as DB
+
+C -> UI : visualizarCandidatos(idDemanda)
+activate UI
+UI -> Srv : listarCandidatos(idDemanda)
+activate Srv
+Srv -> DB : buscarCandidaturasComDadosGrupo(idDemanda)
+activate DB
+DB --> Srv : listaCandidatos
+deactivate DB
+Srv --> UI : exibirTabelaCandidatos()
+deactivate Srv
+
+C -> UI : decidirCandidatura(idCandidatura, status)
+activate UI
+UI -> Srv : atualizarStatus(idCandidatura, status)
+activate Srv
+
+alt Status == "Aceito"
+    Srv -> DB : setStatus(idCandidatura, "Aceito")
+    activate DB
+    DB --> Srv : ok
+    deactivate DB
+    Srv -> DB : invalidarOutrasCandidaturas(idDemanda)
+    activate DB
+    DB --> Srv : limpo
+    deactivate DB
+    Srv --> UI : grupoVinculadoSucesso()
+else Status == "Recusado"
+    Srv -> DB : setStatus(idCandidatura, "Recusado")
+    activate DB
+    DB --> Srv : ok
+    deactivate DB
+    Srv --> UI : recusaConfirmada()
+end
+
+deactivate Srv
+deactivate UI
+@enduml
