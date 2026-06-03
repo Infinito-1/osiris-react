@@ -1,0 +1,30 @@
+@startuml
+title UC-02: Login e Início de Sessão
+actor "Usuário" as U
+participant "TelaLogin" as UI
+participant "AuthService" as Srv
+participant "UsuarioRepository" as DB
+
+U -> UI : inserirCredenciais(email, senha)
+activate UI
+UI -> Srv : autenticar(email, senha)
+activate Srv
+
+Srv -> DB : buscarUsuarioPorEmail(email)
+activate DB
+DB --> Srv : objetoUsuario (ou null)
+deactivate DB
+
+alt Credenciais Válidas
+    Srv -> Srv : validarSenha(senhaHash)
+    Srv -> Srv : gerarTokenSessao()
+    Srv --> UI : loginSucesso(token, papelUsuario)
+    UI --> U : redirecionarDashboard(papelUsuario)
+else Credenciais Inválidas ou Usuário Inexistente
+    Srv --> UI : erroAutenticacao()
+    UI --> U : exibirMensagem"E-mail ou Senha incorretos"
+end
+
+deactivate Srv
+deactivate UI
+@enduml
