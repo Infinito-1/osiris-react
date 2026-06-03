@@ -1,23 +1,22 @@
-import React, { useState, useMemo, useEffect } from "react";
+import React, { useState, useMemo, useEffect, useRef } from "react";
 import foguete from "../../assets/img/icones/foguete.svg";
-import pessoas from "../../assets/img/icones/pessoas.svg";
-import Person from "../../assets/img/icones/Person.svg";
-import Tag from "../../assets/img/icones/Tag.svg";
-import ExclamationCircle from "../../assets/img/icones/ExclamationCircle.svg";
+import send from "../../assets/img/icones/send.svg";
 import EllipseCadastro from "../../assets/img/icones/Ellipse cadastro.svg";
 import EllipseDescoberta from "../../assets/img/icones/Ellipse descoberta.svg";
 import EllipseExecucao from "../../assets/img/icones/Ellipse execucao.svg";
 import EllipseConexao from "../../assets/img/icones/Ellipse conexao.svg";
 import CarrosselHome from "../../components/carrosselHome/CarrosselHome";
 import FiltroDemandas from "../../components/filtro/filtroDemandas";
-import { Link, useLocation } from "react-router-dom";
-import { getGaleriaDemandaOrdenada, getGaleriaDemandas } from "../../services/demanda.service";
+import { useLocation, useNavigate } from "react-router-dom";
+import { getGaleriaDemandaOrdenada } from "../../services/demanda.service";
 import CardDemanda from "../demanda/CardDemanda";
+import { useAuth } from "../../hooks/useAuth";
 
 interface Demanda {
   id: number;
   titulo: string;
   empreendedor: string;
+  empId?: number;
   tipo: string;
   semestreRecomendado: string | null;
   descricao: string;
@@ -29,18 +28,63 @@ interface Filtros {
   semestre: string;
 }
 
+// ── Botão com tooltip ─────────────────────────────────────────────────────────
+
+const BotaoComTooltip: React.FC<{
+  label: string;
+  icone: string;
+  iconeAlt: string;
+  onClick: () => void;
+  tooltip?: string;
+  className: string;
+}> = ({ label, icone, iconeAlt, onClick, tooltip, className }) => {
+  const [tooltipVisivel, setTooltipVisivel] = useState(false);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  function handleClick() {
+    if (tooltip) {
+      setTooltipVisivel(true);
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+      timeoutRef.current = setTimeout(() => setTooltipVisivel(false), 2500);
+    } else {
+      onClick();
+    }
+  }
+
+  return (
+    <div className="relative">
+      <button
+        onClick={handleClick}
+        className={`flex items-center space-x-2 py-3 px-5 rounded-lg text-base font-medium transition-colors duration-200 cursor-pointer ${className}`}
+      >
+        <img src={icone} alt={iconeAlt} className="w-5 h-5" />
+        <p>{label}</p>
+      </button>
+      {tooltip && tooltipVisivel && (
+        <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 bg-gray-800 text-white text-xs rounded-md px-3 py-2 whitespace-nowrap z-10 shadow-lg">
+          {tooltip}
+          <div className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-gray-800" />
+        </div>
+      )}
+    </div>
+  );
+};
+
+// ── Componente principal ──────────────────────────────────────────────────────
+
 function Home() {
   const { hash } = useLocation();
+  const navigate = useNavigate();
+  const { isAuthenticated, usuario } = useAuth();
+
   const [filtros, setFiltros] = useState<Filtros>({
     tipos: [],
     area: "Todas as áreas",
     semestre: "Todos",
   });
   const [demandas, setDemandas] = useState<Demanda[]>([]);
-
   const [ordem, setOrdem] = useState<'ASC' | 'DESC'>('DESC');
 
-  // atualizar o useEffect para depender de ordem
   useEffect(() => {
     getGaleriaDemandaOrdenada(ordem)
       .then(data => {
@@ -56,22 +100,6 @@ function Home() {
       })
       .catch(() => setDemandas([]));
   }, [ordem]);
-
-  useEffect(() => {
-    getGaleriaDemandas()
-      .then(data => {
-        setDemandas(data.map((d: any) => ({
-          id: d.id,
-          titulo: d.nome,
-          empreendedor: d.empreendedor?.empresa ?? '—',
-          empId: d.empreendedor?.id,
-          tipo: d.tipos?.[0] ?? '',
-          semestreRecomendado: d.semestreRecomendado,
-          descricao: d.descricao,
-        })));
-      })
-      .catch(() => setDemandas([]));
-  }, []);
 
   const demandasFiltradas = useMemo(() => {
     return demandas.filter(demanda => {
@@ -89,6 +117,39 @@ function Home() {
     }
   }, [hash]);
 
+  // ── Lógica dos botões ──────────────────────────────────────────────────────
+
+  // Botão "Cadastrar Projeto" — disponível apenas para Grupo
+  function getCadastrarProjetoProps() {
+    if (!isAuthenticated) {
+      return { onClick: () => navigate('/login'), tooltip: undefined };
+    }
+    if (usuario?.tipo === 'Grupo') {
+      return { onClick: () => navigate('/entrega'), tooltip: undefined };
+    }
+    return {
+      onClick: () => {},
+      tooltip: 'Disponível apenas para grupos',
+    };
+  }
+
+  // Botão "Enviar Demanda" — disponível apenas para Empreendedor
+  function getEnviarDemandaProps() {
+    if (!isAuthenticated) {
+      return { onClick: () => navigate('/login'), tooltip: undefined };
+    }
+    if (usuario?.tipo === 'Empreendedor') {
+      return { onClick: () => navigate('/cadastrar_demanda'), tooltip: undefined };
+    }
+    return {
+      onClick: () => {},
+      tooltip: 'Disponível apenas para empreendedores',
+    };
+  }
+
+  const projetoProps = getCadastrarProjetoProps();
+  const demandaProps = getEnviarDemandaProps();
+
   return (
     <div className="w-full min-h-screen">
       <section className="bg-[#021926] p-10">
@@ -103,24 +164,29 @@ function Home() {
         </h2>
 
         <div className="flex gap-4 mt-2 justify-center max-[500px]:flex-wrap">
-          <button className="flex items-center space-x-2 bg-[#5F747F] text-white py-3 px-5 rounded-lg text-base font-medium transition-colors duration-200 hover:bg-[#556872]">
-            <img src={foguete} alt="Cadastrar Projeto" className="w-5 h-5" />
-            <p>Cadastrar Projeto</p>
-          </button>
-          <button className="flex items-center space-x-2 bg-[#F1F7EE] text-[#000000] py-3 px-5 rounded-lg text-base font-medium transition-colors duration-200 hover:bg-[#c4c9c2]">
-            <img src={pessoas} alt="Formar Equipe" className="w-5 h-5" />
-            <p>Formar Equipe</p>
-          </button>
+          <BotaoComTooltip
+            label="Cadastrar Projeto"
+            icone={foguete}
+            iconeAlt="Cadastrar Projeto"
+            onClick={projetoProps.onClick}
+            tooltip={projetoProps.tooltip}
+            className="bg-[#5F747F] text-white hover:bg-[#556872]"
+          />
+          <BotaoComTooltip
+            label="Enviar Demanda"
+            icone={send}
+            iconeAlt="Enviar Demanda"
+            onClick={demandaProps.onClick}
+            tooltip={demandaProps.tooltip}
+            className="bg-[#F1F7EE] text-[#000000] hover:bg-[#c4c9c2]"
+          />
         </div>
       </section>
 
       <section className="bg-[#F1F7EE] py-10">
         <div className="w-11/12 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-4 gap-8">
           <div className="lg:col-span-1">
-            <FiltroDemandas
-              onFiltroChange={setFiltros}
-              currentFiltros={filtros}
-            />
+            <FiltroDemandas onFiltroChange={setFiltros} currentFiltros={filtros} />
           </div>
 
           <div className="lg:col-span-3">
@@ -154,10 +220,8 @@ function Home() {
       <section id="como-funciona" className="text-center py-5 bg-[#F1F7EE]">
         <h2 className="text-3xl font-semibold">Como Funciona</h2>
         <p className="w-[50%] mx-auto lg:text-2xl md:text-lg sm:text-sm">
-          Um processo simples e eficiente para conectar demandas reais com
-          estudantes talentosos
+          Um processo simples e eficiente para conectar demandas reais com estudantes talentosos
         </p>
-
         <div className="mx-[10%] my-10">
           <div className="flex flex-wrap gap-10 justify-center">
             <div className="w-full sm:w-[45%] lg:w-[20%] p-2 hover:scale-110 transition-transform duration-200">
@@ -186,9 +250,7 @@ function Home() {
 
       <section className="text-center py-5 bg-[#F1F7EE]">
         <h2 className="text-3xl font-semibold">Faça Parte da Plataforma</h2>
-        <p className="text-2xl w-[50%] mx-auto mb-2">
-          Escolha como deseja participar do Osiris
-        </p>
+        <p className="text-2xl w-[50%] mx-auto mb-2">Escolha como deseja participar do Osiris</p>
         <CarrosselHome />
       </section>
     </div>
