@@ -27,10 +27,6 @@ function EmpreendedorForm() {
   const onSubmit = async (data: CreateEmpreendedorFormDto) => {
     passwordHook.setTouched(true);
 
-    if (!passwordHook.isValid) {
-      alert("Senha inválida");
-      return;
-    }
     try {
     const response = await api.post("/usuarios", {
       usuStrNome: data.usuStrNome,
@@ -185,6 +181,7 @@ function EmpreendedorForm() {
                 hook={passwordHook}
                 register={register("usuStrSenha", {
                   required: "Senha obrigatória",
+                  validate: () => passwordHook.isValid || "A senha não atende todos os requisitos.",
                 })}
               />
     

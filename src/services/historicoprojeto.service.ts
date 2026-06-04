@@ -20,8 +20,10 @@ export async function getHistoricoById(id: number) {
 
 export async function criarEntrega(dto: {
   hspStrDesc: string;
-  hspStrLinkProjeto: string;
   hspStrStatus: StatusProjeto;
+  hspStrLinkGithub?: string;
+  hspStrLinkDeploy?: string;
+  hspStrLinkProjeto?: string;
   proIntId: number;
 }) {
   const response = await api.post('/historicos-projeto', dto);
@@ -30,8 +32,10 @@ export async function criarEntrega(dto: {
 
 export async function updateHistorico(id: number, dto: {
   hspStrDesc?: string;
-  hspStrLinkProjeto?: string;
   hspStrStatus?: StatusProjeto;
+  hspStrLinkGithub?: string;
+  hspStrLinkDeploy?: string;
+  hspStrLinkProjeto?: string;
   proIntId?: number;
 }) {
   const response = await api.put(`/historicos-projeto/${id}`, dto);

@@ -13,7 +13,7 @@ export async function getEmpreendedorById(id: number) {
 
 // Rotas protegidas (exigem que o interceptor do Axios injete o Bearer token)
 export async function getPerfilEmpreendedor() {
-  const response = await api.get('/empreendedores/perfil');
+  const response = await api.get('/empreendedores/perfil/me');
   return mapEmpreendedor(response.data);
 }
 

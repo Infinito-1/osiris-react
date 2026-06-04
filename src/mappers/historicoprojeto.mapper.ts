@@ -5,7 +5,9 @@ export function mapHistoricoProjeto(h: any) {
   return {
     id: h.hspIntId,
     descricao: h.hspStrDesc,
-    link: h.hspStrLinkProjeto,
+    link: h.hspStrLinkProjeto ?? null,
+    linkGithub: h.hspStrLinkGithub ?? null,
+    linkDeploy: h.hspStrLinkDeploy ?? null,
     status: h.hspStrStatus,
     data: h.hspDateData,
     projeto: h.projeto ? {

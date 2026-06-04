@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getDashboardEmpreendedor } from "../../services/empreendedores.service";
+import { getDashboardEmpreendedor, reativarDemandaEmpreendedor } from "../../services/empreendedores.service";
+import { desativarDemanda } from "../../services/demanda.service";
 
 // ── Tipos ─────────────────────────────────────────────────────────────────────
 
@@ -33,11 +34,12 @@ interface DashboardDados {
   demandas: {
     pendentes: Demanda[];
     emAndamento: Demanda[];
-    concluidas: Demanda[];
+    desativadas: Demanda[];
+    rejeitadas: Demanda[];
   };
 }
 
-type Aba = "pendentes" | "emAndamento" | "concluidas";
+type Aba = "pendentes" | "emAndamento" | "desativadas" | "rejeitadas";
 
 // ── Ícones ────────────────────────────────────────────────────────────────────
 
@@ -61,9 +63,10 @@ const TrashIcon = () => (
 
 const StatusBadge = ({ aba }: { aba: Aba }) => {
   const map = {
-    pendentes:    { label: "Em Análise",  cls: "border border-gray-300 text-gray-600 bg-white" },
-    emAndamento:  { label: "Em Andamento", cls: "bg-[#550B0B] text-white" },
-    concluidas:   { label: "Concluído",   cls: "bg-[#40531D] text-white" },
+    pendentes:   { label: "Em Análise",   cls: "border border-gray-300 text-gray-600 bg-white" },
+    emAndamento: { label: "Em Andamento", cls: "bg-[#550B0B] text-white" },
+    desativadas: { label: "Desativada",   cls: "bg-gray-400 text-white" },
+    rejeitadas:  { label: "Rejeitada",    cls: "bg-red-100 text-red-800" },
   };
   const { label, cls } = map[aba];
   return (
@@ -79,7 +82,19 @@ const Tag = ({ text }: { text: string }) => (
   </span>
 );
 
-const CardDemanda = ({ demanda, aba }: { demanda: Demanda; aba: Aba }) => (
+const CardDemanda = ({
+  demanda,
+  aba,
+  onEditar,
+  onDesativar,
+  onReativar,
+}: {
+  demanda: Demanda;
+  aba: Aba;
+  onEditar: (id: number) => void;
+  onDesativar: (id: number) => void;
+  onReativar: (id: number) => void;
+}) => (
   <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm mb-4">
     <div className="flex justify-between items-start mb-2">
       <h3 className="text-xl font-bold text-gray-900">{demanda.nome}</h3>
@@ -91,7 +106,7 @@ const CardDemanda = ({ demanda, aba }: { demanda: Demanda; aba: Aba }) => (
     {demanda.tipos.length > 0 && (
       <div className="flex flex-wrap gap-2 mb-4">
         {demanda.tipos.map((t, i) => <Tag key={i} text={t} />)}
-        {demanda.semestreRecomendado && <Tag text={demanda.semestreRecomendado} />}
+        {demanda.semestreRecomendado && <Tag text={`${demanda.semestreRecomendado}º sem`} />}
         {demanda.areaTecnica && <Tag text={demanda.areaTecnica} />}
       </div>
     )}
@@ -102,31 +117,40 @@ const CardDemanda = ({ demanda, aba }: { demanda: Demanda; aba: Aba }) => (
       </p>
     )}
 
-    {aba === "concluidas" && demanda.grupos.length > 0 && (
-      <p className="text-gray-500 text-base mb-4">
-        Grupo: <span className="font-bold text-gray-900">{demanda.grupos.join(", ")}</span>
-      </p>
-    )}
-
     <div className="flex flex-col sm:flex-row justify-between items-center gap-4 border-t border-gray-100 pt-4 mt-2">
-      <span className="text-gray-500 text-sm font-medium">
-        {demanda.totalCandidaturas} {demanda.totalCandidaturas === 1 ? "grupo interessado" : "grupos interessados"}
-      </span>
+      {(aba === "pendentes" || aba === "emAndamento") && (
+        <span className="text-gray-500 text-sm font-medium">
+          {demanda.totalCandidaturas} {demanda.totalCandidaturas === 1 ? "grupo interessado" : "grupos interessados"}
+        </span>
+      )}
 
       <div className="flex gap-3 w-full sm:w-auto">
-        {aba === "concluidas" ? (
-          <button className="w-full sm:w-auto bg-white border border-gray-400 text-gray-900 py-2 px-4 rounded-md font-bold text-sm hover:bg-gray-50 transition shadow-sm">
-            Ver Projeto Final
-          </button>
-        ) : (
+        {(aba === "pendentes" || aba === "emAndamento") && (
           <>
-            <button className="flex items-center justify-center gap-2 px-4 py-1.5 border border-gray-300 rounded text-gray-700 text-sm font-medium hover:bg-gray-50 transition w-full sm:w-auto">
+            <button
+              onClick={() => onEditar(demanda.id)}
+              className="flex items-center justify-center gap-2 px-4 py-1.5 border border-gray-300 rounded text-gray-700 text-sm font-medium hover:bg-gray-50 transition w-full sm:w-auto cursor-pointer"
+            >
               <EditIcon /> Editar
             </button>
-            <button className="flex items-center justify-center gap-2 px-4 py-1.5 border border-[#B91C1C] text-[#B91C1C] rounded text-sm font-medium hover:bg-red-50 transition w-full sm:w-auto">
-              <TrashIcon /> Excluir
+            <button
+              onClick={() => onDesativar(demanda.id)}
+              className="flex items-center justify-center gap-2 px-4 py-1.5 border border-[#B91C1C] text-[#B91C1C] rounded text-sm font-medium hover:bg-red-50 transition w-full sm:w-auto cursor-pointer"
+            >
+              <TrashIcon /> Desativar
             </button>
           </>
+        )}
+        {aba === "desativadas" && (
+          <button
+            onClick={() => onReativar(demanda.id)}
+            className="flex items-center justify-center gap-2 px-4 py-1.5 border border-[#40531D] text-[#40531D] rounded text-sm font-medium hover:bg-green-50 transition w-full sm:w-auto cursor-pointer"
+          >
+            Reativar
+          </button>
+        )}
+        {aba === "rejeitadas" && (
+          <span className="text-gray-400 text-sm italic">Rejeitada pelo coordenador</span>
         )}
       </div>
     </div>
@@ -135,21 +159,19 @@ const CardDemanda = ({ demanda, aba }: { demanda: Demanda; aba: Aba }) => (
 
 const TabsNavegacao = ({ aba, setAba }: { aba: Aba; setAba: (a: Aba) => void }) => {
   const tabs: { key: Aba; label: string }[] = [
-    { key: "pendentes",   label: "Demandas Pendentes" },
+    { key: "pendentes",   label: "Pendentes" },
     { key: "emAndamento", label: "Em Andamento" },
-    { key: "concluidas",  label: "Concluídos" },
+    { key: "desativadas", label: "Desativadas" },
+    { key: "rejeitadas",  label: "Rejeitadas" },
   ];
-
   return (
     <div className="flex w-full bg-[#4f534e] rounded-md p-1 shadow-sm">
       {tabs.map(({ key, label }) => (
         <button
           key={key}
           onClick={() => setAba(key)}
-          className={`flex-1 py-2 text-sm font-medium rounded transition-all ${
-            aba === key
-              ? "bg-white text-gray-900 shadow-sm"
-              : "text-white hover:bg-white/10"
+          className={`flex-1 py-2 text-sm font-medium rounded transition-all cursor-pointer ${
+            aba === key ? "bg-white text-gray-900 shadow-sm" : "text-white hover:bg-white/10"
           }`}
         >
           {label}
@@ -159,10 +181,11 @@ const TabsNavegacao = ({ aba, setAba }: { aba: Aba; setAba: (a: Aba) => void }) 
   );
 };
 
-const MinhasInformacoes = ({ dados }: { dados: DashboardDados }) => (
+const MinhasInformacoes = ({ dados }: { dados: DashboardDados }) => {
+  const navigate = useNavigate();
+  return (
   <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
     <h3 className="text-lg font-bold text-gray-900 mb-4">Minhas Informações</h3>
-
     <div className="space-y-4 text-sm mb-4">
       <div>
         <p className="text-gray-500 text-xs uppercase font-semibold mb-0.5">Nome</p>
@@ -181,17 +204,15 @@ const MinhasInformacoes = ({ dados }: { dados: DashboardDados }) => (
         <p className="font-medium text-gray-900">{dados.cnpj}</p>
       </div>
     </div>
-
-    <button className="w-full mt-2 border border-gray-300 text-gray-600 py-1.5 rounded text-xs font-medium hover:bg-gray-50 flex items-center justify-center gap-2">
+    <button onClick={() => navigate('/empreendedor/editar')} className="w-full mt-2 border border-gray-300 text-gray-600 py-1.5 rounded text-xs font-medium hover:bg-gray-50 flex items-center justify-center gap-2 cursor-pointer">
       <EditIcon /> Editar
     </button>
   </div>
-);
+)};
 
 const Estatisticas = ({ metricas }: { metricas: Metricas }) => (
   <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm space-y-3">
     <h3 className="text-lg font-bold text-gray-900 mb-2">Estatísticas</h3>
-
     <div className="w-full py-2 bg-[#BC9595] text-gray-900 rounded flex justify-between px-4 font-medium text-sm">
       <span>Demandas Abertas</span>
       <span>{metricas.demandasEmAnalisePeloCoordenador}</span>
@@ -217,34 +238,75 @@ export default function DashboardEmpreendedor() {
   const [erro, setErro] = useState("");
 
   useEffect(() => {
-    async function carregar() {
-      try {
-        const data = await getDashboardEmpreendedor();
-        setDados(data);
-      } catch {
-        setErro("Não foi possível carregar o dashboard.");
-      } finally {
-        setLoading(false);
-      }
-    }
-    carregar();
+    getDashboardEmpreendedor()
+      .then(setDados)
+      .catch(() => setErro("Não foi possível carregar o dashboard."))
+      .finally(() => setLoading(false));
   }, []);
 
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center w-full min-h-screen bg-[#F1F7EE]">
-        <p className="text-gray-500">Carregando dashboard...</p>
-      </div>
-    );
+  function handleEditar(id: number) {
+    navigate(`/cadastrar_demanda?id=${id}`);
   }
 
-  if (erro || !dados) {
-    return (
-      <div className="flex items-center justify-center w-full min-h-screen bg-[#F1F7EE]">
-        <p className="text-red-600">{erro || "Erro ao carregar dados."}</p>
-      </div>
-    );
+  async function handleDesativar(id: number) {
+    if (!confirm("Deseja desativar esta demanda?")) return;
+    try {
+      await desativarDemanda(id);
+      setDados(prev => {
+        if (!prev) return prev;
+        const demanda =
+          prev.demandas.pendentes.find(d => d.id === id) ||
+          prev.demandas.emAndamento.find(d => d.id === id);
+        return {
+          ...prev,
+          demandas: {
+            ...prev.demandas,
+            pendentes: prev.demandas.pendentes.filter(d => d.id !== id),
+            emAndamento: prev.demandas.emAndamento.filter(d => d.id !== id),
+            desativadas: demanda
+              ? [{ ...demanda, ativo: false }, ...prev.demandas.desativadas]
+              : prev.demandas.desativadas,
+          },
+        };
+      });
+    } catch {
+      alert("Erro ao desativar demanda.");
+    }
   }
+
+  async function handleReativar(id: number) {
+    try {
+      await reativarDemandaEmpreendedor(id);
+      setDados(prev => {
+        if (!prev) return prev;
+        const demanda = prev.demandas.desativadas.find(d => d.id === id);
+        return {
+          ...prev,
+          demandas: {
+            ...prev.demandas,
+            desativadas: prev.demandas.desativadas.filter(d => d.id !== id),
+            pendentes: demanda
+              ? [{ ...demanda, ativo: true, aceitacao: false }, ...prev.demandas.pendentes]
+              : prev.demandas.pendentes,
+          },
+        };
+      });
+    } catch {
+      alert("Erro ao reativar demanda.");
+    }
+  }
+
+  if (loading) return (
+    <div className="flex items-center justify-center w-full min-h-screen bg-[#F1F7EE]">
+      <p className="text-gray-500">Carregando dashboard...</p>
+    </div>
+  );
+
+  if (erro || !dados) return (
+    <div className="flex items-center justify-center w-full min-h-screen bg-[#F1F7EE]">
+      <p className="text-red-600">{erro || "Erro ao carregar dados."}</p>
+    </div>
+  );
 
   const demandasDaAba = dados.demandas[aba];
 
@@ -259,32 +321,35 @@ export default function DashboardEmpreendedor() {
         </header>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
-          {/* Coluna esquerda */}
           <div className="lg:col-span-2">
             <TabsNavegacao aba={aba} setAba={setAba} />
-
             <div className="mt-6">
               {demandasDaAba.length === 0 ? (
                 <div className="bg-white border border-gray-200 rounded-lg p-8 text-center text-gray-500 shadow-sm">
                   Nenhuma demanda nesta categoria ainda.
                 </div>
               ) : (
-                demandasDaAba.map((d) => (
-                  <CardDemanda key={d.id} demanda={d} aba={aba} />
+                demandasDaAba.map(d => (
+                  <CardDemanda
+                    key={d.id}
+                    demanda={d}
+                    aba={aba}
+                    onEditar={handleEditar}
+                    onDesativar={handleDesativar}
+                    onReativar={handleReativar}
+                  />
                 ))
               )}
             </div>
           </div>
 
-          {/* Coluna direita */}
           <div className="space-y-6">
             <button
               onClick={() => navigate("/cadastrar_demanda")}
-              className="w-full bg-[#782e29] hover:bg-[#5e231f] active:scale-95 text-white py-3 px-4 rounded-md shadow font-medium transition text-center"
+              className="w-full bg-[#782e29] hover:bg-[#5e231f] active:scale-95 text-white py-3 px-4 rounded-md shadow font-medium transition text-center cursor-pointer"
             >
               Nova Demanda
             </button>
-
             <MinhasInformacoes dados={dados} />
             <Estatisticas metricas={dados.metricas} />
           </div>

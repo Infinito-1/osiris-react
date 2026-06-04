@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import { getGrupoPerfil } from '../../services/grupos.service';
-import { getProjetos } from '../../services/projeto.service';
+import { criarProjeto } from '../../services/projeto.service';
 import { criarEntrega, type StatusProjeto } from '../../services/historicoprojeto.service';
+import { getGrupoPerfil } from '../../services/grupos.service';
 
-interface EntregaFormDto {
-  hspStrDesc: string;
-  hspStrLinkProjeto: string;
+interface CadastrarProjetoDto {
+  proStrDescricao: string;
+  proDateInicio: string;
   hspStrStatus: StatusProjeto;
+  hspStrLinkGithub?: string;
+  hspStrLinkDeploy?: string;
+  hspStrLinkProjeto?: string;
 }
 
 const STATUS_OPTIONS: StatusProjeto[] = [
@@ -21,66 +24,60 @@ const STATUS_OPTIONS: StatusProjeto[] = [
 
 const Entrega: React.FC = () => {
   const navigate = useNavigate();
-  const [proIntId, setProIntId] = useState<number | null>(null);
-  const [nomeProjeto, setNomeProjeto] = useState('');
+  const [searchParams] = useSearchParams();
+  const canIntId = searchParams.get('canIntId');
+
   const [nomeGrupo, setNomeGrupo] = useState('');
   const [semestre, setSemestre] = useState('');
-  const [loadingProjeto, setLoadingProjeto] = useState(true);
+  const [loadingPerfil, setLoadingPerfil] = useState(true);
 
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<EntregaFormDto>();
+  } = useForm<CadastrarProjetoDto>({
+    defaultValues: { hspStrStatus: 'Planejamento' },
+  });
 
   useEffect(() => {
-    async function carregarProjeto() {
-      try {
-        const [perfil, projetos] = await Promise.all([
-          getGrupoPerfil(),
-          getProjetos(),
-        ]);
-
+    getGrupoPerfil()
+      .then(perfil => {
         setNomeGrupo(perfil?.nome ?? '');
         setSemestre(perfil?.semestre ? `${perfil.semestre}º semestre` : '');
-
-        // encontra o projeto ativo vinculado ao grupo logado
-        const projetoAtivo = projetos.find(
-          (p: any) => p.candidatura?.grupo?.nome === perfil?.nome && p.ativo
-        );
-
-        if (projetoAtivo) {
-          setProIntId(projetoAtivo.id);
-          setNomeProjeto(projetoAtivo.candidatura?.demanda ?? '');
-        }
-      } catch {
-        // grupo sem projeto ativo ainda
-      } finally {
-        setLoadingProjeto(false);
-      }
-    }
-    carregarProjeto();
+      })
+      .catch(() => {})
+      .finally(() => setLoadingPerfil(false));
   }, []);
 
-  const onSubmit = async (data: EntregaFormDto) => {
-    if (!proIntId) {
-      alert('Nenhum projeto ativo encontrado para este grupo.');
-      return;
-    }
+  const onSubmit = async (data: CadastrarProjetoDto) => {
     try {
-      await criarEntrega({
-        hspStrDesc: data.hspStrDesc,
-        hspStrLinkProjeto: data.hspStrLinkProjeto,
-        hspStrStatus: data.hspStrStatus,
-        proIntId,
+      // 1. cria o projeto
+      const projeto = await criarProjeto({
+        proStrDescricao: data.proStrDescricao,
+        proDateInicio: data.proDateInicio,
+        ...(canIntId ? { canIntId: Number(canIntId) } : {}),
       });
+
+      // 2. se algum link ou status foi preenchido, cria histórico
+      const temLink = data.hspStrLinkGithub || data.hspStrLinkDeploy || data.hspStrLinkProjeto;
+      if (temLink || data.hspStrStatus) {
+        await criarEntrega({
+          hspStrDesc: `Início do projeto: ${data.proStrDescricao}`,
+          hspStrStatus: data.hspStrStatus,
+          hspStrLinkGithub: data.hspStrLinkGithub || undefined,
+          hspStrLinkDeploy: data.hspStrLinkDeploy || undefined,
+          hspStrLinkProjeto: data.hspStrLinkProjeto || undefined,
+          proIntId: projeto.id,
+        });
+      }
+
       navigate('/dashboard_grupo');
     } catch (error: any) {
       const mensagem = error?.response?.data?.message;
       alert(
         Array.isArray(mensagem)
           ? mensagem.join('\n')
-          : mensagem ?? 'Erro ao registrar entrega.'
+          : mensagem ?? 'Erro ao cadastrar projeto.'
       );
     }
   };
@@ -88,46 +85,22 @@ const Entrega: React.FC = () => {
   return (
     <div className="flex justify-center w-full min-h-screen bg-[#F1F7EE] py-10">
       <div className="w-11/12 max-w-2xl bg-white border border-gray-300 rounded-lg p-8 shadow-xl">
-        <h1 className="text-3xl font-bold text-gray-800 text-center mb-8">
-          Entrega de Projeto
+        <h1 className="text-3xl font-bold text-gray-800 text-center mb-2">
+          Cadastrar Projeto
         </h1>
+        <p className="text-center text-gray-500 text-sm mb-8">
+          {canIntId ? 'Projeto vinculado à candidatura' : 'Projeto independente'}
+        </p>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-          {/* Nome do Projeto — readonly */}
-          <div className="flex flex-col space-y-1">
-            <label className="text-sm font-medium text-gray-700">Nome do projeto</label>
-            <input
-              type="text"
-              value={loadingProjeto ? 'Carregando...' : (nomeProjeto || '—')}
-              readOnly
-              className="w-full p-2 border border-gray-300 rounded-md bg-gray-50 cursor-default focus:outline-none"
-            />
-          </div>
 
-          {/* Descrição da entrega */}
-          <div className="flex flex-col space-y-1">
-            <label htmlFor="hspStrDesc" className="text-sm font-medium text-gray-700">
-              Descrição do que foi desenvolvido
-            </label>
-            <textarea
-              {...register('hspStrDesc', { required: 'Descrição obrigatória' })}
-              id="hspStrDesc"
-              rows={4}
-              placeholder="Descreva o que foi entregue nesta etapa"
-              className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#782E29] resize-none"
-            />
-            {errors.hspStrDesc && (
-              <span className="text-red-500 text-xs">{errors.hspStrDesc.message}</span>
-            )}
-          </div>
-
-          {/* Grupo e Semestre */}
+          {/* Grupo e Semestre — readonly */}
           <div className="grid grid-cols-2 gap-4">
             <div className="flex flex-col space-y-1">
               <label className="text-sm font-medium text-gray-700">Grupo</label>
               <input
                 type="text"
-                value={nomeGrupo || '—'}
+                value={loadingPerfil ? 'Carregando...' : (nomeGrupo || '—')}
                 readOnly
                 className="w-full p-2 border border-gray-300 rounded-md bg-gray-50 cursor-default focus:outline-none"
               />
@@ -143,50 +116,115 @@ const Entrega: React.FC = () => {
             </div>
           </div>
 
-          {/* Link do repositório/deploy */}
+          {/* Descrição */}
           <div className="flex flex-col space-y-1">
-            <label htmlFor="hspStrLinkProjeto" className="text-sm font-medium text-gray-700">
-              Link do repositório ou deploy
+            <label htmlFor="proStrDescricao" className="text-sm font-medium text-gray-700">
+              Descrição do projeto
+            </label>
+            <textarea
+              {...register('proStrDescricao', { required: 'Descrição obrigatória' })}
+              id="proStrDescricao"
+              rows={4}
+              placeholder="Descreva o escopo e objetivos do projeto"
+              className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#782E29] resize-none"
+            />
+            {errors.proStrDescricao && (
+              <span className="text-red-500 text-xs">{errors.proStrDescricao.message}</span>
+            )}
+          </div>
+
+          {/* Data de início */}
+          <div className="flex flex-col space-y-1">
+            <label htmlFor="proDateInicio" className="text-sm font-medium text-gray-700">
+              Data de início
             </label>
             <input
-              {...register('hspStrLinkProjeto', { required: 'Link obrigatório' })}
-              id="hspStrLinkProjeto"
-              type="text"
-              placeholder="https://github.com/seu-repositorio"
+              {...register('proDateInicio', { required: 'Data de início obrigatória' })}
+              id="proDateInicio"
+              type="date"
               className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#782E29]"
             />
-            {errors.hspStrLinkProjeto && (
-              <span className="text-red-500 text-xs">{errors.hspStrLinkProjeto.message}</span>
+            {errors.proDateInicio && (
+              <span className="text-red-500 text-xs">{errors.proDateInicio.message}</span>
             )}
           </div>
 
           {/* Status */}
           <div className="flex flex-col space-y-1">
             <label htmlFor="hspStrStatus" className="text-sm font-medium text-gray-700">
-              Status atual do projeto
+              Status inicial
             </label>
             <select
-              {...register('hspStrStatus', { required: 'Status obrigatório' })}
+              {...register('hspStrStatus')}
               id="hspStrStatus"
               className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#782E29] bg-white cursor-pointer"
             >
-              <option value="">Selecione o status</option>
               {STATUS_OPTIONS.map(s => (
                 <option key={s} value={s}>{s}</option>
               ))}
             </select>
-            {errors.hspStrStatus && (
-              <span className="text-red-500 text-xs">{errors.hspStrStatus.message}</span>
-            )}
           </div>
 
-          <div className="pt-4">
+          {/* Links — opcionais */}
+          <div className="space-y-4">
+            <p className="text-sm font-medium text-gray-700">
+              Links <span className="text-gray-400 font-normal">(opcionais)</span>
+            </p>
+
+            <div className="flex flex-col space-y-1">
+              <label htmlFor="hspStrLinkGithub" className="text-xs text-gray-600">
+                Repositório GitHub
+              </label>
+              <input
+                {...register('hspStrLinkGithub')}
+                id="hspStrLinkGithub"
+                type="text"
+                placeholder="https://github.com/usuario/repositorio"
+                className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#782E29] text-sm"
+              />
+            </div>
+
+            <div className="flex flex-col space-y-1">
+              <label htmlFor="hspStrLinkDeploy" className="text-xs text-gray-600">
+                Link de Deploy
+              </label>
+              <input
+                {...register('hspStrLinkDeploy')}
+                id="hspStrLinkDeploy"
+                type="text"
+                placeholder="https://meu-projeto.vercel.app"
+                className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#782E29] text-sm"
+              />
+            </div>
+
+            <div className="flex flex-col space-y-1">
+              <label htmlFor="hspStrLinkProjeto" className="text-xs text-gray-600">
+                Link do Projeto
+              </label>
+              <input
+                {...register('hspStrLinkProjeto')}
+                id="hspStrLinkProjeto"
+                type="text"
+                placeholder="https://link-do-projeto.com"
+                className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#782E29] text-sm"
+              />
+            </div>
+          </div>
+
+          <div className="pt-4 flex gap-3">
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full bg-[#782E29] text-white py-3 rounded-md text-lg font-medium transition-colors duration-200 hover:bg-[#6d2823] shadow-md cursor-pointer active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="flex-1 bg-[#782E29] text-white py-3 rounded-md text-lg font-medium transition hover:bg-[#6d2823] shadow-md cursor-pointer active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {isSubmitting ? 'Registrando...' : 'Registrar Entrega'}
+              {isSubmitting ? 'Cadastrando...' : 'Cadastrar Projeto'}
+            </button>
+            <button
+              type="button"
+              onClick={() => navigate(-1)}
+              className="flex-1 bg-gray-200 text-gray-800 py-3 rounded-md text-lg font-medium transition hover:bg-gray-300 cursor-pointer"
+            >
+              Cancelar
             </button>
           </div>
         </form>
