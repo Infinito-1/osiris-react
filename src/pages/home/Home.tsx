@@ -8,7 +8,7 @@ import EllipseConexao from "../../assets/img/icones/Ellipse conexao.svg";
 import CarrosselHome from "../../components/carrosselHome/CarrosselHome";
 import FiltroDemandas from "../../components/filtro/filtroDemandas";
 import { useLocation, useNavigate } from "react-router-dom";
-import { getGaleriaDemandaOrdenada } from "../../services/demanda.service";
+import { getGaleriaDemandaOrdenada, getGaleriaDemandas } from "../../services/demanda.service";
 import CardDemanda from "../demanda/CardDemanda";
 import { useAuth } from "../../hooks/useAuth";
 
@@ -84,6 +84,23 @@ function Home() {
   });
   const [demandas, setDemandas] = useState<Demanda[]>([]);
   const [ordem, setOrdem] = useState<'ASC' | 'DESC'>('DESC');
+
+    useEffect(() => {
+      getGaleriaDemandas()
+        .then(data => {
+          setDemandas(data.map((d: any) => ({
+            id: d.id,
+            titulo: d.nome,
+            empreendedor: d.empreendedor?.empresa ?? '—',
+            empId: d.empreendedor?.id,
+            tipo: d.tipos?.[0] ?? '',
+            descricao: d.descricao,
+            semestreRecomendado: d.semestreRecomendado,
+          })));
+        })
+        .catch(() => setDemandas([]))
+        .finally(() => setLoading(false));
+    }, []);
 
   useEffect(() => {
     getGaleriaDemandaOrdenada(ordem)
