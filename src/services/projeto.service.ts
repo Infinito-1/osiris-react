@@ -6,6 +6,17 @@ export async function getProjetos() {
   return response.data.map(mapProjeto);
 }
 
+export async function getTodosProjetos() {
+  const response = await api.get('/projetos/todosStatus');
+  return response.data.map(mapProjeto);
+}
+
+// projetos do grupo logado
+export async function getMeusProjetos() {
+  const response = await api.get('/projetos/meus');
+  return response.data.map(mapProjeto);
+}
+
 export async function getProjetoById(id: number) {
   const response = await api.get(`/projetos/${id}`);
   return mapProjeto(response.data);
@@ -14,7 +25,7 @@ export async function getProjetoById(id: number) {
 export async function criarProjeto(dto: {
   proStrDescricao: string;
   proDateInicio: string;
-  canIntId: number;
+  canIntId?: number;
 }) {
   const response = await api.post('/projetos', dto);
   return mapProjeto(response.data);
@@ -26,6 +37,24 @@ export async function updateProjeto(id: number, dto: {
   canIntId?: number;
 }) {
   const response = await api.put(`/projetos/${id}`, dto);
+  return mapProjeto(response.data);
+}
+
+// grupo toggle ativo/inativo do próprio projeto
+export async function toggleProjeto(id: number) {
+  const response = await api.put(`/projetos/${id}/toggle`);
+  return mapProjeto(response.data);
+}
+
+// coordenador desativa com motivo opcional
+export async function desativarProjetoCoordenador(id: number, motivo?: string) {
+  const response = await api.put(`/projetos/${id}/desativar`, { motivo });
+  return mapProjeto(response.data);
+}
+
+// coordenador reativa após revisão
+export async function reativarProjetoCoordenador(id: number) {
+  const response = await api.put(`/projetos/${id}/reativar`);
   return mapProjeto(response.data);
 }
 

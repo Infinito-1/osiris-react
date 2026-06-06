@@ -63,7 +63,7 @@ const TrashIcon = () => (
 
 const StatusBadge = ({ aba }: { aba: Aba }) => {
   const map = {
-    pendentes:   { label: "Em Análise",   cls: "border border-gray-300 text-gray-600 bg-white" },
+    pendentes:   { label: "Em Análise",   cls: "border border-gray-300 text-black bg-white" },
     emAndamento: { label: "Em Andamento", cls: "bg-[#550B0B] text-white" },
     desativadas: { label: "Desativada",   cls: "bg-gray-400 text-white" },
     rejeitadas:  { label: "Rejeitada",    cls: "bg-red-100 text-red-800" },

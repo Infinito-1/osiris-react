@@ -134,3 +134,120 @@
 .dark .admin-text {
   color: #DAD4C8 !important;
 }
+
+/* ── Botões com fundo claro que ficam com letra branca no dark ── */
+
+/* Botão "Cancelar" e similares com bg-gray-200 */
+.dark button.bg-gray-200 {
+  background-color: #404040;
+  color: #f5f5f5;
+}
+
+.dark button.bg-gray-200:hover {
+  background-color: #505050;
+}
+
+/* Botão com fundo branco e borda (ex: bordas coloridas no dashboard coordenador) */
+.dark button.bg-white {
+  background-color: #2e2e2e;
+  color: #f5f5f5;
+}
+
+.dark button.bg-white:hover {
+  background-color: #3a3a3a;
+}
+
+/* Botão fundo [#F1F7EE] (ex: "Enviar Demanda" na galeria) */
+.dark button.bg-\[\#F1F7EE\] {
+  background-color: #2e2e2e;
+  color: #f5f5f5;
+}
+
+.dark button.bg-\[\#F1F7EE\]:hover {
+  background-color: #3a3a3a;
+}
+
+/* ── Botão expandir/recolher projetos (bg-white com texto escuro) ── */
+.dark button.bg-white.border {
+  background-color: #2e2e2e;
+  color: #f5f5f5;
+  border-color: #404040;
+}
+
+.dark button.bg-white.border:hover {
+  background-color: #3a3a3a;
+}
+
+/* ── Span e textos de status com fundo claro fixo ── */
+.dark span.bg-green-100 {
+  background-color: #14532d;
+  color: #bbf7d0;
+}
+
+.dark span.bg-red-100 {
+  background-color: #7f1d1d;
+  color: #fecaca;
+}
+
+.dark span.bg-yellow-100 {
+  background-color: #713f12;
+  color: #fef08a;
+}
+
+.dark span.bg-gray-100,
+.dark span.bg-gray-200 {
+  background-color: #374151;
+  color: #d1d5db;
+}
+
+.dark span.bg-\[\#c6d8e2\] {
+  background-color: #354046;
+  color: #c6d8e2;
+}
+
+/* ── Labels e rótulos com cores fixas ── */
+.dark p.text-gray-900,
+.dark label.text-gray-900 {
+  color: #f5f5f5;
+}
+
+/* ── Div de bg-red-50, bg-green-50 (motivo desativação, etc) ── */
+.dark div.bg-red-50 {
+  background-color: #450a0a;
+  border-color: #7f1d1d;
+  color: #fca5a5;
+}
+
+.dark div.bg-green-50 {
+  background-color: #052e16;
+  border-color: #14532d;
+  color: #86efac;
+}
+
+/* ── Métricas coloridas do dashboard coordenador ── */
+.dark .bg-\[\#BC9595\] {
+  background-color: #5a2d2d;
+  color: #f5f5f5;
+}
+
+.dark .bg-\[\#7D888F\] {
+  background-color: #354046;
+  color: #f5f5f5;
+}
+
+.dark .bg-\[\#A6ACB1\] {
+  background-color: #404040;
+  color: #f5f5f5;
+}
+
+.dark .bg-\[\#c6d8e2\] {
+  background-color: #2a3f47;
+  color: #f5f5f5;
+}
+
+/* ── Badge "Pendente" com borda no tema escuro ── */
+.dark span.border.border-gray-300 {
+  border-color: #6b7280;
+  color: #d1d5db;
+  background-color: #2e2e2e;
+}

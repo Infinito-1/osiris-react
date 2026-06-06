@@ -7,10 +7,20 @@ export function mapProjeto(p: any) {
     descricao: p.proStrDescricao,
     dataInicio: p.proDateInicio,
     ativo: p.proBoolAtivo,
+    desativadoCoordenador: p.proBoolDesativadoCoordenador ?? false,
+    motivoDesativacao: p.proStrMotivoDesativacao ?? null,
+    historicos: p.historicos?.map((h: any) => ({
+      id: h.hspIntId,
+      descricao: h.hspStrDesc,
+      status: h.hspStrStatus,
+      data: h.hspDateData,
+      link: h.hspStrLinkProjeto ?? null,
+      linkGithub: h.hspStrLinkGithub ?? null,
+      linkDeploy: h.hspStrLinkDeploy ?? null,
+    })) ?? [],
     candidatura: p.candidatura ? {
       id: p.candidatura.canIntId,
       status: p.candidatura.canStrStatus,
-      aprovacao: p.candidatura.canBoolAprovacao,
       grupo: p.candidatura.grupo ? {
         id: p.candidatura.grupo.gruIntId,
         nome: p.candidatura.grupo.gruStrNome,

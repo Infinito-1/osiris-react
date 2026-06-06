@@ -53,3 +53,26 @@ export async function createGrupo(dto: {
   const response = await api.post('/grupos', dto);
   return response.data;
 }
+
+export async function getMeusGrupos() {
+  const response = await api.get('/grupos/meus/todos');
+  return response.data.map(mapGrupo);
+}
+
+export async function criarNovoGrupo(dto: {
+  gruStrNome: string;
+  gruStrDescricao: string;
+  gruChaRa: string;
+  gruIntTamanho: number;
+  gruStrMembros?: string;
+  semIntId: number;
+  usuIntId: number;
+}) {
+  const response = await api.post('/grupos/novo', dto);
+  return mapGrupo(response.data);
+}
+
+export async function reativarGrupo(gruIntId: number, usuIntId: number) {
+  const response = await api.post(`/grupos/reativar/${gruIntId}`, { usuIntId });
+  return response.data;
+}

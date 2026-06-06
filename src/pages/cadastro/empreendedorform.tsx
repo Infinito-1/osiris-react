@@ -5,7 +5,6 @@ import { api } from "../../api/axios";
 import { usePasswordValidation } from "../../hooks/usePasswordValidation";
 import { PasswordInput } from "../../components/PasswordInput";
 
-
 interface CreateEmpreendedorFormDto {
   usuStrNome: string;
   usuStrEmail: string;
@@ -26,26 +25,35 @@ function EmpreendedorForm() {
 
   const onSubmit = async (data: CreateEmpreendedorFormDto) => {
     passwordHook.setTouched(true);
+    if (!passwordHook.isValid) {
+      alert("Senha inválida");
+      return;
+    }
+
+    // valida empresa antes de qualquer chamada à API
+    if (!data.empStrEmpresa?.trim()) {
+      alert("Nome da empresa é obrigatório.");
+      return;
+    }
 
     try {
-    const response = await api.post("/usuarios", {
-      usuStrNome: data.usuStrNome,
-      usuStrEmail: data.usuStrEmail,
-      usuStrSenha: data.usuStrSenha,
-      usuStrTelefone: data.usuStrTelefone,
-      usuStrTipo: "Empreendedor",
-    });
+      const response = await api.post("/usuarios", {
+        usuStrNome: data.usuStrNome,
+        usuStrEmail: data.usuStrEmail,
+        usuStrSenha: data.usuStrSenha,
+        usuStrTelefone: data.usuStrTelefone,
+        usuStrTipo: "Empreendedor",
+      });
 
-    const usuarioId = response.data.dados.id; // ← captura o id aqui
+      const usuarioId = response.data.dados.id;
 
-    await api.post("/empreendedores", {
-      usuIntId: usuarioId,
-      empStrEmpresa: data.empStrEmpresa,
-      empChaCnpj: data.empChaCnpj,
-    });
+      await api.post("/empreendedores", {
+        usuIntId: usuarioId,
+        empStrEmpresa: data.empStrEmpresa,
+        empChaCnpj: data.empChaCnpj || undefined,
+      });
 
-    navigate("/login");
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      navigate("/login");
     } catch (error: any) {
       const mensagem = error?.response?.data?.message;
       alert(
@@ -60,22 +68,16 @@ function EmpreendedorForm() {
     <>
       <section className="login-section flex flex-col items-center justify-center min-h-screen py-6 sm:py-10 md:py-[60px] px-4 sm:px-6 font-inter text-[#021926] bg-[#F1F7EE]">
         <div className="text-center mb-8 sm:mb-10 w-full">
-          <h1 className="text-2xl sm:text-3xl md:text-[2.5rem] font-semibold mb-2">
-            Osíris
-          </h1>
+          <h1 className="text-2xl sm:text-3xl md:text-[2.5rem] font-semibold mb-2">Osíris</h1>
           <p className="text-sm sm:text-base md:text-[1.1rem] font-medium">
             Acesse sua conta ou crie uma nova
           </p>
         </div>
 
-        <div
-          id="empreendedorForm"
-          className="empreendedor-form text-left w-full sm:w-[680px] max-w-md sm:max-w-none bg-white border border-[#d3d3d3] rounded-xl p-6 sm:p-8 md:p-[50px] shadow-[0_4px_10px_rgba(0,0,0,0.08)]"
-        >
+        <div id="empreendedorForm"
+          className="empreendedor-form text-left w-full sm:w-[680px] max-w-md sm:max-w-none bg-white border border-[#d3d3d3] rounded-xl p-6 sm:p-8 md:p-[50px] shadow-[0_4px_10px_rgba(0,0,0,0.08)]">
           <div className="top-icon flex justify-center mb-6 sm:mb-[25px]">
-            <img
-              src={Lamp}
-              alt="Ícone de lâmpada"
+            <img src={Lamp} alt="Ícone de lâmpada"
               className="w-16 sm:w-20 md:w-[90px] h-16 sm:h-20 md:h-[90px] rounded-full p-3 sm:p-4 md:p-[15px] bg-[#782e29]"
             />
           </div>
@@ -83,12 +85,12 @@ function EmpreendedorForm() {
           <h3 className="text-center my-2 mb-2 text-lg sm:text-xl md:text-[1.4rem] font-semibold">
             Sou Empreendedor
           </h3>
-
           <p className="text-center text-sm sm:text-base md:text-[1rem] text-gray-600 mb-6 sm:mb-[45px] font-normal">
             Tenho uma demanda e preciso de uma solução digital
           </p>
 
           <form onSubmit={handleSubmit(onSubmit)}>
+            {/* Nome + Email */}
             <div className="form-row grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 md:gap-[35px] mb-5 sm:mb-[30px]">
               <div className="form-group">
                 <label htmlFor="nomeEmp" className="block text-sm sm:text-base font-medium mb-2 text-[#021926]">
@@ -96,16 +98,11 @@ function EmpreendedorForm() {
                 </label>
                 <input
                   {...register("usuStrNome", { required: "Nome obrigatório" })}
-                  type="text"
-                  id="nomeEmp"
-                  placeholder="Digite seu nome completo"
+                  type="text" id="nomeEmp" placeholder="Digite seu nome completo"
                   className="w-full border border-[#d3d3d3] rounded-lg p-2.5 sm:p-3 text-sm sm:text-base outline-none focus:ring-2 focus:ring-[#782e29] transition"
                 />
-                {errors.usuStrNome && (
-                  <span className="text-red-500 text-xs mt-1">{errors.usuStrNome.message}</span>
-                )}
+                {errors.usuStrNome && <span className="text-red-500 text-xs mt-1">{errors.usuStrNome.message}</span>}
               </div>
-
               <div className="form-group">
                 <label htmlFor="emailEmp" className="block text-sm sm:text-base font-medium mb-2 text-[#021926]">
                   E-mail
@@ -115,17 +112,14 @@ function EmpreendedorForm() {
                     required: "E-mail obrigatório",
                     pattern: { value: /^\S+@\S+$/i, message: "E-mail inválido" },
                   })}
-                  type="email"
-                  id="emailEmp"
-                  placeholder="seu.email@exemplo.com"
+                  type="email" id="emailEmp" placeholder="seu.email@exemplo.com"
                   className="w-full border border-[#d3d3d3] rounded-lg p-2.5 sm:p-3 text-sm sm:text-base outline-none focus:ring-2 focus:ring-[#782e29] transition"
                 />
-                {errors.usuStrEmail && (
-                  <span className="text-red-500 text-xs mt-1">{errors.usuStrEmail.message}</span>
-                )}
+                {errors.usuStrEmail && <span className="text-red-500 text-xs mt-1">{errors.usuStrEmail.message}</span>}
               </div>
             </div>
 
+            {/* Telefone + Empresa */}
             <div className="form-row grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 md:gap-[35px] mb-5 sm:mb-[30px]">
               <div className="form-group">
                 <label htmlFor="telefoneEmp" className="block text-sm sm:text-base font-medium mb-2 text-[#021926]">
@@ -133,77 +127,53 @@ function EmpreendedorForm() {
                 </label>
                 <input
                   {...register("usuStrTelefone")}
-                  type="text"
-                  id="telefoneEmp"
-                  placeholder="(11) 99999-9999"
+                  type="text" id="telefoneEmp" placeholder="(11) 99999-9999"
                   className="w-full border border-[#d3d3d3] rounded-lg p-2.5 sm:p-3 text-sm sm:text-base outline-none focus:ring-2 focus:ring-[#782e29] transition"
                 />
               </div>
-
-              {/*TODO: Campo de empresa por enquanto é visual apenas, não vai pro banco devido a não termos correspondecia até agora no código */}
               <div className="form-group">
                 <label htmlFor="empresaEmp" className="block text-sm sm:text-base font-medium mb-2 text-[#021926]">
                   Empresa / Negócio
                 </label>
                 <input
-                  {...register("empStrEmpresa")}
-                  type="text"
-                  id="empresaEmp"
-                  placeholder="Nome da sua empresa"
+                  {...register("empStrEmpresa", { required: "Nome da empresa obrigatório" })}
+                  type="text" id="empresaEmp" placeholder="Nome da sua empresa"
                   className="w-full border border-[#d3d3d3] rounded-lg p-2.5 sm:p-3 text-sm sm:text-base outline-none focus:ring-2 focus:ring-[#782e29] transition"
                 />
+                {errors.empStrEmpresa && <span className="text-red-500 text-xs mt-1">{errors.empStrEmpresa.message}</span>}
               </div>
+            </div>
+
+            {/* CNPJ */}
+            <div className="form-row mb-5 sm:mb-[30px]">
               <div className="form-group">
                 <label htmlFor="empChaCnpj" className="block text-sm sm:text-base font-medium mb-2 text-[#021926]">
-                  CNPJ
+                  CNPJ <span className="text-gray-400 font-normal">(opcional)</span>
                 </label>
                 <input
                   {...register("empChaCnpj", {
                     minLength: { value: 14, message: "CNPJ deve ter 14 dígitos" },
                     maxLength: { value: 14, message: "CNPJ deve ter 14 dígitos" },
                   })}
-                  type="text"
-                  id="empChaCnpj"
-                  placeholder="00000000000000"
+                  type="text" id="empChaCnpj" placeholder="00000000000000"
                   className="w-full border border-[#d3d3d3] rounded-lg p-2.5 sm:p-3 text-sm sm:text-base outline-none focus:ring-2 focus:ring-[#782e29] transition"
                 />
-                {errors.empChaCnpj && (
-                  <span className="text-red-500 text-xs mt-1">{errors.empChaCnpj.message}</span>
-                )}
+                {errors.empChaCnpj && <span className="text-red-500 text-xs mt-1">{errors.empChaCnpj.message}</span>}
               </div>
             </div>
 
-            
             <div className="form-group mb-6 sm:mb-[30px]">
               <PasswordInput
-                id="senhaEmp"
-                label="Senha"
-                hook={passwordHook}
+                id="senhaEmp" label="Senha" hook={passwordHook}
                 register={register("usuStrSenha", {
                   required: "Senha obrigatória",
                   validate: () => passwordHook.isValid || "A senha não atende todos os requisitos.",
                 })}
               />
-    
             </div>
-            <button
-              type="submit"
-              disabled={isSubmitting}
-              className="
-                w-full
-                text-white
-                bg-[#782e29]
-                py-4
-                text-[1.1rem]
-                rounded-lg
-                mt-[20px]
-                transition
-                hover:bg-[#5e231f]
-                cursor-pointer
-                active:scale-95
-                disabled:opacity-60
-                disabled:cursor-not-allowed
-              "
+
+            <button type="submit" disabled={isSubmitting}
+              className="w-full text-white bg-[#782e29] py-4 text-[1.1rem] rounded-lg mt-[20px] transition hover:bg-[#5e231f] cursor-pointer active:scale-95 disabled:opacity-60 disabled:cursor-not-allowed"
             >
               {isSubmitting ? "Criando conta..." : "Criar Conta"}
             </button>
@@ -212,11 +182,8 @@ function EmpreendedorForm() {
           <div className="text-center mt-4 sm:mt-6 pt-4 sm:pt-6 border-t border-gray-200">
             <p className="text-xs sm:text-sm text-gray-600">
               Já tem uma conta?{" "}
-              <button
-                type="button"
-                onClick={() => navigate("/login")}
-                className="text-[#782e29] font-medium underline hover:no-underline transition"
-              >
+              <button type="button" onClick={() => navigate("/login")}
+                className="text-[#782e29] font-medium underline hover:no-underline transition">
                 Faça login aqui
               </button>
             </p>

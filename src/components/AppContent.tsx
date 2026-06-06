@@ -74,7 +74,7 @@ export default function AppContent() {
 
             {/* ── Rotas protegidas — Projeto ── */}
             <Route path="/projeto" element={<PrivateRoute><Projeto /></PrivateRoute>} />
-            <Route path="/projeto/:id" element={<PrivateRoute><Projeto /></PrivateRoute>} />
+            <Route path="/projeto/:id" element={<PrivateRoute><Entrega /></PrivateRoute>} />
             <Route path="/entrega" element={<PrivateRoute><Entrega /></PrivateRoute>} />
             <Route path="/status" element={<PrivateRoute><Status /></PrivateRoute>} />
 
