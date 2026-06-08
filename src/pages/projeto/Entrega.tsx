@@ -112,9 +112,11 @@ const Entrega: React.FC = () => {
           });
         }
       }
-
-      navigate('/dashboard_grupo');
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      if (modoEdicao) {
+        navigate(-1); // volta para onde veio — funciona para admin e grupo
+      } else {
+        navigate('/dashboard_grupo'); // só cria demanda quem é grupo
+      }
     } catch (error: any) {
       const mensagem = error?.response?.data?.message;
       alert(

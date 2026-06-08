@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { api } from '../api/axios';
 import { jwtDecode } from 'jwt-decode';
 import type UsuarioLogin from '../models/UsuarioLogin';
