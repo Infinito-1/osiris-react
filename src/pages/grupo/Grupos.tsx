@@ -49,6 +49,7 @@ const BotaoComTooltip: React.FC<{
 const Grupos: React.FC = () => {
   const navigate = useNavigate();
   const { isAuthenticated, usuario } = useAuth();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [grupos, setGrupos] = useState<any[]>([]);
   const [busca, setBusca] = useState('');
 

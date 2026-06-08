@@ -54,7 +54,7 @@ export default function CadastrarDemanda() {
           tipStrNomes: d.tipos?.join(', ') ?? '',
         });
       })
-      .catch(() => navigate('/empreendedor'))
+      .catch(() => navigate(-1))
       .finally(() => setLoading(false));
   }, [demandaId]);
 
@@ -87,7 +87,11 @@ export default function CadastrarDemanda() {
           tipStrNomes: tipos,
         });
       }
-      navigate('/empreendedor');
+      if (modoEdicao) {
+        navigate(-1); // volta para onde veio — funciona para admin e empreendedor
+      } else {
+        navigate('/empreendedor'); // só cria demanda quem é empreendedor
+      }
     } catch (error: any) {
       const mensagem = error?.response?.data?.message;
       alert(
