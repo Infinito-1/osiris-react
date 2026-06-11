@@ -1,6 +1,7 @@
 import Lamp from "../../assets/img/login/lamp.png";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { useState, useEffect, useRef } from "react";
 import { api } from "../../api/axios";
 import { usePasswordValidation } from "../../hooks/usePasswordValidation";
 import { PasswordInput } from "../../components/PasswordInput";
@@ -14,6 +15,8 @@ interface CreateEmpreendedorFormDto {
   empChaCnpj?: string;
 }
 
+const TIMEOUT_MS = 5 * 60 * 1000; // 5 minutos
+
 function EmpreendedorForm() {
   const navigate = useNavigate();
   const {
@@ -23,14 +26,59 @@ function EmpreendedorForm() {
   } = useForm<CreateEmpreendedorFormDto>();
   const passwordHook = usePasswordValidation();
 
+  // — modal state —
+  const [modalAberto, setModalAberto] = useState(false);
+  const [emailCadastrado, setEmailCadastrado] = useState("");
+  const [codigo, setCodigo] = useState("");
+  const [confirmando, setConfirmando] = useState(false);
+  const [erroConfirmacao, setErroConfirmacao] = useState<string | null>(null);
+  const [sucesso, setSucesso] = useState(false);
+  const [tempoRestante, setTempoRestante] = useState(TIMEOUT_MS);
+  const [expirado, setExpirado] = useState(false);
+
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const expiracaoRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  // Inicia contagem regressiva ao abrir o modal
+  useEffect(() => {
+    if (!modalAberto || sucesso) return;
+
+    setTempoRestante(TIMEOUT_MS);
+    setExpirado(false);
+
+    timerRef.current = setInterval(() => {
+      setTempoRestante((t) => {
+        if (t <= 1000) {
+          clearInterval(timerRef.current!);
+          return 0;
+        }
+        return t - 1000;
+      });
+    }, 1000);
+
+    expiracaoRef.current = setTimeout(() => {
+      setExpirado(true);
+      clearInterval(timerRef.current!);
+    }, TIMEOUT_MS);
+
+    return () => {
+      clearInterval(timerRef.current!);
+      clearTimeout(expiracaoRef.current!);
+    };
+  }, [modalAberto, sucesso]);
+
+  const formatarTempo = (ms: number) => {
+    const min = Math.floor(ms / 60000);
+    const seg = Math.floor((ms % 60000) / 1000);
+    return `${min}:${seg.toString().padStart(2, "0")}`;
+  };
+
   const onSubmit = async (data: CreateEmpreendedorFormDto) => {
     passwordHook.setTouched(true);
     if (!passwordHook.isValid) {
       alert("Senha inválida");
       return;
     }
-
-    // valida empresa antes de qualquer chamada à API
     if (!data.empStrEmpresa?.trim()) {
       alert("Nome da empresa é obrigatório.");
       return;
@@ -53,7 +101,11 @@ function EmpreendedorForm() {
         empChaCnpj: data.empChaCnpj || undefined,
       });
 
-      navigate("/login");
+      setEmailCadastrado(data.usuStrEmail);
+      setCodigo("");
+      setErroConfirmacao(null);
+      setSucesso(false);
+      setModalAberto(true);
     } catch (error: any) {
       const mensagem = error?.response?.data?.message;
       alert(
@@ -62,6 +114,38 @@ function EmpreendedorForm() {
           : mensagem ?? "Erro ao criar conta."
       );
     }
+  };
+
+  const handleConfirmar = async () => {
+    if (!codigo.trim()) return;
+    setConfirmando(true);
+    setErroConfirmacao(null);
+    try {
+      await api.get(`/usuarios/confirmar/${codigo.trim()}`);
+      setSucesso(true);
+      clearInterval(timerRef.current!);
+      clearTimeout(expiracaoRef.current!);
+      setTimeout(() => navigate("/login"), 2500);
+    } catch (error: any) {
+      const mensagem = error?.response?.data?.message;
+      setErroConfirmacao(
+        typeof mensagem === "string" ? mensagem : "Código inválido ou expirado."
+      );
+    } finally {
+      setConfirmando(false);
+    }
+  };
+
+  const handleVoltarCadastro = () => {
+    setModalAberto(false);
+    setCodigo("");
+    setErroConfirmacao(null);
+    setExpirado(false);
+  };
+
+  const handleTentarNovamente = () => {
+    setCodigo("");
+    setErroConfirmacao(null);
   };
 
   return (
@@ -74,10 +158,14 @@ function EmpreendedorForm() {
           </p>
         </div>
 
-        <div id="empreendedorForm"
-          className="empreendedor-form text-left w-full sm:w-[680px] max-w-md sm:max-w-none bg-white border border-[#d3d3d3] rounded-xl p-6 sm:p-8 md:p-[50px] shadow-[0_4px_10px_rgba(0,0,0,0.08)]">
+        <div
+          id="empreendedorForm"
+          className="empreendedor-form text-left w-full sm:w-[680px] max-w-md sm:max-w-none bg-white border border-[#d3d3d3] rounded-xl p-6 sm:p-8 md:p-[50px] shadow-[0_4px_10px_rgba(0,0,0,0.08)]"
+        >
           <div className="top-icon flex justify-center mb-6 sm:mb-[25px]">
-            <img src={Lamp} alt="Ícone de lâmpada"
+            <img
+              src={Lamp}
+              alt="Ícone de lâmpada"
               className="w-16 sm:w-20 md:w-[90px] h-16 sm:h-20 md:h-[90px] rounded-full p-3 sm:p-4 md:p-[15px] bg-[#782e29]"
             />
           </div>
@@ -90,7 +178,6 @@ function EmpreendedorForm() {
           </p>
 
           <form onSubmit={handleSubmit(onSubmit)}>
-            {/* Nome + Email */}
             <div className="form-row grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 md:gap-[35px] mb-5 sm:mb-[30px]">
               <div className="form-group">
                 <label htmlFor="nomeEmp" className="block text-sm sm:text-base font-medium mb-2 text-[#021926]">
@@ -119,7 +206,6 @@ function EmpreendedorForm() {
               </div>
             </div>
 
-            {/* Telefone + Empresa */}
             <div className="form-row grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 md:gap-[35px] mb-5 sm:mb-[30px]">
               <div className="form-group">
                 <label htmlFor="telefoneEmp" className="block text-sm sm:text-base font-medium mb-2 text-[#021926]">
@@ -144,7 +230,6 @@ function EmpreendedorForm() {
               </div>
             </div>
 
-            {/* CNPJ */}
             <div className="form-row mb-5 sm:mb-[30px]">
               <div className="form-group">
                 <label htmlFor="empChaCnpj" className="block text-sm sm:text-base font-medium mb-2 text-[#021926]">
@@ -172,7 +257,8 @@ function EmpreendedorForm() {
               />
             </div>
 
-            <button type="submit" disabled={isSubmitting}
+            <button
+              type="submit" disabled={isSubmitting}
               className="w-full text-white bg-[#782e29] py-4 text-[1.1rem] rounded-lg mt-[20px] transition hover:bg-[#5e231f] cursor-pointer active:scale-95 disabled:opacity-60 disabled:cursor-not-allowed"
             >
               {isSubmitting ? "Criando conta..." : "Criar Conta"}
@@ -190,6 +276,123 @@ function EmpreendedorForm() {
           </div>
         </div>
       </section>
+
+      {/* Modal de confirmação de e-mail */}
+      {modalAberto && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4">
+          <div className="bg-white rounded-xl shadow-2xl w-full max-w-md p-8">
+
+            {sucesso ? (
+              /* — estado: confirmado com sucesso — */
+              <div className="text-center">
+                <div className="w-14 h-14 rounded-full bg-green-100 flex items-center justify-center mx-auto mb-4">
+                  <svg className="w-7 h-7 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                  </svg>
+                </div>
+                <h2 className="text-xl font-bold text-gray-800 mb-2">Conta confirmada!</h2>
+                <p className="text-gray-500 text-sm">
+                  Seu e-mail foi verificado com sucesso. Redirecionando para o login...
+                </p>
+              </div>
+
+            ) : expirado ? (
+              /* — estado: tempo esgotado — */
+              <div className="text-center">
+                <div className="w-14 h-14 rounded-full bg-red-100 flex items-center justify-center mx-auto mb-4">
+                  <svg className="w-7 h-7 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </div>
+                <h2 className="text-xl font-bold text-gray-800 mb-2">Tempo esgotado</h2>
+                <p className="text-gray-500 text-sm mb-6">
+                  O prazo para confirmar o código expirou. Faça o cadastro novamente.
+                </p>
+                <button
+                  onClick={handleVoltarCadastro}
+                  className="w-full bg-[#782e29] text-white py-2.5 rounded-md font-medium hover:bg-[#5e231f] transition cursor-pointer"
+                >
+                  Voltar ao cadastro
+                </button>
+              </div>
+
+            ) : erroConfirmacao ? (
+              /* — estado: código incorreto — */
+              <>
+                <div className="text-center mb-6">
+                  <div className="w-14 h-14 rounded-full bg-red-100 flex items-center justify-center mx-auto mb-4">
+                    <svg className="w-7 h-7 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </div>
+                  <h2 className="text-xl font-bold text-gray-800 mb-1">Código incorreto</h2>
+                  <p className="text-gray-500 text-sm">{erroConfirmacao}</p>
+                </div>
+                <div className="flex gap-3">
+                  <button
+                    onClick={handleTentarNovamente}
+                    className="flex-1 bg-[#782e29] text-white py-2.5 rounded-md font-medium hover:bg-[#5e231f] transition cursor-pointer active:scale-95"
+                  >
+                    Tentar novamente
+                  </button>
+                  <button
+                    onClick={handleVoltarCadastro}
+                    className="flex-1 bg-gray-100 text-gray-700 py-2.5 rounded-md font-medium hover:bg-gray-200 transition cursor-pointer active:scale-95"
+                  >
+                    Voltar ao cadastro
+                  </button>
+                </div>
+              </>
+
+            ) : (
+              /* — estado: aguardando código — */
+              <>
+                <h2 className="text-xl font-bold text-gray-800 mb-1">
+                  Confirme seu e-mail
+                </h2>
+                <p className="text-gray-500 text-sm mb-6">
+                  Enviamos um código de 6 dígitos para{" "}
+                  <strong className="text-gray-700">{emailCadastrado}</strong>.
+                  Digite-o abaixo para ativar sua conta.
+                </p>
+
+                <div className="flex gap-2 mb-3">
+                  <input
+                    type="text"
+                    value={codigo}
+                    onChange={(e) => setCodigo(e.target.value.replace(/\D/g, "").slice(0, 6))}
+                    placeholder="000000"
+                    maxLength={6}
+                    className="flex-1 p-2.5 border border-gray-300 rounded-md text-gray-800 text-sm tracking-[0.3em] text-center focus:outline-none focus:ring-2 focus:ring-[#782e29] transition"
+                  />
+                  <button
+                    onClick={handleConfirmar}
+                    disabled={confirmando || codigo.length < 6}
+                    className="px-4 py-2 bg-[#782e29] text-white rounded-md text-sm font-medium hover:bg-[#5e231f] transition cursor-pointer active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    {confirmando ? "Verificando..." : "Confirmar"}
+                  </button>
+                </div>
+
+                {/* Contador regressivo */}
+                <p className="text-xs text-gray-400 text-right mb-6">
+                  Código expira em{" "}
+                  <span className={tempoRestante < 60000 ? "text-red-500 font-medium" : "text-gray-500"}>
+                    {formatarTempo(tempoRestante)}
+                  </span>
+                </p>
+
+                <button
+                  onClick={handleVoltarCadastro}
+                  className="w-full bg-gray-700 text-white py-2.5 rounded-md font-medium hover:bg-gray-500 transition cursor-pointer"
+                >
+                  Voltar ao cadastro
+                </button>
+              </>
+            )}
+          </div>
+        </div>
+      )}
     </>
   );
 }
