@@ -194,7 +194,10 @@
   color: #fef08a;
 }
 
-.dark span.bg-gray-100,
+.dark span.bg-gray-100 {
+  background-color: #374151;
+  color: #d1d5db;
+}
 .dark span.bg-gray-200 {
   background-color: #374151;
   color: #d1d5db;
@@ -251,3 +254,4 @@
   color: #d1d5db;
   background-color: #2e2e2e;
 }
+

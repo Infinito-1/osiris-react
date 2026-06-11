@@ -155,7 +155,7 @@ const ModalCriarUsuario: React.FC<{
   });
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4">
-      <div className="bg-white rounded-xl shadow-2xl w-full max-w-md p-8">
+      <div className="bg-white rounded-xl shadow-2xl w-full max-w-md p-8 max-h-[90vh] overflow-y-auto">
         <h2 className="text-xl font-bold text-gray-800 mb-6">Criar Usuário</h2>
         <div className="space-y-4">
           {[

@@ -13,7 +13,7 @@ export interface CreateUsuarioDto {
 
 interface JwtPayload {
   sub: number;
-  username: string;
+  name: string;
   role: 'Empreendedor' | 'Coordenador' | 'Grupo' | 'Admin';
 }
 
@@ -26,7 +26,7 @@ export async function loginUsuario(email: string, senha: string): Promise<Usuari
     email,
     senha: '',
     id: decoded.sub,
-    nome: decoded.username,
+    nome: decoded.name,
     tipo: decoded.role,
     token: access_token,
   };
