@@ -8,7 +8,10 @@ import EllipseConexao from "../../assets/img/icones/Ellipse conexao.svg";
 import CarrosselHome from "../../components/carrosselHome/CarrosselHome";
 import FiltroDemandas from "../../components/filtro/filtroDemandas";
 import { useLocation, useNavigate } from "react-router-dom";
-import { getGaleriaDemandaOrdenada, getGaleriaDemandas } from "../../services/demanda.service";
+import {
+  getGaleriaDemandaOrdenada,
+  getGaleriaDemandas,
+} from "../../services/demanda.service";
 import CardDemanda from "../demanda/CardDemanda";
 import { useAuth } from "../../hooks/useAuth";
 
@@ -24,7 +27,6 @@ interface Demanda {
 
 interface Filtros {
   tipos: string[];
-  area: string;
   semestre: string;
 }
 
@@ -79,49 +81,75 @@ function Home() {
 
   const [filtros, setFiltros] = useState<Filtros>({
     tipos: [],
-    area: "Todas as áreas",
     semestre: "Todos",
   });
   const [demandas, setDemandas] = useState<Demanda[]>([]);
-  const [ordem, setOrdem] = useState<'ASC' | 'DESC'>('DESC');
+  const [ordem, setOrdem] = useState<"ASC" | "DESC">("DESC");
+  const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-      getGaleriaDemandas()
-        .then(data => {
-          setDemandas(data.map((d: any) => ({
-            id: d.id,
-            titulo: d.nome,
-            empreendedor: d.empreendedor?.empresa ?? '—',
-            empId: d.empreendedor?.id,
-            tipo: d.tipos?.[0] ?? '',
-            descricao: d.descricao,
-            semestreRecomendado: d.semestreRecomendado,
-          })));
-        })
-        .catch(() => setDemandas([]))
-        .finally(() => setLoading(false));
-    }, []);
+  useEffect(() => {
+    getGaleriaDemandas()
+      .then((data: unknown[]) => {
+        setDemandas(
+          data.map((d) => {
+            const item = d as {
+              id: number;
+              nome: string;
+              empreendedor?: { empresa?: string; id?: number };
+              tipos?: string[];
+              descricao: string;
+              semestreRecomendado?: string;
+            };
+            return {
+              id: item.id,
+              titulo: item.nome,
+              empreendedor: item.empreendedor?.empresa ?? "—",
+              empId: item.empreendedor?.id,
+              tipo: item.tipos?.[0] ?? "",
+              descricao: item.descricao,
+              semestreRecomendado: item.semestreRecomendado ?? null,
+            };
+          }),
+        );
+      })
+      .catch(() => setDemandas([]))
+      .finally(() => setLoading(false));
+  }, []);
 
   useEffect(() => {
     getGaleriaDemandaOrdenada(ordem)
-      .then(data => {
-        setDemandas(data.map((d: any) => ({
-          id: d.id,
-          titulo: d.nome,
-          empreendedor: d.empreendedor?.empresa ?? '—',
-          empId: d.empreendedor?.id,
-          tipo: d.tipos?.[0] ?? '',
-          semestreRecomendado: d.semestreRecomendado,
-          descricao: d.descricao,
-        })));
+      .then((data: unknown[]) => {
+        setDemandas(
+          data.map((d) => {
+            const item = d as {
+              id: number;
+              nome: string;
+              empreendedor?: { empresa?: string; id?: number };
+              tipos?: string[];
+              descricao: string;
+              semestreRecomendado?: string;
+            };
+            return {
+              id: item.id,
+              titulo: item.nome,
+              empreendedor: item.empreendedor?.empresa ?? "—",
+              empId: item.empreendedor?.id,
+              tipo: item.tipos?.[0] ?? "",
+              descricao: item.descricao,
+              semestreRecomendado: item.semestreRecomendado ?? null,
+            };
+          }),
+        );
       })
       .catch(() => setDemandas([]));
   }, [ordem]);
 
   const demandasFiltradas = useMemo(() => {
-    return demandas.filter(demanda => {
-      const tipoMatch = filtros.tipos.length === 0 || filtros.tipos.includes(demanda.tipo);
-      const semestreMatch = filtros.semestre === "Todos" ||
+    return demandas.filter((demanda) => {
+      const tipoMatch =
+        filtros.tipos.length === 0 || filtros.tipos.includes(demanda.tipo);
+      const semestreMatch =
+        filtros.semestre === "Todos" ||
         Number(demanda.semestreRecomendado) >= Number(filtros.semestre);
       return tipoMatch && semestreMatch;
     });
@@ -139,28 +167,31 @@ function Home() {
   // Botão "Cadastrar Projeto" — disponível apenas para Grupo
   function getCadastrarProjetoProps() {
     if (!isAuthenticated) {
-      return { onClick: () => navigate('/login'), tooltip: undefined };
+      return { onClick: () => navigate("/login"), tooltip: undefined };
     }
-    if (usuario?.tipo === 'Grupo') {
-      return { onClick: () => navigate('/entrega'), tooltip: undefined };
+    if (usuario?.tipo === "Grupo") {
+      return { onClick: () => navigate("/entrega"), tooltip: undefined };
     }
     return {
       onClick: () => {},
-      tooltip: 'Disponível apenas para grupos',
+      tooltip: "Disponível apenas para grupos",
     };
   }
 
   // Botão "Enviar Demanda" — disponível apenas para Empreendedor
   function getEnviarDemandaProps() {
     if (!isAuthenticated) {
-      return { onClick: () => navigate('/login'), tooltip: undefined };
+      return { onClick: () => navigate("/login"), tooltip: undefined };
     }
-    if (usuario?.tipo === 'Empreendedor') {
-      return { onClick: () => navigate('/cadastrar_demanda'), tooltip: undefined };
+    if (usuario?.tipo === "Empreendedor") {
+      return {
+        onClick: () => navigate("/cadastrar_demanda"),
+        tooltip: undefined,
+      };
     }
     return {
       onClick: () => {},
-      tooltip: 'Disponível apenas para empreendedores',
+      tooltip: "Disponível apenas para empreendedores",
     };
   }
 
@@ -171,13 +202,13 @@ function Home() {
     <div className="w-full min-h-screen">
       <section className="bg-[#021926] p-10">
         <h1 className="text-4xl justify-center font-semibold text-[#DAD4C8] w-[70%] mx-auto text-center md:text-5xl break-words">
-          Conectamos <span className="text-[#A33E38]">Empreendedores</span>{" "}
-          com <span className="text-[#A33E38]">Estudantes de Tecnologia</span>
+          Conectamos <span className="text-[#A33E38]">Empreendedores</span> com{" "}
+          <span className="text-[#A33E38]">Estudantes de Tecnologia</span>
         </h1>
         <h2 className="text-[#DAD4C8] text-center py-5 text-2xl w-[80%] mx-auto">
-          Plataforma que une demandas reais de negócios com projetos
-          acadêmicos da Fatec Zona Leste, criando oportunidades de aprendizado
-          prático e soluções inovadoras.
+          Plataforma que une demandas reais de negócios com projetos acadêmicos
+          da Fatec Zona Leste, criando oportunidades de aprendizado prático e
+          soluções inovadoras.
         </h2>
 
         <div className="flex gap-4 mt-2 justify-center max-[500px]:flex-wrap">
@@ -203,7 +234,10 @@ function Home() {
       <section className="bg-[#F1F7EE] py-10">
         <div className="w-11/12 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-4 gap-8">
           <div className="lg:col-span-1">
-            <FiltroDemandas onFiltroChange={setFiltros} currentFiltros={filtros} />
+            <FiltroDemandas
+              onFiltroChange={setFiltros}
+              currentFiltros={filtros}
+            />
           </div>
 
           <div className="lg:col-span-3">
@@ -213,7 +247,7 @@ function Home() {
               </h2>
               <select
                 value={ordem}
-                onChange={(e) => setOrdem(e.target.value as 'ASC' | 'DESC')}
+                onChange={(e) => setOrdem(e.target.value as "ASC" | "DESC")}
                 className="p-2 border border-gray-300 rounded-md focus:outline-none bg-white cursor-pointer"
               >
                 <option value="DESC">Mais recentes</option>
@@ -221,9 +255,19 @@ function Home() {
               </select>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-              {demandasFiltradas.map((demanda) => (
-                <CardDemanda key={demanda.id} {...demanda} />
-              ))}
+              {loading ? (
+                <p className="text-center text-gray-500 text-lg mt-10 col-span-3">
+                  Carregando demandas...
+                </p>
+              ) : demandasFiltradas.length === 0 ? (
+                <p className="text-center text-gray-500 text-lg mt-10 col-span-3">
+                  Nenhum projeto encontrado com os filtros selecionados.
+                </p>
+              ) : (
+                demandasFiltradas.map((demanda) => (
+                  <CardDemanda key={demanda.id} {...demanda} />
+                ))
+              )}
             </div>
             {demandasFiltradas.length === 0 && (
               <p className="text-center text-gray-500 text-lg mt-10">
@@ -237,24 +281,34 @@ function Home() {
       <section id="como-funciona" className="text-center py-5 bg-[#F1F7EE]">
         <h2 className="text-3xl font-semibold">Como Funciona</h2>
         <p className="w-[50%] mx-auto lg:text-2xl md:text-lg sm:text-sm">
-          Um processo simples e eficiente para conectar demandas reais com estudantes talentosos
+          Um processo simples e eficiente para conectar demandas reais com
+          estudantes talentosos
         </p>
         <div className="mx-[10%] my-10">
           <div className="flex flex-wrap gap-10 justify-center">
             <div className="w-full sm:w-[45%] lg:w-[20%] p-2 hover:scale-110 transition-transform duration-200">
               <img className="size-25 mx-auto" src={EllipseCadastro} />
               <h3 className="font-semibold text-lg">1. Cadastro</h3>
-              <p>Empreendedores se cadastram e descrevem suas demandas com detalhes do projeto</p>
+              <p>
+                Empreendedores se cadastram e descrevem suas demandas com
+                detalhes do projeto
+              </p>
             </div>
             <div className="w-full sm:w-[45%] lg:w-[20%] hover:scale-110 transition-transform duration-200">
               <img className="size-25 mx-auto" src={EllipseDescoberta} />
               <h3 className="font-semibold text-lg">2. Descoberta</h3>
-              <p>Estudantes exploram projetos usando filtros para encontrar oportunidades ideais</p>
+              <p>
+                Estudantes exploram projetos usando filtros para encontrar
+                oportunidades ideais
+              </p>
             </div>
             <div className="w-full sm:w-[45%] lg:w-[20%] hover:scale-110 transition-transform duration-200">
               <img className="size-25 mx-auto" src={EllipseConexao} />
               <h3 className="font-semibold text-lg">3. Conexão</h3>
-              <p>Grupos de alunos manifestam interesse e iniciam diálogo com empreendedores</p>
+              <p>
+                Grupos de alunos manifestam interesse e iniciam diálogo com
+                empreendedores
+              </p>
             </div>
             <div className="w-full sm:w-[45%] lg:w-[20%] hover:scale-110 transition-transform duration-200">
               <img className="size-25 mx-auto" src={EllipseExecucao} />
@@ -267,7 +321,9 @@ function Home() {
 
       <section className="text-center py-5 bg-[#F1F7EE]">
         <h2 className="text-3xl font-semibold">Faça Parte da Plataforma</h2>
-        <p className="text-2xl w-[50%] mx-auto mb-2">Escolha como deseja participar do Osiris</p>
+        <p className="text-2xl w-[50%] mx-auto mb-2">
+          Escolha como deseja participar do Osiris
+        </p>
         <CarrosselHome />
       </section>
     </div>

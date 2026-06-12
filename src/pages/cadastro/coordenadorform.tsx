@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import { api } from "../../api/axios";
 import { usePasswordValidation } from "../../hooks/usePasswordValidation";
 import { PasswordInput } from "../../components/PasswordInput";
-import { useAuth } from "../../hooks/useAuth";
 
 interface EditarCoordenadorDto {
   usuStrNome: string;
@@ -16,7 +15,6 @@ interface EditarCoordenadorDto {
 
 function CoordenadorForm() {
   const navigate = useNavigate();
-  const { usuario } = useAuth();
   const passwordHook = usePasswordValidation();
   const [alterarSenha, setAlterarSenha] = useState(false);
   const [cooIntId, setCooIntId] = useState<number | null>(null);
@@ -80,8 +78,8 @@ function CoordenadorForm() {
       }
 
       navigate('/coordenador');
-    } catch (error: any) {
-      const mensagem = error?.response?.data?.message;
+    } catch (error: unknown) {
+      const mensagem = (error as { response?: { data?: { message?: unknown } } })?.response?.data?.message;
       alert(
         Array.isArray(mensagem)
           ? mensagem.join('\n')

@@ -46,6 +46,7 @@ export default function CadastrarDemanda() {
     if (!modoEdicao) return;
     getDemandaById(Number(demandaId))
       .then(d => {
+        if (!d) return navigate(-1);
         reset({
           demStrNome: d.nome ?? '',
           demStrDescricao: d.descricao ?? '',
@@ -92,8 +93,8 @@ export default function CadastrarDemanda() {
       } else {
         navigate('/empreendedor'); // só cria demanda quem é empreendedor
       }
-    } catch (error: any) {
-      const mensagem = error?.response?.data?.message;
+    } catch (error: unknown) {
+      const mensagem = (error as { response?: { data?: { message?: unknown } } })?.response?.data?.message;
       alert(
         Array.isArray(mensagem)
           ? mensagem.join('\n')

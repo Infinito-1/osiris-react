@@ -26,6 +26,7 @@ export async function criarDemanda(dto: {
   demStrNome: string;
   demStrDescricao: string;
   demBoolAceitaMudancaTipo: boolean;
+  demBoolExibirContato: boolean;
   empIntId: number;
   tipStrNomes?: string[];
 }) {

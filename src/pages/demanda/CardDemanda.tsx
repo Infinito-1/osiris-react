@@ -4,7 +4,7 @@ import { useAuth } from '../../hooks/useAuth';
 import { desativarDemanda } from '../../services/demanda.service';
 import { criarCandidatura } from '../../services/candidatura.service';
 import { getPerfilEmpreendedor } from '../../services/empreendedores.service';
-import { getGrupoById, getGrupoPerfil } from '../../services/grupos.service';
+import { getGrupoPerfil } from '../../services/grupos.service';
 
 interface CardDemandaProps {
   id: number;
@@ -88,12 +88,12 @@ const CardDemanda: React.FC<CardDemandaProps> = ({
       const candidatura = await criarCandidatura(id, gruIntIdLogado!);
       setCanIntId(candidatura?.id);
       setEtapa('sucesso');
-    } catch (error: any) {
-      const mensagem = error?.response?.data?.message;
+    } catch (error: unknown) {
+      const mensagem = (error as { response?: { data?: { message?: unknown } } })?.response?.data?.message;
       setErroCandidatura(
         Array.isArray(mensagem)
-          ? mensagem.join('\n')
-          : mensagem ?? 'Erro ao enviar candidatura.'
+          ? (mensagem as string[]).join('\n')
+          : String(mensagem ?? 'Erro ao enviar candidatura.')
       );
     } finally {
       setEnviando(false);

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getDashboardCoordenador, aprovarDemanda, rejeitarDemanda } from "../../services/coordenador.service";
-import { getProjetos, desativarProjetoCoordenador, reativarProjetoCoordenador, getTodosProjetos } from "../../services/projeto.service";
+import { getDashboardCoordenador, rejeitarDemanda } from "../../services/coordenador.service";
+import { desativarProjetoCoordenador, reativarProjetoCoordenador, getTodosProjetos } from "../../services/projeto.service";
 
 type Aba = 'pendentes' | 'ativas' | 'rejeitadas';
 
@@ -313,32 +313,32 @@ export default function DashboardCoordenador() {
       .finally(() => setLoading(false));
   }, []);
 
-  async function handleAprovar(id: number) {
-    try {
-      await aprovarDemanda(id);
-      setDashboard(prev => {
-        if (!prev) return prev;
-        const demanda = prev.demandas.pendentes.find(d => d.id === id);
-        if (!demanda) return prev;
-        return {
-          ...prev,
-          demandas: {
-            ...prev.demandas,
-            pendentes: prev.demandas.pendentes.filter(d => d.id !== id),
-            ativas: [demanda, ...prev.demandas.ativas],
-          },
-          metricas: {
-            ...prev.metricas,
-            demandasPendentesDeAprovacao: prev.metricas.demandasPendentesDeAprovacao - 1,
-            demandasPublicadasGaleria: prev.metricas.demandasPublicadasGaleria + 1,
-          },
-        };
-      });
-    } catch (error: any) {
-      const m = error?.response?.data?.message;
-      alert(Array.isArray(m) ? m.join('\n') : m ?? 'Erro ao aprovar.');
-    }
-  }
+  // async function handleAprovar(id: number) {
+  //   try {
+  //     await aprovarDemanda(id);
+  //     setDashboard(prev => {
+  //       if (!prev) return prev;
+  //       const demanda = prev.demandas.pendentes.find(d => d.id === id);
+  //       if (!demanda) return prev;
+  //       return {
+  //         ...prev,
+  //         demandas: {
+  //           ...prev.demandas,
+  //           pendentes: prev.demandas.pendentes.filter(d => d.id !== id),
+  //           ativas: [demanda, ...prev.demandas.ativas],
+  //         },
+  //         metricas: {
+  //           ...prev.metricas,
+  //           demandasPendentesDeAprovacao: prev.metricas.demandasPendentesDeAprovacao - 1,
+  //           demandasPublicadasGaleria: prev.metricas.demandasPublicadasGaleria + 1,
+  //         },
+  //       };
+  //     });
+  //   } catch (error: any) {
+  //     const m = error?.response?.data?.message;
+  //     alert(Array.isArray(m) ? m.join('\n') : m ?? 'Erro ao aprovar.');
+  //   }
+  // }
 
   async function handleConfirmarRejeicao(motivo: string) {
     if (!modalRejeicao) return;
@@ -373,7 +373,7 @@ export default function DashboardCoordenador() {
     setEnviando(true);
     try {
       const atualizado = await desativarProjetoCoordenador(modalProjeto.id, motivo);
-      setProjetos(prev => prev.map(p => p.id === modalProjeto.id ? atualizado : p));
+      setProjetos(prev => prev.map(p => p.id === modalProjeto.id ? atualizado as Projeto : p));
       setModalProjeto(null);
     } catch { alert('Erro ao desativar projeto.'); }
     finally { setEnviando(false); }
@@ -382,7 +382,7 @@ export default function DashboardCoordenador() {
   async function handleReativarProjeto(id: number) {
     try {
       const atualizado = await reativarProjetoCoordenador(id);
-      setProjetos(prev => prev.map(p => p.id === id ? atualizado : p));
+      setProjetos(prev => prev.map(p => p.id === id ? atualizado as Projeto: p));
     } catch { alert('Erro ao reativar projeto.'); }
   }
 
